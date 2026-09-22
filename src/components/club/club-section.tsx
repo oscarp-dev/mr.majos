@@ -9,7 +9,7 @@ export function ClubSection() {
     <section id="club" className="relative overflow-hidden bg-[#141414] py-20 md:py-28">
       <PaintSplash className="-left-20 bottom-0 h-80 w-80 opacity-20" />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 md:grid-cols-2 md:gap-16 md:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 md:grid-cols-2 md:gap-16 md:px-8">
         <Reveal>
           <div className="relative mx-auto w-full max-w-sm rotate-2 overflow-hidden rounded-2xl border-4 border-mr-black shadow-[0_16px_0_0_rgba(0,0,0,1)]">
             <Image

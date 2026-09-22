@@ -18,7 +18,7 @@ const PROCESS_STEPS = [
 export function ProcessSection() {
   return (
     <section id="about" className="relative overflow-hidden bg-mr-yellow py-20 md:py-28">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 md:grid-cols-2 md:items-center md:gap-16 md:px-8 xl:max-w-[92rem] xl:gap-24">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 md:grid-cols-2 md:items-center md:gap-16 md:px-8 xl:max-w-[92rem] xl:gap-24">
         <Reveal>
           <span className="font-tag text-xs tracking-widest text-mr-black/70">
             EL PROCESO
@@ -54,13 +54,13 @@ export function ProcessSection() {
             ))}
           </ol>
 
-          <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-mr-black/15 pt-6">
+          <dl className="mt-8 grid grid-cols-3 gap-2 border-t border-mr-black/15 pt-6 sm:gap-4">
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <dt className="font-display text-4xl text-mr-black md:text-5xl">
+                <dt className="font-display text-3xl text-mr-black sm:text-4xl md:text-5xl">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                 </dt>
-                <dd className="mt-1 text-xs leading-snug text-mr-black/60">
+                <dd className="mt-1 text-[10px] leading-snug text-mr-black/60 sm:text-xs">
                   {stat.label}
                 </dd>
               </div>

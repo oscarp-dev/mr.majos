@@ -31,7 +31,7 @@ export function HeroSection() {
           <CooltextBadge className="inset-x-0 top-full mx-auto mt-4 sm:mt-2 md:inset-x-auto md:right-[6%] md:top-auto md:bottom-4 md:mx-0" />
         </div>
 
-        <div className="mt-10 grid gap-8 md:mt-14 lg:grid-cols-12 lg:items-center lg:gap-6">
+        <div className="mt-16 grid gap-8 md:mt-14 lg:grid-cols-12 lg:items-center lg:gap-6">
           <div className="lg:col-span-5">
             <div className="mb-3 flex items-end justify-between">
               <div>
