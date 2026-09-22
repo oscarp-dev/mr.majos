@@ -38,6 +38,7 @@ export default function Home() {
             </>
           }
           verticalAlign="center"
+          imageScaleRange={[1.05, 1.0]}
           className="aspect-[4/3] h-auto min-h-0 sm:aspect-[3/2] md:h-auto"
         />
         <ProcessSection />

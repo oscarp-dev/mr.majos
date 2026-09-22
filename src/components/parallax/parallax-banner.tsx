@@ -18,6 +18,9 @@ type ParallaxBannerProps = {
    *  on short/wide viewports while the section is still mostly image. */
   verticalAlign?: "end" | "center";
   className?: string;
+  /** [start, end] scale applied to the image as it scrolls through the
+   *  viewport. Defaults to the original, fairly aggressive zoom. */
+  imageScaleRange?: [number, number];
 };
 
 export function ParallaxBanner({
@@ -29,6 +32,7 @@ export function ParallaxBanner({
   align = "left",
   verticalAlign = "end",
   className,
+  imageScaleRange = [1.15, 1.02],
 }: ParallaxBannerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -47,7 +51,7 @@ export function ParallaxBanner({
   // image, tag and headline drift apart as you scroll — that gap is what
   // reads as depth instead of one flat card sliding up.
   const imageY = useTransform(smooth, [0, 1], ["-14%", "14%"]);
-  const imageScale = useTransform(smooth, [0, 1], [1.15, 1.02]);
+  const imageScale = useTransform(smooth, [0, 1], imageScaleRange);
   const eyebrowY = useTransform(smooth, [0, 1], ["20%", "-20%"]);
   const headingY = useTransform(smooth, [0, 1], ["55%", "-55%"]);
 
