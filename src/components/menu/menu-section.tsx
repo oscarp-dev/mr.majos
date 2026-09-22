@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MENU_ITEMS } from "@/lib/site-data";
 import { MenuCard } from "./menu-card";
+import { MenuMobileCarousel } from "./menu-mobile-carousel";
 import { Reveal } from "@/components/motion/reveal";
 import { LineartSticker } from "@/components/decorative/lineart-sticker";
 
@@ -32,7 +33,11 @@ export function MenuSection() {
           {RUNNING_LIST}
         </p>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:mt-16">
+        <div className="mt-12 sm:hidden">
+          <MenuMobileCarousel items={MENU_ITEMS} />
+        </div>
+
+        <div className="mt-12 hidden grid-cols-1 gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:mt-16">
           {MENU_ITEMS.map((item, i) => (
             <Reveal key={item.id} delay={i * 0.05}>
               <MenuCard item={item} />
