@@ -38,7 +38,7 @@ export default function Home() {
             </>
           }
           verticalAlign="center"
-          className="aspect-[3/2] h-auto min-h-0 md:h-auto"
+          className="aspect-[4/3] h-auto min-h-0 sm:aspect-[3/2] md:h-auto"
         />
         <ProcessSection />
         <InstagramSection />

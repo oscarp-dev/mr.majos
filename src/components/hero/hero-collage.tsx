@@ -155,9 +155,8 @@ export function HeroCollage() {
           height={112}
           className="pointer-events-none absolute -right-3 -top-3 z-10 h-20 w-20 rotate-6 select-none drop-shadow-[0_4px_0_rgba(0,0,0,1)]"
         />
-        <OrderCard className="absolute -bottom-4 -right-4 hidden lg:flex" />
+        <OrderCard className="absolute -bottom-4 -right-4" />
       </div>
-      <OrderCard className="col-span-2 flex sm:col-span-2 lg:hidden" />
     </div>
   );
 }

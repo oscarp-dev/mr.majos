@@ -13,7 +13,7 @@ export function HeroSection() {
       <PaintSplash className="-right-16 top-4 h-72 w-72 opacity-90 md:h-96 md:w-96" />
 
       <div className="relative mx-auto max-w-7xl px-4 md:px-8">
-        <div className="bleed-full relative px-4 pt-6 sm:px-6 md:px-8">
+        <div className="bleed-full relative z-30 px-4 pt-6 sm:px-6 md:px-8">
           <h1 className="font-display relative mt-3 -rotate-1 text-center text-[26vw] leading-[0.74] text-mr-cream sm:text-[20vw] md:mt-4 md:text-[16vw] lg:text-[15.5vw]">
             <span className="inline-block md:-translate-x-3">THE REAL</span>
             <br />
@@ -37,9 +37,6 @@ export function HeroSection() {
               <div>
                 <p className="font-tag text-sm tracking-wide text-mr-cream">
                   MAJO ARCHIVE ↗
-                </p>
-                <p className="font-tag text-[11px] tracking-widest text-mr-cream/50">
-                  GAME BOY EDITION
                 </p>
               </div>
               <span className="rounded-full border border-mr-cream/20 px-3 py-1 font-tag text-[10px] tracking-widest text-mr-cream/70">
