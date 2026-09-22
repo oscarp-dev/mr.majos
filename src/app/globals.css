@@ -1,0 +1,199 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-heading: var(--font-display);
+  --color-mr-black: var(--mr-black);
+  --color-mr-yellow: var(--mr-yellow);
+  --color-mr-cream: var(--mr-cream);
+  --color-mr-red: var(--mr-red);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --mr-black: #0a0a0a;
+  --mr-yellow: #ffc700;
+  --mr-cream: #f5f1e6;
+  --mr-red: #e8402c;
+
+  --background: var(--mr-black);
+  --foreground: var(--mr-cream);
+  --card: #141414;
+  --card-foreground: var(--mr-cream);
+  --popover: #141414;
+  --popover-foreground: var(--mr-cream);
+  --primary: var(--mr-yellow);
+  --primary-foreground: #171200;
+  --secondary: #1c1c1c;
+  --secondary-foreground: var(--mr-cream);
+  --muted: #1c1c1c;
+  --muted-foreground: #a3a3a3;
+  --accent: var(--mr-yellow);
+  --accent-foreground: #171200;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(245, 241, 230, 0.14);
+  --input: rgba(245, 241, 230, 0.18);
+  --ring: var(--mr-yellow);
+  --chart-1: var(--mr-yellow);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.5rem;
+  --sidebar: #141414;
+  --sidebar-foreground: var(--mr-cream);
+  --sidebar-primary: var(--mr-yellow);
+  --sidebar-primary-foreground: #171200;
+  --sidebar-accent: #1c1c1c;
+  --sidebar-accent-foreground: var(--mr-cream);
+  --sidebar-border: rgba(245, 241, 230, 0.14);
+  --sidebar-ring: var(--mr-yellow);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer utilities {
+  /* Condensed extra-bold display headline, always uppercase */
+  .font-display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  /* Small branded UI text (nav, tags, buttons) — the display face reads
+     poorly below ~20px, so labels use the body face instead. */
+  .font-tag {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Breaks a headline out of its centered max-w container so it spans
+     the full browser viewport edge-to-edge, regardless of nesting. */
+  .bleed-full {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+}
+
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-x 22s linear infinite;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--float-rot, -6deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(var(--float-rot, -6deg));
+  }
+}
+
+.animate-float {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+@keyframes neon-flicker {
+  0%,
+  3%,
+  6%,
+  9%,
+  55%,
+  62%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px var(--neon-color, #ff3fe0))
+      drop-shadow(0 0 18px var(--neon-color, #ff3fe0))
+      drop-shadow(0 0 34px var(--neon-color, #ff3fe0));
+  }
+  4%,
+  7%,
+  63% {
+    opacity: 0.35;
+    filter: drop-shadow(0 0 2px var(--neon-color, #ff3fe0));
+  }
+  5%,
+  8%,
+  64% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px var(--neon-color, #ff3fe0))
+      drop-shadow(0 0 10px var(--neon-color, #ff3fe0));
+  }
+}
+
+.animate-neon-flicker {
+  animation: neon-flicker 4.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-float,
+  .animate-neon-flicker {
+    animation: none;
+  }
+}
