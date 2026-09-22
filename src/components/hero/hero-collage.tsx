@@ -71,24 +71,24 @@ function ClubTeaserCard({ className, rotate = "rotate-3" }: CardProps) {
         MAJO&apos;S CLUB
       </span>
 
-      <div className="flex items-center gap-1.5">
-        {[0, 1, 2, 3, 4].map((i) => (
+      <div className="flex flex-wrap items-center gap-1">
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
           <span
             key={i}
             className={cn(
-              "size-2.5 rounded-full border border-mr-cream/50",
-              i < 2 ? "bg-mr-cream" : "bg-transparent"
+              "size-2 rounded-full border border-mr-cream/50",
+              i < 4 ? "bg-mr-cream" : "bg-transparent"
             )}
           />
         ))}
         <span className="ml-1 font-tag text-[10px] tracking-wide text-mr-cream/60">
-          2/5 SELLOS
+          4/9 SELLOS
         </span>
       </div>
 
       <p className="text-xs leading-snug text-mr-cream/85">
-        Cada burger suma un sello. Junta 5 y la próxima ronda de salsa extra
-        va por la casa.
+        Cada burger suma un sello. Por cada 9, te llevas una burger o hot
+        dog gratis, by the face.
       </p>
 
       <a

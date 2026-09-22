@@ -32,8 +32,9 @@ export function ClubSection() {
             MAJO&apos;S CLUB
           </h2>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-mr-cream/60 md:text-base">
-            Cada burger o hot dog suma un sello. Junta suficientes y sube de nivel:
-            más salsa, más regalos, más morro.
+            Cada burger o hot dog suma un sello. Por cada 9 sellos, te llevas
+            una burger o hot dog totalmente gratis, by the face. Y cuantos
+            más sellos acumules, más descuento en cada pedido.
           </p>
 
           <ul className="mt-8 flex flex-col gap-3">
