@@ -5,8 +5,6 @@ import { MenuMobileCarousel } from "./menu-mobile-carousel";
 import { Reveal } from "@/components/motion/reveal";
 import { LineartSticker } from "@/components/decorative/lineart-sticker";
 
-const RUNNING_LIST = MENU_ITEMS.map((item) => item.name.toUpperCase()).join(" / ");
-
 export function MenuSection() {
   return (
     <section id="menu" className="relative overflow-hidden bg-mr-black py-20 md:py-28">
@@ -29,11 +27,7 @@ export function MenuSection() {
           </h2>
         </Reveal>
 
-        <p className="mt-4 max-w-md text-sm leading-relaxed text-mr-cream/60 md:mt-5">
-          {RUNNING_LIST}
-        </p>
-
-        <div className="mt-12 sm:hidden">
+        <div className="mt-8 sm:hidden">
           <MenuMobileCarousel items={MENU_ITEMS} />
         </div>
 

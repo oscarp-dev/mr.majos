@@ -14,7 +14,7 @@ const css = `
     padding-bottom: 44px !important;
   }
   .menu-coverflow .swiper-slide {
-    width: 250px;
+    width: 285px;
   }
   .menu-coverflow .swiper-pagination-bullet {
     background-color: #ffc700;
@@ -55,7 +55,7 @@ export function MenuMobileCarousel({ items }: { items: MenuItem[] }) {
                   src={item.image}
                   alt={item.name}
                   fill
-                  sizes="250px"
+                  sizes="285px"
                   className="object-cover"
                 />
                 {item.tag && (
@@ -68,11 +68,11 @@ export function MenuMobileCarousel({ items }: { items: MenuItem[] }) {
                 </span>
               </div>
 
-              <div className="flex flex-col gap-1 p-4">
-                <h3 className="font-display text-xl leading-none text-mr-cream">
+              <div className="flex flex-col gap-1.5 p-4">
+                <h3 className="font-display text-2xl leading-none text-mr-cream">
                   {item.name}
                 </h3>
-                <p className="line-clamp-2 text-xs leading-snug text-mr-cream/60">
+                <p className="line-clamp-2 text-sm leading-snug text-mr-cream/60">
                   {item.description}
                 </p>
               </div>
