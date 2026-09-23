@@ -128,8 +128,8 @@ function OrderCard({ className, rotate = "-rotate-2" }: CardProps) {
 
 export function HeroCollage() {
   return (
-    <div className="grid grid-cols-2 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-5">
-      <div className="col-span-2 flex flex-col gap-4 sm:col-span-1 lg:gap-5">
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-5">
+      <div className="flex flex-col gap-3 lg:gap-5">
         <ClubTeaserCard rotate="rotate-2" className="lg:z-10 lg:-mb-8" />
         <PhotoCard
           src="/images/foto-burger-mano-2.jpg"
@@ -139,14 +139,14 @@ export function HeroCollage() {
           className="aspect-[3/4]"
         />
       </div>
-      <div className="relative col-span-2 sm:col-span-1">
+      <div className="relative">
         <PhotoCard
           src="/images/burger-la-gringa-real.jpg"
           alt="La Gringa — burger clásica de Mr. Majo's con doble bacon"
           rotate="-rotate-1"
           tag="LA GRINGA"
           tagPosition="top-left"
-          className="lg:aspect-auto lg:h-full"
+          className="aspect-auto h-full"
         />
         <Image
           src="/images/badge-circular-amarillo-sin-anillo.png"

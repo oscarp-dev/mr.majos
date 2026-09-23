@@ -43,7 +43,7 @@ export default function InstagramSection() {
               SEGUIR
             </a>
           </div>
-          <h2 className="font-display bleed-full px-4 mt-2 text-[19vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[13vw] md:px-8 md:text-[9vw]">
+          <h2 className="font-display bleed-full px-4 mt-2 text-[17vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[13vw] md:px-8 md:text-[9vw]">
             TANTO CHORREO
             <br />
             <span className="text-mr-yellow">QUE ROMPE INSTAGRAM</span>
