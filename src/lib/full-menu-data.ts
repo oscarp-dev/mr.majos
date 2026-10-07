@@ -19,6 +19,8 @@ export type FullMenuItem = {
   image?: string;
   /** object-position, solo para fotos sin recortar (p. ej. la Custom Burger). */
   imagePosition?: string;
+  /** La foto deja mucho negro encima de la burger: en marcos apaisados se recorta por abajo. */
+  headroom?: boolean;
 };
 
 export type FullMenuCategory = {
@@ -59,6 +61,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         tagVariant: "red",
         footerLeft: "Doble 180g",
         image: "/images/burgers/gringa.webp",
+        headroom: true,
       },
       {
         id: "guiri",
@@ -479,6 +482,7 @@ export type ShowcaseBurger = {
   tag?: string;
   image: string;
   imagePosition?: string;
+  headroom?: boolean;
 };
 
 export const BURGER_SHOWCASE: ShowcaseBurger[] = [
@@ -489,6 +493,7 @@ export const BURGER_SHOWCASE: ShowcaseBurger[] = [
     price: FEATURED_DISH.price,
     tag: "⭐ PLATO INSIGNIA",
     image: FEATURED_DISH.image,
+    headroom: true,
   },
   ...HOME_CATEGORIES[0].items.map((item) => ({
     id: item.id,
@@ -498,5 +503,6 @@ export const BURGER_SHOWCASE: ShowcaseBurger[] = [
     tag: item.tag,
     image: item.image!,
     imagePosition: item.imagePosition,
+    headroom: item.headroom,
   })),
 ];

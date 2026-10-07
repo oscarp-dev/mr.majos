@@ -97,15 +97,15 @@ function PhotoCard({ row }: { row: StreetRow }) {
       href={row.href}
       className="relative flex aspect-[4/5.6] flex-col overflow-hidden rounded-[1.25rem] border-4 border-mr-cream bg-[#141414]"
     >
-      {/* the studio shots leave the top half black: crop to the burger */}
+      {/* shots with black headroom get cropped to the burger; tight shots fit whole */}
       <div className="relative aspect-[5/4] w-full shrink-0 bg-mr-black">
         <Image
           src={row.image!}
           alt={`${row.name} de Mr. Majo's`}
           fill
           sizes="300px"
-          className="object-cover"
-          style={{ objectPosition: row.imagePosition ?? "center bottom" }}
+          className={row.headroom ? "object-cover" : "object-contain"}
+          style={{ objectPosition: row.imagePosition ?? (row.headroom ? "center bottom" : undefined) }}
         />
         <PriceSticker row={row} />
       </div>

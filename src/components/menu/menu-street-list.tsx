@@ -24,6 +24,7 @@ export type StreetRow = {
   tag?: string;
   image?: string;
   imagePosition?: string;
+  headroom?: boolean;
   href: string;
 };
 
