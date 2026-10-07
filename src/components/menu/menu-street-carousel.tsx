@@ -104,7 +104,7 @@ function PhotoCard({ row }: { row: StreetRow }) {
           alt={`${row.name} de Mr. Majo's`}
           fill
           sizes="300px"
-          className={row.headroom ? "object-cover" : "object-contain"}
+          className={row.headroom ? "object-cover" : "scale-110 object-contain"}
           style={{ objectPosition: row.imagePosition ?? (row.headroom ? "center bottom" : undefined) }}
         />
         <PriceSticker row={row} />
