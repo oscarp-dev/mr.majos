@@ -95,25 +95,28 @@ function PhotoCard({ row }: { row: StreetRow }) {
   return (
     <Link
       href={row.href}
-      className="relative block aspect-[4/5.6] overflow-hidden rounded-[1.25rem] border-4 border-mr-cream bg-mr-black"
+      className="relative flex aspect-[4/5.6] flex-col overflow-hidden rounded-[1.25rem] border-4 border-mr-cream bg-[#141414]"
     >
-      <Image
-        src={row.image!}
-        alt={`${row.name} de Mr. Majo's`}
-        fill
-        sizes="300px"
-        className="object-cover"
-        style={{ objectPosition: row.imagePosition }}
-      />
-      <PriceSticker row={row} />
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/85 to-transparent p-4 pt-16">
+      {/* the studio shots leave the top half black: crop to the burger */}
+      <div className="relative aspect-[5/4] w-full shrink-0 bg-mr-black">
+        <Image
+          src={row.image!}
+          alt={`${row.name} de Mr. Majo's`}
+          fill
+          sizes="300px"
+          className="object-cover"
+          style={{ objectPosition: row.imagePosition ?? "center bottom" }}
+        />
+        <PriceSticker row={row} />
+      </div>
+      <div className="flex flex-1 flex-col border-t-4 border-mr-cream p-4">
         {row.tag && (
-          <span className="mb-2 inline-block -rotate-2 rounded-md bg-mr-red px-2 py-0.5 font-tag text-[10px] tracking-wide text-mr-cream">
+          <span className="mb-2 self-start -rotate-2 rounded-md bg-mr-red px-2 py-0.5 font-tag text-[10px] tracking-wide text-mr-cream">
             {row.tag}
           </span>
         )}
         <h3 className="font-display text-4xl leading-[0.85] text-mr-yellow">{row.name}</h3>
-        <p className="mt-2 line-clamp-2 text-xs leading-snug text-mr-cream/70">
+        <p className="mt-2 line-clamp-3 text-xs leading-snug text-mr-cream/70">
           {row.description}
         </p>
       </div>
