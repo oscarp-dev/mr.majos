@@ -1,0 +1,564 @@
+"use client";
+
+// Squeeze Carousel — 21st.dev (@yura/carousel-squeeze), adaptado a Mr. Majo's:
+// sin fuente propia (hereda la de la web), proporción del panel abierto
+// configurable (las fotos de la carta son verticales), next/image con
+// object-position por foto, flechas con el estilo de botón de la marca y un
+// `renderCaption` para pintar el texto de debajo a medida.
+
+import Image from "next/image";
+import {
+    type ComponentProps,
+    type CSSProperties,
+    type KeyboardEvent,
+    type ReactNode,
+    useCallback,
+    useEffect,
+    useId,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
+
+import { cn } from "@/lib/utils";
+
+/* -------------------------------------------------------------------------- */
+/*                                   slides                                   */
+/* -------------------------------------------------------------------------- */
+
+export type SqueezeSlide = {
+    /** Stable key. Falls back to the position in the array. */
+    id?: string | number;
+    /** The opening line under the panels (and the tab's accessible name). */
+    title: string;
+    /** The grey sentence that runs on from the title. */
+    description?: string;
+    /** Picture for the panel. It crops from the middle as the panel narrows. */
+    image?: string;
+    /** object-position for the picture. Default `center`. */
+    imagePosition?: string;
+    /** Alt text for that picture. Leave it out and the picture reads as decoration. */
+    imageAlt?: string;
+    /** Any CSS background — a gradient, a colour, layers. Used when there is no picture. */
+    background?: string;
+    /** Sits in the corner of the open panel: a wordmark, a logo, a caption. */
+    overlay?: ReactNode;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                  geometry                                  */
+/* -------------------------------------------------------------------------- */
+
+/** A number is read as pixels; a string goes through as written, `2rem` and all. */
+type Size = number | string;
+
+const size = (value: Size) => (typeof value === "number" ? `${value}px` : value);
+
+const clamp = (value: number, low: number, high: number) =>
+    Math.max(low, Math.min(high, value));
+
+/**
+ * The row is four columns and a tail of slats, and it is a strip that slides
+ * rather than a ring that turns.
+ *
+ * The open card is exactly a `heroRatio` block; the other three columns share
+ * out whatever is left once it, the slats and the gaps are paid for. Column −1
+ * and anything past column 3 is a slat, so a card leaving the front simply
+ * narrows to a slat and carries on out of the left edge.
+ *
+ * Mr. Majo's: the original let the open card give room back (negative first
+ * share) and let a hovered column outgrow it. Every picture is drawn at the
+ * open card's width, so a card narrower than that crops the photo's sides and
+ * a card wider than it zooms the photo in. Here the open card never shrinks,
+ * and `height` must keep the room small enough that no column passes it.
+ */
+const SHARES = [0, 0.55, 0.3, 0.15];
+
+/** The hovered column takes more room. */
+const STRETCHED = [0, 0.65, 0.36, 0.21];
+
+/** Its neighbours give a little up to pay for it. */
+const SQUEEZED = [0, 0.51, 0.26, 0.12];
+
+/** One card in the strip. `key` keeps React on the same node as the strip grows. */
+type Card = { key: number; slide: number };
+
+/* -------------------------------------------------------------------------- */
+/*                                    hooks                                   */
+/* -------------------------------------------------------------------------- */
+
+/** True while the reader asks for less movement. */
+function useReducedMotion(): boolean {
+    const [reduced, setReduced] = useState(false);
+
+    useEffect(() => {
+        const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const read = () => setReduced(query.matches);
+        read();
+        query.addEventListener("change", read);
+        return () => query.removeEventListener("change", read);
+    }, []);
+
+    return reduced;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 component                                  */
+/* -------------------------------------------------------------------------- */
+
+export type SqueezeCarouselProps = {
+    /** The panels, in the order they are read. */
+    slides: SqueezeSlide[];
+    /** Which panel starts open. Default `0`. */
+    defaultIndex?: number;
+    /** Called with the panel that just opened. */
+    onIndexChange?: (index: number) => void;
+    /** Height of the row. Default `clamp(180px, 32cqi, 340px)`. */
+    height?: Size;
+    /** Width ÷ height of the open panel. Default `16 / 9`. */
+    heroRatio?: number;
+    /** Width of a slat in the tail. Default `8`. */
+    slatWidth?: Size;
+    /** Space between slats. Default `8`. */
+    slatGap?: Size;
+    /** Space between the four columns. Default `16`. */
+    gap?: Size;
+    /** Corner rounding on a panel. Default `6`. */
+    radius?: Size;
+    /** Milliseconds the slide takes. Default `1000`. */
+    duration?: number;
+    /** Widen the panel under the pointer. Default `true`. */
+    hoverGrow?: boolean;
+    /** Step on by itself. Default `false`. */
+    autoplay?: boolean;
+    /** Milliseconds a panel stays open under autoplay. Default `6000`. */
+    interval?: number;
+    /** Show the two arrow buttons. Default `true`. */
+    controls?: boolean;
+    /** Extra content on the left of the arrow row (e.g. a counter). */
+    controlsStart?: ReactNode;
+    /** What a screen reader calls the carousel. Default `"Featured"`. */
+    label?: string;
+    /** Extra classes for a single panel. */
+    panelClassName?: string;
+    /** Custom copy under the panels. Default: title + description. */
+    renderCaption?: (slide: SqueezeSlide, index: number, shown: boolean) => ReactNode;
+    /** `sizes` hint for next/image. */
+    imageSizes?: string;
+} & Omit<ComponentProps<"div">, "onSelect">;
+
+/**
+ * A carousel that gives one panel the room and squeezes the rest into slats
+ * down the right-hand side. Opening a slat widens it and slides the row along;
+ * the copy underneath cross-fades to match.
+ */
+export function SqueezeCarousel({
+    slides,
+    defaultIndex = 0,
+    onIndexChange,
+    height = "clamp(180px, 32cqi, 340px)",
+    heroRatio = 16 / 9,
+    slatWidth = 8,
+    slatGap = 8,
+    gap = 16,
+    radius = 6,
+    duration = 1000,
+    hoverGrow = true,
+    autoplay = false,
+    interval = 6000,
+    controls = true,
+    controlsStart,
+    label = "Featured",
+    panelClassName,
+    renderCaption,
+    imageSizes = "600px",
+    className,
+    style,
+    ...props
+}: SqueezeCarouselProps) {
+    const count = slides.length;
+    const wrap = (i: number) => ((i % count) + count) % count;
+
+    // Four columns plus a tail of slats. Fewer slides, shorter tail.
+    const slats = clamp(count - 4, 1, 3);
+    const visible = 4 + slats;
+
+    const reduced = useReducedMotion();
+    const ms = reduced ? 0 : duration;
+
+    const ids = useId();
+    // Next key to hand out; the first `visible` keys go to the opening strip.
+    const seed = useRef(visible);
+
+    /* --- the strip -------------------------------------------------------- */
+
+    const window0 = () =>
+        Array.from({ length: visible }, (_, p) => ({
+            key: p,
+            slide: wrap(defaultIndex + p),
+        }));
+
+    const [cards, setCards] = useState<Card[]>(window0);
+    // Which column each card sits in: its place in the strip plus this. Stepping
+    // on pushes it down, so the card that was column 0 becomes column −1 — a
+    // slat, on its way out of the left edge.
+    const [column, setColumn] = useState(0);
+    // Read by the tidy-up below, which runs from a timer and so cannot trust a
+    // value captured when it was scheduled.
+    const columnRef = useRef(0);
+    const forward = useRef(true);
+    // How far the strip is slid, counted in slats. Normally the same as
+    // `column`; it parts company for the one frame after a trim or before a
+    // step back, where the strip has to move without being seen to.
+    const [slid, setSlid] = useState(0);
+    const [still, setStill] = useState(false);
+    const [hover, setHover] = useState(-1);
+
+    const open = cards[-column]?.slide ?? defaultIndex;
+    const timers = useRef<number[]>([]);
+
+    useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+    // A step leaves the strip longer than it needs to be. Once the movement has
+    // finished, cut it back to the cards on show and put the numbers back to
+    // zero — the same picture, so nothing may animate on the way.
+    const settle = useCallback(() => {
+        setCards((strip) =>
+            forward.current ? strip.slice(-visible) : strip.slice(0, visible),
+        );
+        columnRef.current = 0;
+        setColumn(0);
+        setSlid(0);
+        setStill(true);
+    }, [visible]);
+
+    useLayoutEffect(() => {
+        if (!still) return;
+        const id = requestAnimationFrame(() => setStill(false));
+        return () => cancelAnimationFrame(id);
+    }, [still]);
+
+    const step = useCallback(
+        (by: number) => {
+            if (count < 2 || by === 0) return;
+
+            timers.current.forEach(clearTimeout);
+            timers.current = [];
+            forward.current = by > 0;
+
+            if (by > 0) {
+                // The incoming slat joins the tail at full size before anything
+                // moves, so the end of the row is never a slat short.
+                setCards((strip) => [
+                    ...strip,
+                    ...Array.from({ length: by }, (_, k) => ({
+                        key: seed.current++,
+                        slide: wrap(strip[strip.length - 1].slide + 1 + k),
+                    })),
+                ]);
+                columnRef.current -= by;
+                setColumn(columnRef.current);
+                setSlid((s) => s - by);
+            } else {
+                // Going back, the strip has to grow at the front, which shoves
+                // everything right. Slide it left by the same amount with no
+                // transition, then let it ease home.
+                setCards((strip) => [
+                    ...Array.from({ length: -by }, (_, k) => ({
+                        key: seed.current++,
+                        slide: wrap(strip[0].slide - (-by - k)),
+                    })),
+                    ...strip,
+                ]);
+                setSlid((s) => s + by);
+                setStill(true);
+                timers.current.push(window.setTimeout(() => setSlid(0), 0));
+            }
+
+            timers.current.push(window.setTimeout(settle, ms + 20));
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [count, ms, settle],
+    );
+
+    useEffect(() => {
+        onIndexChange?.(open);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open]);
+
+    /* --- autoplay --------------------------------------------------------- */
+
+    const [paused, setPaused] = useState(false);
+
+    useEffect(() => {
+        if (!autoplay || paused || reduced || count < 2) return;
+        const timer = window.setTimeout(() => step(1), interval);
+        return () => clearTimeout(timer);
+    }, [autoplay, paused, reduced, count, open, interval, step]);
+
+    /* --- keyboard --------------------------------------------------------- */
+
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        const moves: Record<string, number | undefined> = { ArrowRight: 1, ArrowLeft: -1 };
+        const by = moves[event.key];
+        if (by === undefined) return;
+        event.preventDefault();
+        step(by);
+    };
+
+    if (!count) return null;
+
+    /* --- render ----------------------------------------------------------- */
+
+    const slat = size(slatWidth);
+    const hovering = hoverGrow && hover >= 0 && hover <= 3 && !reduced;
+
+    /** The share a column takes, once the pointer has had its say. */
+    const shareOf = (col: number) => {
+        if (!hovering) return SHARES[col];
+        return hover === col ? STRETCHED[col] : SQUEEZED[col];
+    };
+
+    /** A column's width, worked out in CSS so nothing needs measuring. */
+    const widthOf = (col: number) => {
+        if (col < 0 || col > 3) return slat;
+        if (col === 0) return `calc(var(--sq-hero) + var(--sq-room) * ${shareOf(0)})`;
+        return `calc(var(--sq-room) * ${shareOf(col)})`;
+    };
+
+    const vars = {
+        "--sq-h": size(height),
+        "--sq-gap": size(gap),
+        "--sq-slat-gap": size(slatGap),
+        "--sq-radius": size(radius),
+        "--sq-ms": `${ms}ms`,
+        // easeOutExpo, the curve the original slides on
+        "--sq-ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+        // One block sets both the open card and the size every picture is
+        // drawn at, so a picture keeps one scale however narrow its card gets.
+        "--sq-hero": `calc(var(--sq-h) * ${heroRatio})`,
+        "--sq-room": `calc(100cqi - var(--sq-hero) - ${
+            slats
+        } * var(--sq-slat-gap) - 3 * var(--sq-gap) - ${slats} * ${slat})`,
+    } as CSSProperties;
+
+    const move = `translateX(calc(${slid} * (${slat} + var(--sq-gap))))`;
+
+    return (
+        <div
+            className={cn("flex w-full flex-col", className)}
+            // The widths below read the width this carousel is given, not the
+            // width of the window.
+            style={{ containerType: "inline-size", ...vars, ...style }}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => {
+                setPaused(false);
+                setHover(-1);
+            }}
+            onFocusCapture={() => setPaused(true)}
+            onBlurCapture={() => setPaused(false)}
+            {...props}
+        >
+            {controls && count > 1 && (
+                <div className="mb-5 flex items-center justify-between gap-4">
+                    <div>{controlsStart}</div>
+                    <div className="flex gap-3">
+                        <Arrow back label="Anterior" onClick={() => step(-1)} />
+                        <Arrow label="Siguiente" onClick={() => step(1)} />
+                    </div>
+                </div>
+            )}
+
+            <div className="w-full overflow-hidden" style={{ height: "var(--sq-h)" }}>
+                <div
+                    role="tablist"
+                    aria-label={label}
+                    aria-orientation="horizontal"
+                    onKeyDown={onKeyDown}
+                    className="flex h-full w-max"
+                    style={{
+                        transform: move,
+                        transition: still ? "none" : `transform var(--sq-ms) var(--sq-ease)`,
+                    }}
+                >
+                    {cards.map((card, place) => {
+                        const col = place + column;
+                        const slide = slides[card.slide];
+                        const front = col === 0;
+
+                        return (
+                            <button
+                                key={card.key}
+                                type="button"
+                                role="tab"
+                                id={`${ids}-tab-${card.key}`}
+                                aria-selected={front}
+                                aria-controls={`${ids}-panel`}
+                                aria-label={slide.title}
+                                tabIndex={front ? 0 : -1}
+                                onMouseMove={() => hoverGrow && setHover(col)}
+                                onClick={() => col > 0 && step(col)}
+                                className={cn(
+                                    "relative isolate h-full shrink-0 cursor-pointer overflow-hidden bg-black p-0",
+                                    "outline-none focus-visible:ring-2 focus-visible:ring-mr-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-mr-black",
+                                    panelClassName,
+                                )}
+                                style={{
+                                    width: widthOf(col),
+                                    marginLeft:
+                                        place === 0
+                                            ? 0
+                                            : col < 4
+                                              ? "var(--sq-gap)"
+                                              : "var(--sq-slat-gap)",
+                                    borderRadius: `min(var(--sq-radius), calc(${widthOf(col)} / 2))`,
+                                    transitionProperty: "width, margin-left",
+                                    transitionDuration: still ? "0s" : "var(--sq-ms)",
+                                    transitionTimingFunction: "var(--sq-ease)",
+                                }}
+                            >
+                                <Picture slide={slide} sizes={imageSizes} />
+
+                                {/* closed panels dim so the open one reads as the hero */}
+                                <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 bg-black"
+                                    style={{
+                                        opacity: front ? 0 : 0.35,
+                                        transition: `opacity var(--sq-ms) var(--sq-ease)`,
+                                    }}
+                                />
+
+                                {slide.overlay && (
+                                    <span
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end p-4 pt-16 @lg:p-6 @lg:pt-20"
+                                        style={{
+                                            opacity: front ? 1 : 0,
+                                            transition: `opacity var(--sq-ms) var(--sq-ease)`,
+                                            backgroundImage:
+                                                "linear-gradient(to top, rgb(0 0 0 / 0.75), transparent)",
+                                        }}
+                                    >
+                                        {slide.overlay}
+                                    </span>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+
+            <div id={`${ids}-panel`} role="tabpanel" aria-live="polite" className="mt-6 grid @xl:mt-8">
+                {slides.map((slide, i) => {
+                    const shown = i === open;
+
+                    return (
+                        <div
+                            key={slide.id ?? i}
+                            aria-hidden={!shown}
+                            className="col-start-1 row-start-1"
+                            style={{
+                                opacity: shown ? 1 : 0,
+                                visibility: shown ? "visible" : "hidden",
+                                pointerEvents: shown ? "auto" : "none",
+                                // quicker than the slide so two captions never read on top of each other
+                                transition: shown
+                                    ? "opacity 400ms ease 150ms, visibility 0s"
+                                    : "opacity 150ms ease, visibility 0s 150ms",
+                            }}
+                        >
+                            {renderCaption ? (
+                                renderCaption(slide, i, shown)
+                            ) : (
+                                <p className="max-w-[46rem] text-[15px] leading-[1.6] text-balance @lg:text-[17px]">
+                                    <span className="text-foreground">{slide.title}</span>{" "}
+                                    {slide.description && (
+                                        <span className="text-muted-foreground">{slide.description}</span>
+                                    )}
+                                </p>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   pieces                                   */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Drawn at a fixed hero block and centred, never at the width of its card.
+ * Left to itself `object-fit: cover` reads whichever edge binds — height while
+ * the card is a slat, width once it opens — so the picture would rescale
+ * mid-slide and be resampled every frame. One block means one scale: the card
+ * only ever changes how much of it you can see.
+ */
+function Picture({ slide, sizes }: { slide: SqueezeSlide; sizes: string }) {
+    const box = {
+        width: "var(--sq-hero)",
+        minWidth: "100%",
+        objectPosition: slide.imagePosition ?? "center",
+    } as const;
+
+    if (slide.image) {
+        return (
+            <Image
+                src={slide.image}
+                alt={slide.imageAlt ?? ""}
+                width={1170}
+                height={1500}
+                sizes={sizes}
+                draggable={false}
+                className="absolute inset-y-0 left-1/2 h-full max-w-none -translate-x-1/2 object-cover"
+                style={box}
+            />
+        );
+    }
+
+    return (
+        <span
+            aria-hidden="true"
+            className="absolute inset-y-0 left-1/2 -translate-x-1/2"
+            style={{ background: slide.background, width: box.width, minWidth: box.minWidth }}
+        />
+    );
+}
+
+function Arrow({
+    back = false,
+    label,
+    onClick,
+}: {
+    back?: boolean;
+    label: string;
+    onClick: () => void;
+}) {
+    return (
+        <button
+            type="button"
+            aria-label={label}
+            onClick={onClick}
+            className={cn(
+                "grid size-11 cursor-pointer place-items-center rounded-full border-2 border-mr-black bg-mr-yellow text-mr-black",
+                "shadow-[0_4px_0_0_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 outline-none",
+                "focus-visible:ring-2 focus-visible:ring-mr-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-mr-black",
+            )}
+        >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path
+                    d={
+                        back
+                            ? "M9.6 2.6 5.1 7.1h9.1v1.8H5.1l4.5 4.5-1.2 1.2-6-6L1.8 8l.6-.6 6-6 1.2 1.2Z"
+                            : "M6.4 2.6l4.5 4.5H1.8v1.8h9.1l-4.5 4.5 1.2 1.2 6-6 .6-.6-.6-.6-6-6-1.2 1.2Z"
+                    }
+                />
+            </svg>
+        </button>
+    );
+}
+
+export default SqueezeCarousel;

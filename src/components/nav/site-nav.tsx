@@ -22,7 +22,7 @@ export function SiteNav() {
       >
         <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
           <Link
-            href="#top"
+            href="/#top"
             aria-label="Mr. Majo's — inicio"
             className="flex shrink-0 items-center gap-2.5"
           >

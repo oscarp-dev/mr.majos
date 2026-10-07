@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { MENU_ITEMS } from "@/lib/site-data";
-import { MenuCard } from "./menu-card";
-import { MenuMobileCarousel } from "./menu-mobile-carousel";
+import { BURGER_SHOWCASE, HOME_CATEGORIES } from "@/lib/full-menu-data";
+import { MenuStreetList } from "./menu-street-list";
 import { Reveal } from "@/components/motion/reveal";
 import { LineartSticker } from "@/components/decorative/lineart-sticker";
+import { DraggableSticker } from "@/components/decorative/draggable-sticker";
 
 export function MenuSection() {
   return (
@@ -17,27 +17,27 @@ export function MenuSection() {
 
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal>
-          <span className="font-tag px-4 text-xs tracking-widest text-mr-yellow/70 sm:px-6 md:px-8">
-            LOS DESTACADOS
+          <span className="font-tag relative z-10 block px-4 text-xs tracking-widest text-mr-yellow/70 sm:px-6 md:px-8">
+            UN ADELANTO DE LA CARTA
           </span>
-          <h2 className="font-display bleed-full px-4 text-[22vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[16vw] md:px-8 md:text-[11.5vw]">
+          <h2 className="font-display bleed-full mt-1 px-4 pt-[0.08em] text-[22vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[16vw] md:px-8 md:text-[11.5vw]">
             EL MENÚ
             <br />
             <span className="text-mr-yellow">QUE MÁS CHORREA</span>
           </h2>
         </Reveal>
 
-        <div className="mt-8 sm:hidden">
-          <MenuMobileCarousel items={MENU_ITEMS} />
-        </div>
-
-        <div className="mt-12 hidden grid-cols-1 gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:mt-16">
-          {MENU_ITEMS.map((item, i) => (
-            <Reveal key={item.id} delay={i * 0.05}>
-              <MenuCard item={item} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={0.05} className="relative mt-10 md:mt-14">
+          <DraggableSticker
+            src="/images/sticker-holo-lips.gif"
+            alt="Sticker labios holográficos"
+            width={600}
+            height={398}
+            rotate={9}
+            className="-top-16 right-[8%] hidden w-24 md:block"
+          />
+          <MenuStreetList categories={HOME_CATEGORIES} burgers={BURGER_SHOWCASE} />
+        </Reveal>
 
         <Reveal delay={0.1}>
           <div className="mt-12 flex justify-center md:mt-16">

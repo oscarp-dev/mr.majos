@@ -1,7 +1,8 @@
-// Carta real de Mr. Majo's — fuente de verdad para /carta.
-// A diferencia de MENU_ITEMS (destacados del home, con foto), esta carta es
-// la lista completa tal cual la maneja el local: por categorías, sin foto
-// por plato salvo el insignia.
+import type { GraffitiIconName } from "@/components/decorative/graffiti-icon";
+
+// Carta real de Mr. Majo's — fuente de verdad para /carta y para el
+// escaparate de burgers del home. Las burgers llevan foto de estudio
+// (fondo negro + banderita); el resto de categorías van solo con texto.
 
 export type FullMenuItem = {
   id: string;
@@ -14,12 +15,18 @@ export type FullMenuItem = {
   footerLeft?: string;
   footerRight?: string;
   highlight?: "yellow" | "red" | "dashed";
+  /** Fotos de burgers: recortadas a 4:5 con la burger centrada (public/images/burgers). */
+  image?: string;
+  /** object-position, solo para fotos sin recortar (p. ej. la Custom Burger). */
+  imagePosition?: string;
 };
 
 export type FullMenuCategory = {
   id: string;
   title: string;
-  icon?: string;
+  /** Para pestañas y huecos estrechos; por defecto, `title`. */
+  shortTitle?: string;
+  icon?: GraffitiIconName;
   description?: string;
   items: FullMenuItem[];
 };
@@ -33,13 +40,14 @@ export const FEATURED_DISH = {
     "Doble smash de ternera 100% vaca gallega con bordes extradelgados hipercaramelizados, queso cheddar fundido, pepinillos agridulces americanos, cebolla caramelizada casera, doble ración de bacon ultra crujiente y la legendaria salsa secreta Mayo Majo's en brioche artesano. ¡Una adicción total!",
   chips: ["Doble Smash 180g", "Cheddar Fundido", "Bacon Crujiente"],
   footer: "PAN BRIOCHE ARTESANO",
+  image: "/images/burgers/sugar-daddy.webp",
 };
 
 export const FULL_MENU: FullMenuCategory[] = [
   {
     id: "burgers",
     title: "Burgers",
-    icon: "🍔",
+    icon: "burger",
     items: [
       {
         id: "gringa",
@@ -50,6 +58,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "NEW HIT",
         tagVariant: "red",
         footerLeft: "Doble 180g",
+        image: "/images/burgers/gringa.webp",
       },
       {
         id: "guiri",
@@ -59,6 +68,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "13,70€",
         tag: "AMERICAN STYLE",
         footerLeft: "Huevo Campero",
+        image: "/images/burgers/guiri.webp",
       },
       {
         id: "tiquismiquis",
@@ -68,6 +78,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "13,70€",
         tag: "SUPER CRUNCHY 🍗",
         footerLeft: "Pollo Crujiente",
+        image: "/images/burgers/tiquismiquis.webp",
       },
       {
         id: "motomami",
@@ -77,6 +88,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "13,70€",
         tag: "FRESH & CRUNCH",
         footerLeft: "Fresh Classic",
+        image: "/images/burgers/motomami.webp",
       },
       {
         id: "loba",
@@ -86,6 +98,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "14,90€",
         tag: "TRUFFLE TOUCH ✨",
         footerLeft: "Mayo Trufa",
+        image: "/images/burgers/loba.webp",
       },
       {
         id: "goloza",
@@ -96,6 +109,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "PULLED PORK CASERO",
         tagVariant: "red",
         footerLeft: "Pulled Pork BBQ",
+        image: "/images/burgers/goloza.webp",
       },
       {
         id: "sugarmommy-real",
@@ -105,6 +119,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "17,90€",
         tag: "CABRA & CEBOLLA CARAMELIZADA",
         footerLeft: "Rulo de Cabra",
+        image: "/images/burgers/sugar-mommy.webp",
       },
       {
         id: "pecadora",
@@ -114,6 +129,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "17,90€",
         tag: "¡CHEESE BOOM! 🧀",
         footerLeft: "Trilogía de Quesos",
+        image: "/images/burgers/pecadora.webp",
       },
       {
         id: "pija",
@@ -123,6 +139,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "15,70€",
         tag: "CLÁSICO GOURMET",
         footerLeft: "Gourmet Edition",
+        image: "/images/burgers/pija.webp",
       },
       {
         id: "orale",
@@ -132,6 +149,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "16,50€",
         tag: "🌶️ SPICY CHINGÓN",
         footerLeft: "Guacamole & Chipotle",
+        image: "/images/burgers/orale.webp",
       },
       {
         id: "custom-burger",
@@ -144,13 +162,15 @@ export const FULL_MENU: FullMenuCategory[] = [
         footerLeft: "PERSONALIZACIÓN TOTAL EN MESA",
         footerRight: "Elige tus ingredientes",
         highlight: "dashed",
+        image: "/images/IMG_3613_menu.PNG",
       },
     ],
   },
   {
     id: "perritos",
     title: "Perritos Calientes Gigantes (120g)",
-    icon: "🌭",
+    shortTitle: "Perritos",
+    icon: "hotdog",
     description: "Salchicha gigante de 120 gramos en pan tierno con mantequilla.",
     items: [
       {
@@ -193,7 +213,7 @@ export const FULL_MENU: FullMenuCategory[] = [
   {
     id: "acompanamientos",
     title: "Acompañamientos",
-    icon: "🍟",
+    icon: "fries",
     items: [
       {
         id: "majos-teques",
@@ -263,7 +283,7 @@ export const FULL_MENU: FullMenuCategory[] = [
   {
     id: "veggie-kids",
     title: "Veggie & Kids",
-    icon: "🌱",
+    icon: "veggie",
     items: [
       {
         id: "veggie-baby",
@@ -305,7 +325,7 @@ export const FULL_MENU: FullMenuCategory[] = [
   {
     id: "postres",
     title: "Postres",
-    icon: "🍫",
+    icon: "dessert",
     items: [
       {
         id: "nute-teques",
@@ -332,7 +352,7 @@ export const FULL_MENU: FullMenuCategory[] = [
   {
     id: "bebidas",
     title: "Bebidas",
-    icon: "🍹",
+    icon: "drink",
     items: [
       {
         id: "mahou-5-estrellas",
@@ -395,21 +415,88 @@ export const FULL_MENU: FullMenuCategory[] = [
 export type ToppingItem = {
   id: string;
   name: string;
-  icon: string;
+  icon: GraffitiIconName;
   price: string;
 };
 
 export const TOPPINGS: ToppingItem[] = [
-  { id: "smash-extra", name: "Smash Extra 90g", icon: "🥩", price: "3,90€" },
-  { id: "vaca-madurada", name: "Vaca Madurada 30D", icon: "👑", price: "5,70€" },
-  { id: "pollo-crujiente", name: "Pollo Crujiente", icon: "🍗", price: "3,50€" },
-  { id: "doble-bacon", name: "Doble Bacon Crispy", icon: "🥓", price: "1,80€" },
-  { id: "huevo-granja", name: "Huevo de Granja", icon: "🍳", price: "1,50€" },
-  { id: "pulled-pork", name: "Pulled Pork Casero", icon: "🔥", price: "2,90€" },
-  { id: "guacamole", name: "Guacamole Rústico", icon: "🥑", price: "2,50€" },
-  { id: "rulo-cabra", name: "Rulo de Cabra", icon: "🧀", price: "2,20€" },
-  { id: "mayo-majos", name: "Mayo Majo's", icon: "🥄", price: "1,50€" },
-  { id: "salsa-trufa", name: "Salsa Trufa Secreta", icon: "✨", price: "1,90€" },
-  { id: "salsa-chipotle", name: "Salsa Chipotle", icon: "🌶️", price: "1,50€" },
-  { id: "pan-sin-gluten", name: "Pan Sin Gluten", icon: "🌾", price: "1,90€" },
+  { id: "smash-extra", name: "Smash Extra 90g", icon: "patty", price: "3,90€" },
+  { id: "vaca-madurada", name: "Vaca Madurada 30D", icon: "crown", price: "5,70€" },
+  { id: "pollo-crujiente", name: "Pollo Crujiente", icon: "drumstick", price: "3,50€" },
+  { id: "doble-bacon", name: "Doble Bacon Crispy", icon: "bacon", price: "1,80€" },
+  { id: "huevo-granja", name: "Huevo de Granja", icon: "egg", price: "1,50€" },
+  { id: "pulled-pork", name: "Pulled Pork Casero", icon: "flame", price: "2,90€" },
+  { id: "guacamole", name: "Guacamole Rústico", icon: "avocado", price: "2,50€" },
+  { id: "rulo-cabra", name: "Rulo de Cabra", icon: "cheese", price: "2,20€" },
+  { id: "mayo-majos", name: "Mayo Majo's", icon: "mayo", price: "1,50€" },
+  { id: "salsa-trufa", name: "Salsa Trufa Secreta", icon: "truffle", price: "1,90€" },
+  { id: "salsa-chipotle", name: "Salsa Chipotle", icon: "chili", price: "1,50€" },
+  { id: "pan-sin-gluten", name: "Pan Sin Gluten", icon: "glutenfree", price: "1,90€" },
+];
+
+// ---------------------------------------------------------------------------
+// Home: solo una MUESTRA de la carta (la carta completa vive en /carta).
+// Aquí se elige qué categorías salen y qué platos de cada una, en orden.
+// ---------------------------------------------------------------------------
+
+export const HOME_PICKS: { categoryId: string; itemIds: string[] }[] = [
+  { categoryId: "burgers", itemIds: ["gringa", "guiri", "loba", "sugarmommy-real", "orale"] },
+  { categoryId: "perritos", itemIds: ["yankee", "cheese-porn"] },
+  { categoryId: "acompanamientos", itemIds: ["majos-teques", "patatas-trifasicas-carta", "chicken-wings"] },
+  { categoryId: "postres", itemIds: ["nute-teques", "choko-majos"] },
+];
+
+export type HomeCategory = FullMenuCategory & {
+  /** Platos que tiene la categoría en la carta completa. */
+  total: number;
+  /** Precio más barato de la categoría completa. */
+  from: string;
+};
+
+const toNumber = (price: string) => Number(price.replace("€", "").replace(",", "."));
+
+export const HOME_CATEGORIES: HomeCategory[] = HOME_PICKS.map(({ categoryId, itemIds }) => {
+  const category = FULL_MENU.find((c) => c.id === categoryId)!;
+  const min = Math.min(...category.items.map((item) => toNumber(item.price)));
+  return {
+    ...category,
+    items: itemIds.map((id) => {
+      const item = category.items.find((i) => i.id === id);
+      if (!item) throw new Error(`HOME_PICKS: "${id}" no existe en la categoría "${categoryId}"`);
+      return item;
+    }),
+    total: category.items.length,
+    from: `${min.toFixed(2).replace(".", ",")}€`,
+  };
+});
+
+// Escaparate de burgers del home: el plato insignia + las burgers elegidas.
+export type ShowcaseBurger = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  tag?: string;
+  image: string;
+  imagePosition?: string;
+};
+
+export const BURGER_SHOWCASE: ShowcaseBurger[] = [
+  {
+    id: "sugar-daddy",
+    name: FEATURED_DISH.name,
+    description: FEATURED_DISH.description,
+    price: FEATURED_DISH.price,
+    tag: "⭐ PLATO INSIGNIA",
+    image: FEATURED_DISH.image,
+  },
+  ...HOME_CATEGORIES[0].items.map((item) => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    price: item.price,
+    tag: item.tag,
+    image: item.image!,
+    imagePosition: item.imagePosition,
+  })),
 ];

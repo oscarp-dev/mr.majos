@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-data";
@@ -200,14 +201,14 @@ export function NavPanel({
           })}
         </div>
 
-        <a
+        <Link
           ref={ctaRef}
-          href="#order"
+          href="/#order"
           onClick={onNavigate}
           className="inline-flex rotate-1 items-center rounded-full border-2 border-mr-black bg-mr-black px-6 py-3 font-tag text-sm tracking-wide text-mr-yellow shadow-[0_4px_0_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 md:px-8 md:py-4 md:text-base"
         >
           ¡PIDE YA!
-        </a>
+        </Link>
       </div>
     </div>
   );
