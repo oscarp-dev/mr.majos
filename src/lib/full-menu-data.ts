@@ -165,7 +165,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         footerLeft: "PERSONALIZACIÓN TOTAL EN MESA",
         footerRight: "Elige tus ingredientes",
         highlight: "dashed",
-        image: "/images/IMG_3613_menu.PNG",
+        image: "/images/IMG_3613_menu.webp",
       },
     ],
   },

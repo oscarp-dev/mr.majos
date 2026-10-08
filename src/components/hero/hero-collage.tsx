@@ -55,7 +55,7 @@ function InstagramCard({
           src={src}
           alt={alt}
           fill
-          loading="lazy"
+          loading="eager"
           sizes="(max-width: 768px) 45vw, 220px"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -194,11 +194,11 @@ function MenuDelDiaCard({ className, rotate = "rotate-0" }: CardProps) {
       )}
     >
       <Image
-        src="/images/IMG_3632.PNG"
+        src="/images/IMG_3632.webp"
         alt="Menú del día de Mr. Majo's: burger con huevo y bacon, patatas, refresco y postre"
         width={941}
         height={1672}
-        loading="lazy"
+        loading="eager"
         sizes="(max-width: 1024px) 50vw, 340px"
         className="absolute inset-0 h-full w-full object-cover object-[50%_60%] lg:left-1/2 lg:w-auto lg:max-w-none lg:-translate-x-1/2 lg:scale-110 lg:[mask-image:linear-gradient(to_right,transparent,#000_14%,#000_86%,transparent)]"
       />
@@ -251,7 +251,7 @@ export function HeroCollage() {
       <div className="flex flex-col gap-3 lg:gap-5">
         <ClubTeaserCard rotate="rotate-2" className="lg:z-10 lg:-mb-8" />
         <InstagramCard
-          src="/images/foto-burger-mano-2.jpg"
+          src="/images/foto-burger-mano-2.webp"
           alt="Clienta de Mr. Majo's mordiendo una burger en su coche"
           rotate="-rotate-1"
           className="aspect-[3/4]"
@@ -260,7 +260,7 @@ export function HeroCollage() {
       <div className="relative">
         <MenuDelDiaCard rotate="-rotate-1" className="h-full" />
         <Image
-          src="/images/badge-circular-amarillo-sin-anillo.png"
+          src="/images/badge-circular-amarillo-sin-anillo.webp"
           alt="Sello Mr. Majo's"
           width={112}
           height={112}

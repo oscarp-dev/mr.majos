@@ -22,7 +22,7 @@ export default function Home() {
         <WarningMarquee />
         <MenuSection />
         <ParallaxBanner
-          src="/images/foto-burger-menu-del-dia.jpg"
+          src="/images/foto-burger-menu-del-dia.webp"
           alt="Burger doble de Mr. Majo's con el pick de la casa"
           objectPosition="center 35%"
           eyebrow="TODOS LOS DÍAS"
@@ -44,7 +44,7 @@ export default function Home() {
         <ProcessSection />
         <InstagramSection />
         <ParallaxBanner
-          src="/images/lifestyle-pareja-coche-amarillo.jpg"
+          src="/images/lifestyle-pareja-coche-amarillo.webp"
           alt="Pareja comiendo burgers de Mr. Majo's en un descapotable amarillo clásico"
           objectPosition="center 43%"
           eyebrow="SOLO LOS JUEVES"

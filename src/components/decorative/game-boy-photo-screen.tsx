@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { cn } from "cn";
 
 const DEFAULT_PHOTOS = [
-  "/images/foto-burger-mano-1.jpg",
-  "/images/foto-burger-mano-2.jpg",
-  "/images/foto-burger-mano-3.jpg",
-  "/images/hero-sugarmommy-burger.jpg",
-  "/images/foto-hotdog-mordida.jpg",
+  "/images/foto-burger-mano-1.webp",
+  "/images/foto-burger-mano-2.webp",
+  "/images/foto-burger-mano-3.webp",
+  "/images/hero-sugarmommy-burger.webp",
+  "/images/foto-hotdog-mordida.webp",
 ];
 
 type GameBoyPhotoScreenProps = {
@@ -45,6 +45,7 @@ export function GameBoyPhotoScreen({
           alt=""
           fill
           sizes="220px"
+          loading={i === 0 ? "eager" : "lazy"}
           className={cn(
             "object-cover transition-opacity duration-700 ease-in-out",
             i === index ? "opacity-100" : "opacity-0"

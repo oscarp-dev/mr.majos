@@ -4,7 +4,7 @@ import { cn } from "cn";
 export function BadDecisionsBadge({ className }: { className?: string }) {
   return (
     <DraggableSticker
-      src="/images/cooltext-bad-decisions.png"
+      src="/images/cooltext-bad-decisions.webp"
       alt="Bad decisions, make better stories"
       width={1190}
       height={278}

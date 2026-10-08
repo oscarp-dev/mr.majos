@@ -12,7 +12,7 @@ export function FeaturedDishCard() {
           src={FEATURED_DISH.image}
           alt={`${FEATURED_DISH.name} de Mr. Majo's`}
           fill
-          priority
+          preload
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover md:object-contain"
         />

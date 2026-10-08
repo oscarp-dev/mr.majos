@@ -13,7 +13,7 @@ export function ClubSection() {
         <Reveal>
           <div className="relative mx-auto w-full max-w-sm rotate-2 overflow-hidden rounded-2xl border-4 border-mr-black shadow-[0_16px_0_0_rgba(0,0,0,1)]">
             <Image
-              src="/images/logo-mrmajos-tarjeta-fidelidad.png"
+              src="/images/logo-mrmajos-tarjeta-fidelidad.webp"
               alt="Tarjeta de fidelidad del Majo's Club"
               width={600}
               height={832}

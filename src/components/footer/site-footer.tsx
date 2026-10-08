@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="flex flex-wrap items-start justify-between gap-10">
           <Image
-            src="/images/logo-mark.png"
+            src="/images/logo-mark.webp"
             alt="Mr. Majo's"
             width={230}
             height={59}

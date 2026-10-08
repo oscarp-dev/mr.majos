@@ -46,11 +46,11 @@ export default function CartaPage() {
 
             <div className="pointer-events-none absolute -top-4 right-2 hidden w-36 rotate-6 overflow-hidden rounded-2xl border-2 border-mr-black shadow-[0_6px_0_0_rgba(0,0,0,1)] md:block lg:w-44">
               <Image
-                src="/images/IMG_3614_menu.PNG"
+                src="/images/IMG_3614_menu.webp"
                 alt="Burger de Mr. Majo's con huevo y bacon y su banderita"
                 width={908}
                 height={1274}
-                priority
+                preload
                 sizes="176px"
                 className="h-auto w-full"
               />

@@ -71,7 +71,7 @@ export function ProcessSection() {
         <Reveal delay={0.1}>
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border-2 border-mr-black shadow-[0_14px_0_0_rgba(0,0,0,1)] md:aspect-square">
             <Image
-              src="/images/foto-hotdog-bacon.jpg"
+              src="/images/foto-hotdog-bacon.webp"
               alt="Plancha smash de Mr. Majo's"
               fill
               loading="lazy"

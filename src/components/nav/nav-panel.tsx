@@ -7,8 +7,8 @@ import { useEffect, useRef } from "react";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-data";
 
 const PANEL_IMAGES = [
-  { src: "/images/hero-sugarmommy-burger.jpg", alt: "La Sugarmommy" },
-  { src: "/images/foto-hotdog-mordida.jpg", alt: "Hot Dog Vibes" },
+  { src: "/images/hero-sugarmommy-burger.webp", alt: "La Sugarmommy" },
+  { src: "/images/foto-hotdog-mordida.webp", alt: "Hot Dog Vibes" },
 ];
 
 function TikTokIcon() {

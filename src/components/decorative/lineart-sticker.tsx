@@ -17,8 +17,8 @@ export function LineartSticker({
 }: LineartStickerProps) {
   const src =
     variant === "yellow"
-      ? "/images/lineart-sticker-yellow.png"
-      : "/images/lineart-sticker-white.png";
+      ? "/images/lineart-sticker-yellow.webp"
+      : "/images/lineart-sticker-white.webp";
 
   return (
     <div

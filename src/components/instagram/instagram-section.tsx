@@ -5,14 +5,14 @@ import { Reveal } from "@/components/motion/reveal";
 // este grid usa fotos reales de producto a modo de mock visual del feed.
 // Sustituir por el feed real (API oficial o un embed) cuando haya acceso.
 const MOCK_POSTS = [
-  "/images/foto-burger-mano-3.jpg",
-  "/images/foto-hotdog-bacon.jpg",
-  "/images/foto-burger-plato.jpg",
-  "/images/foto-burger-mano-1.jpg",
-  "/images/hero-golden-coulant.jpg",
-  "/images/foto-hotdog-mordida.jpg",
-  "/images/foto-burger-mano-2.jpg",
-  "/images/hero-sugarmommy-burger.jpg",
+  "/images/foto-burger-mano-3.webp",
+  "/images/foto-hotdog-bacon.webp",
+  "/images/foto-burger-plato.webp",
+  "/images/foto-burger-mano-1.webp",
+  "/images/hero-golden-coulant.webp",
+  "/images/foto-hotdog-mordida.webp",
+  "/images/foto-burger-mano-2.webp",
+  "/images/hero-sugarmommy-burger.webp",
 ] as const;
 
 function InstaIcon() {

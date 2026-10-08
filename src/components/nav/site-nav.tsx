@@ -27,11 +27,11 @@ export function SiteNav() {
             className="flex shrink-0 items-center gap-2.5"
           >
             <Image
-              src="/images/badge-circular-amarillo-sin-anillo.png"
+              src="/images/badge-circular-amarillo-sin-anillo.webp"
               alt="Mr. Majo's"
               width={96}
               height={96}
-              priority
+              preload
               className={`h-9 w-9 shrink-0 rounded-full border-2 transition-colors duration-300 md:h-11 md:w-11 ${
                 open ? "border-mr-black/60" : "border-mr-cream/70"
               }`}
