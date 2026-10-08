@@ -1,9 +1,8 @@
 import { Drip } from "@/components/decorative/drip";
 import { Reveal } from "@/components/motion/reveal";
+import { ORDER_LINKS } from "@/lib/site-data";
 
-// NOTE: horario y link de pedido online siguen siendo placeholders —
-// sustitúyelos por los datos reales antes de publicar.
-const ORDER_ONLINE_URL = "#";
+// NOTE: el horario sigue siendo placeholder — sustitúyelo antes de publicar.
 const STORE_ADDRESS = "Calle Bazán, 45, 03001 Alicante";
 const STORE_HOURS = "L-D · 13:00 - 23:30";
 const MAPS_URL =
@@ -31,23 +30,41 @@ export function OrderBanner() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
-              href={ORDER_ONLINE_URL}
-              className="inline-flex rotate-1 items-center rounded-full border-2 border-mr-black bg-mr-black px-7 py-3 font-tag text-sm tracking-wide text-mr-yellow shadow-[0_4px_0_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5"
+              href={ORDER_LINKS.glovo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex rotate-1 items-center gap-2 rounded-full border-2 border-mr-black bg-[#00A082] px-7 py-3 font-tag text-sm tracking-wide text-white shadow-[0_4px_0_0_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
             >
-              PEDIR ONLINE
+              PEDIR EN GLOVO ↗
             </a>
             <a
-              href={MAPS_URL}
+              href={ORDER_LINKS.uberEats}
               target="_blank"
-              rel="noreferrer"
-              className="inline-flex -rotate-1 items-center rounded-full border-2 border-mr-black bg-mr-yellow px-7 py-3 font-tag text-sm tracking-wide text-mr-black transition-transform hover:-translate-y-0.5"
+              rel="noopener noreferrer"
+              className="inline-flex -rotate-1 items-center gap-2 rounded-full border-2 border-mr-black bg-mr-black px-7 py-3 font-tag text-sm tracking-wide text-white shadow-[0_4px_0_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5"
             >
-              CÓMO LLEGAR
+              PEDIR EN UBER<span className="-ml-1 text-[#06C167]">EATS</span>↗
+            </a>
+            <a
+              href={ORDER_LINKS.reservas}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex rotate-1 items-center rounded-full border-2 border-mr-black bg-mr-yellow px-7 py-3 font-tag text-sm tracking-wide text-mr-black transition-transform hover:-translate-y-0.5"
+            >
+              RESERVAR MESA ↗
             </a>
           </div>
 
           <p className="mt-6 font-tag text-xs tracking-widest text-mr-black/60">
-            {STORE_ADDRESS} · {STORE_HOURS}
+            <a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-mr-black/30 underline-offset-4 hover:text-mr-black"
+            >
+              {STORE_ADDRESS}
+            </a>{" "}
+            · {STORE_HOURS}
           </p>
         </Reveal>
       </div>
