@@ -102,6 +102,12 @@
   html {
     @apply font-sans;
   }
+  /* Anchor links (#menu, #menu-del-dia…) glide instead of jumping. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }
 
 @layer utilities {

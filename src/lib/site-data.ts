@@ -16,6 +16,20 @@ export const SOCIAL_LINKS = [
   { label: "TikTok", href: "https://tiktok.com/@mr_majos" },
 ] as const;
 
+// Menú del día: días (getDay(): 0 = domingo) y franja en hora de Madrid.
+export const MENU_DEL_DIA = {
+  price: "13,70€",
+  includes: "Burger + patatas + bebida + postre",
+  days: [
+    { short: "VIE", day: 5 },
+    { short: "SÁB", day: 6 },
+    { short: "DOM", day: 0 },
+  ],
+  daysLabel: "VIERNES, SÁBADO Y DOMINGO",
+  from: "13:00",
+  to: "16:30",
+} as const;
+
 // Plataformas de pedido online y reservas.
 export const ORDER_LINKS = {
   glovo: "https://glovoapp.com/es/es/alicante/stores/mr-majos-alicante",

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { cn } from "cn";
-import { ArrowRight, ArrowUpRight, Gift, Hamburger, Heart } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Clock, Gift, Hamburger, Heart } from "lucide-react";
 import { AnimatedBorder } from "@/components/ui/animated-border";
-import { ORDER_LINKS, SOCIAL_LINKS } from "@/lib/site-data";
+import { MENU_DEL_DIA, SOCIAL_LINKS } from "@/lib/site-data";
+import { MenuDelDiaStatus } from "./menu-del-dia-status";
 
 type CardProps = {
   className?: string;
@@ -206,40 +207,51 @@ function MenuDelDiaCard({ className, rotate = "rotate-0" }: CardProps) {
   );
 }
 
-function ReserveCard({ className, rotate = "-rotate-3" }: CardProps) {
+function MenuDelDiaTeaser({ className, rotate = "-rotate-3" }: CardProps) {
   return (
     <a
-      href={ORDER_LINKS.reservas}
-      target="_blank"
-      rel="noopener noreferrer"
+      href="#menu-del-dia"
       className={cn(
-        "group relative z-10 flex w-44 flex-col overflow-hidden rounded-2xl border-2 border-mr-black bg-mr-yellow text-mr-black shadow-[0_8px_0_0_rgba(0,0,0,1)] transition-[translate,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_12px_0_0_rgba(0,0,0,1)] lg:w-52",
+        "group relative z-10 flex w-full flex-col overflow-hidden rounded-2xl border-2 border-mr-black bg-mr-yellow text-mr-black shadow-[0_8px_0_0_rgba(0,0,0,1)] transition-[translate,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_12px_0_0_rgba(0,0,0,1)] lg:w-52",
         rotate,
         className
       )}
     >
       <div className="flex flex-col gap-1.5 p-3.5 pb-3">
-        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-mr-black px-2 py-0.5 font-tag text-[9px] tracking-widest text-mr-yellow">
-          <span className="relative flex size-1.5">
-            <span className="absolute inline-flex size-full rounded-full bg-mr-red opacity-75 motion-safe:animate-ping" />
-            <span className="relative inline-flex size-1.5 rounded-full bg-mr-red" />
-          </span>
-          HOY · MENÚ DEL DÍA
-        </span>
+        <MenuDelDiaStatus />
         <span className="font-display text-[2rem] leading-none tracking-tight lg:text-4xl">
-          13,70€
+          {MENU_DEL_DIA.price}
         </span>
         <span className="text-[10px] leading-snug text-mr-black/70">
-          Burger + patatas + bebida + postre
+          {MENU_DEL_DIA.includes}
         </span>
+        <div className="mt-1 flex flex-col gap-1">
+          <div className="flex gap-1">
+            {MENU_DEL_DIA.days.map((d, i) => (
+              <span
+                key={d.short}
+                className={cn(
+                  "rounded-md border-2 border-mr-black bg-mr-cream px-1.5 py-0.5 font-tag text-[10px] leading-none tracking-wide",
+                  i % 2 ? "rotate-2" : "-rotate-2"
+                )}
+              >
+                {d.short}
+              </span>
+            ))}
+          </div>
+          <span className="inline-flex items-center gap-1 font-tag text-[11px] tracking-wide">
+            <Clock className="size-3" strokeWidth={3} />
+            {MENU_DEL_DIA.from} – {MENU_DEL_DIA.to}
+          </span>
+        </div>
       </div>
       <div
         aria-hidden="true"
-        className="mx-3 border-t-2 border-dashed border-mr-black/40"
+        className="mx-3 mt-auto border-t-2 border-dashed border-mr-black/40"
       />
-      <span className="m-2.5 flex items-center justify-between rounded-xl bg-mr-red px-3 py-2 font-tag text-xs tracking-wide text-mr-cream shadow-[0_3px_0_0_rgba(0,0,0,1)] transition-colors group-hover:bg-mr-black group-hover:text-mr-yellow">
-        RESERVA TU MESA
-        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" strokeWidth={3} />
+      <span className="m-2.5 flex items-center justify-between gap-1 whitespace-nowrap rounded-xl bg-mr-red px-2.5 py-2 font-tag text-[11px] tracking-wide min-[400px]:px-3 min-[400px]:text-xs text-mr-cream shadow-[0_3px_0_0_rgba(0,0,0,1)] transition-colors group-hover:bg-mr-black group-hover:text-mr-yellow">
+        VER MENÚ DEL DÍA
+        <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" strokeWidth={3} />
       </span>
     </a>
   );
@@ -247,26 +259,30 @@ function ReserveCard({ className, rotate = "-rotate-3" }: CardProps) {
 
 export function HeroCollage() {
   return (
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-5">
-      <div className="flex flex-col gap-3 lg:gap-5">
-        <ClubTeaserCard rotate="rotate-2" className="lg:z-10 lg:-mb-8" />
+    <div className="grid grid-cols-2 gap-x-3 gap-y-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-5">
+      {/* Por debajo de lg las columnas se disuelven (contents) y las cuatro
+          tarjetas forman una rejilla 2×2 con filas alineadas: club + póster
+          arriba, Instagram + teaser abajo. En desktop vuelven las columnas y
+          el teaser flota sobre el póster. */}
+      <div className="contents lg:flex lg:flex-col lg:gap-5">
+        <ClubTeaserCard rotate="rotate-2" className="max-lg:order-1 lg:z-10 lg:-mb-8" />
         <InstagramCard
           src="/images/foto-burger-mano-2.webp"
           alt="Clienta de Mr. Majo's mordiendo una burger en su coche"
           rotate="-rotate-1"
-          className="aspect-[3/4]"
+          className="aspect-[3/4] self-stretch max-lg:order-3"
         />
       </div>
-      <div className="relative">
-        <MenuDelDiaCard rotate="-rotate-1" className="h-full" />
+      <div className="contents lg:relative lg:block">
+        <MenuDelDiaCard rotate="-rotate-1" className="min-h-64 max-lg:order-2 lg:h-full" />
         <Image
           src="/images/badge-circular-amarillo-sin-anillo.webp"
           alt="Sello Mr. Majo's"
           width={112}
           height={112}
-          className="pointer-events-none absolute -right-3 -top-3 z-10 h-20 w-20 rotate-6 select-none drop-shadow-[0_4px_0_rgba(0,0,0,1)]"
+          className="pointer-events-none absolute -right-2 -top-4 z-10 hidden h-14 w-14 rotate-6 select-none drop-shadow-[0_4px_0_rgba(0,0,0,1)] lg:-right-3 lg:-top-3 lg:block lg:h-20 lg:w-20"
         />
-        <ReserveCard className="absolute -bottom-6 -right-4" />
+        <MenuDelDiaTeaser className="max-lg:order-4 lg:absolute lg:-bottom-6 lg:-right-4" />
       </div>
     </div>
   );

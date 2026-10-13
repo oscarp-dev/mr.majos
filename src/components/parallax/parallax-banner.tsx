@@ -21,6 +21,11 @@ type ParallaxBannerProps = {
   /** [start, end] scale applied to the image as it scrolls through the
    *  viewport. Defaults to the original, fairly aggressive zoom. */
   imageScaleRange?: [number, number];
+  /** Anchor id, so other sections can link down to this banner. */
+  id?: string;
+  /** Call to action under the heading (kept out of the h2 so links stay
+   *  outside the heading's semantics). */
+  action?: ReactNode;
 };
 
 export function ParallaxBanner({
@@ -33,6 +38,8 @@ export function ParallaxBanner({
   verticalAlign = "end",
   className,
   imageScaleRange = [1.15, 1.02],
+  id,
+  action,
 }: ParallaxBannerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -58,8 +65,9 @@ export function ParallaxBanner({
   return (
     <section
       ref={ref}
+      id={id}
       className={cn(
-        "relative h-[62vh] min-h-[380px] overflow-hidden bg-mr-black md:h-[80vh]",
+        "relative scroll-mt-16 h-[62vh] min-h-[380px] overflow-hidden bg-mr-black md:h-[80vh]",
         className
       )}
     >
@@ -108,6 +116,11 @@ export function ParallaxBanner({
           >
             {heading}
           </motion.h2>
+          {action && (
+            <motion.div style={{ y: headingY }} className="mt-5 md:mt-7">
+              {action}
+            </motion.div>
+          )}
         </div>
       </div>
     </section>
