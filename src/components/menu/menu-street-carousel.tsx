@@ -97,8 +97,11 @@ function PhotoCard({ row }: { row: StreetRow }) {
       href={row.href}
       className="relative flex aspect-[4/5.6] flex-col overflow-hidden rounded-[1.25rem] border-4 border-mr-cream bg-[#141414]"
     >
-      {/* shots with black headroom get cropped to the burger; tight shots fit whole */}
-      <div className="relative aspect-[5/4] w-full shrink-0 bg-mr-black">
+      {/* shots with black headroom get cropped to the burger; tight shots fit whole.
+          The box clips itself: iOS Safari ignores the card's rounded overflow
+          clip under the coverflow's 3D transform, so the scaled shot would
+          paint over the borders. Pure black matches the shots' backdrop. */}
+      <div className="relative aspect-[5/4] w-full shrink-0 overflow-hidden bg-black [clip-path:inset(0)]">
         <Image
           src={row.image!}
           alt={`${row.name} de Mr. Majo's`}
