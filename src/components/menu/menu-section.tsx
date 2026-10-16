@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { BURGER_SHOWCASE, HOME_CATEGORIES } from "@/lib/full-menu-data";
+import { FullMenuCta } from "./full-menu-cta";
 import { MenuStreetList } from "./menu-street-list";
 import { Reveal } from "@/components/motion/reveal";
 import { LineartSticker } from "@/components/decorative/lineart-sticker";
@@ -40,13 +40,8 @@ export function MenuSection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="mt-12 flex justify-center md:mt-16">
-            <Link
-              href="/carta"
-              className="font-tag inline-flex items-center gap-2 rounded-full border-2 border-mr-black bg-mr-yellow px-6 py-3 text-sm tracking-wide text-mr-black shadow-[0_4px_0_0_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
-            >
-              VER LA CARTA COMPLETA →
-            </Link>
+          <div className="mt-14 md:mt-20">
+            <FullMenuCta />
           </div>
         </Reveal>
       </div>

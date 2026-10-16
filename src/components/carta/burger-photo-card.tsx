@@ -37,7 +37,10 @@ export function BurgerPhotoCard({
       <div
         className={cn(
           "relative w-full overflow-hidden bg-black",
-          wide ? "aspect-[11/10] sm:w-1/2 sm:shrink-0 sm:self-center" : "aspect-[4/5]"
+          wide ? "aspect-[11/10] sm:w-1/2 sm:shrink-0 sm:self-center" : "aspect-[4/5]",
+          // platos apaisados (perritos, raciones) con encuadre propio: en móvil,
+          // a todo el ancho, el 4:5 deja demasiado negro; ahí van en 5:4.
+          !wide && item.headroom && item.imagePosition && "max-sm:aspect-[5/4]"
         )}
       >
         {item.image && (

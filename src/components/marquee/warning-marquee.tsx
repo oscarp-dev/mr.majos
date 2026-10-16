@@ -1,5 +1,6 @@
 type WarningMarqueeProps = {
-  text?: string;
+  /** Frases que se van alternando en la cinta. */
+  texts?: string[];
 };
 
 function TapeItem({ text }: { text: string }) {
@@ -17,8 +18,10 @@ function TapeItem({ text }: { text: string }) {
   );
 }
 
-export function WarningMarquee({ text = "MUCHO CHORREEEEO" }: WarningMarqueeProps) {
-  const items = Array.from({ length: 12 }, (_, i) => i);
+export function WarningMarquee({
+  texts = ["MUCHO CHORREEEEO", "PATATAS ILIMITADAS +1€"],
+}: WarningMarqueeProps) {
+  const items = Array.from({ length: 12 }, (_, i) => texts[i % texts.length]);
 
   return (
     <div className="relative z-30 overflow-hidden bg-mr-black py-5 md:py-7">
@@ -28,12 +31,12 @@ export function WarningMarquee({ text = "MUCHO CHORREEEEO" }: WarningMarqueeProp
       >
         <div className="animate-marquee flex w-max">
           <div className="flex shrink-0">
-            {items.map((i) => (
+            {items.map((text, i) => (
               <TapeItem key={`a-${i}`} text={text} />
             ))}
           </div>
           <div className="flex shrink-0" aria-hidden="true">
-            {items.map((i) => (
+            {items.map((text, i) => (
               <TapeItem key={`b-${i}`} text={text} />
             ))}
           </div>

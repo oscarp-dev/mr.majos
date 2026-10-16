@@ -4,16 +4,22 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { cn } from "cn";
 
-const DEFAULT_PHOTOS = [
-  "/images/foto-burger-mano-1.webp",
-  "/images/foto-burger-mano-2.webp",
-  "/images/foto-burger-mano-3.webp",
-  "/images/hero-sugarmommy-burger.webp",
-  "/images/foto-hotdog-mordida.webp",
+export type GameBoyPhoto = { src: string; position?: string };
+
+// Pantalla pequeña y casi cuadrada: primeros planos que se lean de un vistazo,
+// con el encuadre centrado en la cara o el plato.
+const DEFAULT_PHOTOS: GameBoyPhoto[] = [
+  { src: "/images/instagram/yankee-gorra.webp", position: "center 45%" },
+  { src: "/images/instagram/americano-mordisco.webp", position: "center 40%" },
+  { src: "/images/instagram/bano-de-queso.webp", position: "center 62%" },
+  { src: "/images/lifestyle-pareja-coche-amarillo.webp", position: "center 40%" },
+  { src: "/images/instagram/burger-dos-manos.webp", position: "center 68%" },
+  { src: "/images/foto-burger-plato.webp", position: "center 45%" },
+  { src: "/images/instagram/nutella-chorreando.webp", position: "center 55%" },
 ];
 
 type GameBoyPhotoScreenProps = {
-  photos?: string[];
+  photos?: GameBoyPhoto[];
   interval?: number;
 };
 
@@ -38,7 +44,7 @@ export function GameBoyPhotoScreen({
       className="absolute overflow-hidden bg-mr-black"
       style={{ left: "38.8%", top: "17.5%", width: "27.1%", height: "23.9%" }}
     >
-      {photos.map((src, i) => (
+      {photos.map(({ src, position }, i) => (
         <Image
           key={src}
           src={src}
@@ -50,6 +56,7 @@ export function GameBoyPhotoScreen({
             "object-cover transition-opacity duration-700 ease-in-out",
             i === index ? "opacity-100" : "opacity-0"
           )}
+          style={{ objectPosition: position }}
         />
       ))}
     </div>

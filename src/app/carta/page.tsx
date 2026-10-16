@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/components/nav/site-nav";
@@ -7,6 +8,7 @@ import { FeaturedDishCard } from "@/components/carta/featured-dish-card";
 import { MenuCategorySection } from "@/components/carta/menu-category-section";
 import { ToppingsGrid } from "@/components/carta/toppings-grid";
 import { CartaCategoryNav } from "@/components/carta/carta-category-nav";
+import { UnlimitedFriesStrip } from "@/components/promo/unlimited-fries-strip";
 import { FULL_MENU } from "@/lib/full-menu-data";
 
 export const metadata: Metadata = {
@@ -69,7 +71,11 @@ export default function CartaPage() {
             <FeaturedDishCard />
 
             {FULL_MENU.map((category) => (
-              <MenuCategorySection key={category.id} category={category} />
+              <Fragment key={category.id}>
+                {/* la promo justo antes de Acompañamientos: el momento de "¿y de acompañar?" */}
+                {category.id === "acompanamientos" && <UnlimitedFriesStrip />}
+                <MenuCategorySection category={category} />
+              </Fragment>
             ))}
 
             <ToppingsGrid />

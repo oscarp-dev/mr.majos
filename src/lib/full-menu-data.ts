@@ -1,8 +1,8 @@
 import type { GraffitiIconName } from "@/components/decorative/graffiti-icon";
 
 // Carta real de Mr. Majo's — fuente de verdad para /carta y para el
-// escaparate de burgers del home. Las burgers llevan foto de estudio
-// (fondo negro + banderita); el resto de categorías van solo con texto.
+// escaparate de burgers del home. Los platos con foto de estudio (fondo negro)
+// la llevan en `image`; los que aún no tienen foto van solo con texto.
 
 export type FullMenuItem = {
   id: string;
@@ -15,11 +15,14 @@ export type FullMenuItem = {
   footerLeft?: string;
   footerRight?: string;
   highlight?: "yellow" | "red" | "dashed";
-  /** Fotos de burgers: recortadas a 4:5 con la burger centrada (public/images/burgers). */
+  /** Fotos de estudio recortadas a 4:5 con el plato centrado (public/images/burgers, /perritos, /carta). */
   image?: string;
   /** object-position, solo para fotos sin recortar (p. ej. la Custom Burger). */
   imagePosition?: string;
-  /** La foto deja mucho negro encima de la burger: en marcos apaisados se recorta por abajo. */
+  /**
+   * La foto deja mucho negro encima o debajo del plato (burgers altas, perritos, raciones):
+   * en marcos apaisados se recorta (por abajo, o según `imagePosition`) en vez de encajarse.
+   */
   headroom?: boolean;
 };
 
@@ -184,6 +187,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "12,90€",
         tag: "TOP VENTAS",
         highlight: "yellow",
+        image: "/images/perritos/yankee-estudio.webp",
+        imagePosition: "center 55%",
+        headroom: true,
       },
       {
         id: "cheese-porn",
@@ -192,6 +198,9 @@ export const FULL_MENU: FullMenuCategory[] = [
           "Salchicha 120gr, doble queso gouda, triple cheddar inglés, baño de salsa de queso fundido y lluvia de bacon crujiente.",
         price: "10,70€",
         tag: "¡CHEESE BOOM!",
+        image: "/images/perritos/cheese-porn-estudio.webp",
+        imagePosition: "center 55%",
+        headroom: true,
       },
       {
         id: "americano",
@@ -201,6 +210,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "10,70€",
         tag: "NEW HIT",
         tagVariant: "red",
+        image: "/images/perritos/americano-estudio.webp",
+        imagePosition: "center 55%",
+        headroom: true,
       },
       {
         id: "chingon",
@@ -210,6 +222,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "11,70€",
         tag: "🌶️ SPICY",
         tagVariant: "red",
+        image: "/images/perritos/chingon-estudio.webp",
+        imagePosition: "center 55%",
+        headroom: true,
       },
     ],
   },
@@ -228,6 +243,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         highlight: "yellow",
         footerLeft: "6 UNIDADES",
         footerRight: "Con Salsa Mayo Ajo",
+        image: "/images/carta/majos-teques.webp",
+        imagePosition: "center 95%",
+        headroom: true,
       },
       {
         id: "patatas-trifasicas-carta",
@@ -250,6 +268,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "STREET CLASSIC",
         footerLeft: "CHILI CASERO & GUACAMOLE",
         footerRight: "Ideales para 2-3 pax",
+        image: "/images/carta/nachingones.webp",
+        imagePosition: "center 85%",
+        headroom: true,
       },
       {
         id: "chicken-wings",
@@ -260,6 +281,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "7 PIEZAS CRUNCHY",
         footerLeft: "7 ALITAS CRUJIENTES",
         footerRight: "Con Mayo Majo's",
+        image: "/images/carta/chicken-wings.webp",
+        imagePosition: "center 20%",
+        headroom: true,
       },
       {
         id: "aros-cebolla",
@@ -270,6 +294,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "AROS XXL",
         footerLeft: "AROS CRUJIENTES XXL",
         footerRight: "Dip BBQ Casero",
+        image: "/images/carta/aros-cebolla.webp",
+        imagePosition: "center 75%",
+        headroom: true,
       },
       {
         id: "sweet-potatoes",
@@ -296,6 +323,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         price: "15,70€",
         tag: "100% PLANT BASED 🌱",
         tagVariant: "green",
+        image: "/images/carta/veggie-baby.webp",
+        imagePosition: "center 80%",
+        headroom: true,
       },
       {
         id: "veggie-orale",
@@ -306,6 +336,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "🌱 VEGGIE SPICY 🌶️",
         tagVariant: "green",
         footerLeft: "🌱 Guacamole & Chipotle",
+        image: "/images/carta/veggie-orale.webp",
+        imagePosition: "center 80%",
+        headroom: true,
       },
       {
         id: "kids-carne",
@@ -339,6 +372,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "NUTELLA LOVERS 💎",
         footerLeft: "EXPLOSIÓN DE NUTELLA",
         footerRight: "4 Deditos Dulces",
+        image: "/images/carta/nute-teques.webp",
+        imagePosition: "center 70%",
+        headroom: true,
       },
       {
         id: "choko-majos",
@@ -349,6 +385,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         tag: "BEST SELLER",
         footerLeft: "CHOCOLATE NEGRO PURO",
         footerRight: "Elaboración Casera Diaria",
+        image: "/images/carta/choko-majos.webp",
+        imagePosition: "center 80%",
+        headroom: true,
       },
     ],
   },

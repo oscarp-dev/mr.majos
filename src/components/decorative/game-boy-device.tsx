@@ -1,9 +1,9 @@
-import { GameBoyPhotoScreen } from "./game-boy-photo-screen";
+import { GameBoyPhotoScreen, type GameBoyPhoto } from "./game-boy-photo-screen";
 import { cn } from "cn";
 
 type GameBoyDeviceProps = {
   className?: string;
-  photos?: string[];
+  photos?: GameBoyPhoto[];
 };
 
 export function GameBoyDevice({ className, photos }: GameBoyDeviceProps) {
