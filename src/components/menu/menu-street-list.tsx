@@ -3,6 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, type PointerEvent } from "react";
+import { FreeMode } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
 import {
   AnimatePresence,
   motion,
@@ -59,38 +63,45 @@ export function MenuStreetList({
 
   return (
     <div>
-      {/* category stickers */}
-      <div
-        role="tablist"
-        aria-label="Categorías de la carta"
-        className="-mx-4 flex gap-3 overflow-x-auto px-4 py-3 [scrollbar-width:none] md:mx-0 md:flex-wrap md:px-0 [&::-webkit-scrollbar]:hidden"
-      >
-        {categories.map((c, i) => {
-          const selected = c.id === category.id;
-          return (
-            <button
+      {/* category stickers: a swiper on mobile (iOS Safari won't reliably pan a
+          native overflow strip here), a wrapped row from md up */}
+      <div role="tablist" aria-label="Categorías de la carta">
+        <div className="-mx-4 md:hidden">
+          <Swiper
+            modules={[FreeMode]}
+            freeMode
+            grabCursor
+            slidesPerView="auto"
+            spaceBetween={12}
+            slidesOffsetBefore={16}
+            slidesOffsetAfter={16}
+            className="!py-3"
+          >
+            {categories.map((c, i) => (
+              <SwiperSlide key={c.id} className="!w-auto">
+                <CategoryChip
+                  category={c}
+                  index={i}
+                  count={c.id === "burgers" ? burgers.length : c.items.length}
+                  selected={c.id === category.id}
+                  onSelect={() => setCategoryId(c.id)}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        <div className="hidden flex-wrap gap-3 py-3 md:flex">
+          {categories.map((c, i) => (
+            <CategoryChip
               key={c.id}
-              type="button"
-              role="tab"
-              aria-selected={selected}
-              aria-controls="menu-street-panel"
-              onClick={() => setCategoryId(c.id)}
-              className={`flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-xl border-2 px-4 py-2 font-tag text-sm tracking-wide transition-all duration-200 hover:rotate-0 hover:scale-105 ${
-                i % 2 ? "rotate-2" : "-rotate-2"
-              } ${
-                selected
-                  ? "border-mr-black bg-mr-yellow text-mr-black shadow-[0_4px_0_0_rgba(0,0,0,1)]"
-                  : "border-dashed border-mr-cream/25 text-mr-cream/70 hover:border-mr-cream/60 hover:text-mr-cream"
-              }`}
-            >
-              {c.icon && <GraffitiIcon name={c.icon} className="-my-2 size-8" />}
-              {c.shortTitle ?? c.title}
-              <span className={selected ? "text-mr-black/50" : "text-mr-cream/30"}>
-                {pad(c.id === "burgers" ? burgers.length : c.items.length)}
-              </span>
-            </button>
-          );
-        })}
+              category={c}
+              index={i}
+              count={c.id === "burgers" ? burgers.length : c.items.length}
+              selected={c.id === category.id}
+              onSelect={() => setCategoryId(c.id)}
+            />
+          ))}
+        </div>
       </div>
 
       <div id="menu-street-panel" role="tabpanel" className="mt-8 md:mt-12">
@@ -127,6 +138,41 @@ export function MenuStreetList({
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+function CategoryChip({
+  category,
+  index,
+  count,
+  selected,
+  onSelect,
+}: {
+  category: HomeCategory;
+  index: number;
+  count: number;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={selected}
+      aria-controls="menu-street-panel"
+      onClick={onSelect}
+      className={`flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-xl border-2 px-4 py-2 font-tag text-sm tracking-wide transition-all duration-200 hover:rotate-0 hover:scale-105 ${
+        index % 2 ? "rotate-2" : "-rotate-2"
+      } ${
+        selected
+          ? "border-mr-black bg-mr-yellow text-mr-black shadow-[0_4px_0_0_rgba(0,0,0,1)]"
+          : "border-dashed border-mr-cream/25 text-mr-cream/70 hover:border-mr-cream/60 hover:text-mr-cream"
+      }`}
+    >
+      {category.icon && <GraffitiIcon name={category.icon} className="-my-2 size-8" />}
+      {category.shortTitle ?? category.title}
+      <span className={selected ? "text-mr-black/50" : "text-mr-cream/30"}>{pad(count)}</span>
+    </button>
   );
 }
 

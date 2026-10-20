@@ -21,7 +21,7 @@ export function MenuSection() {
             UN ADELANTO DE LA CARTA
           </span>
           <h2 className="font-display bleed-full mt-1 px-4 pt-[0.08em] text-[22vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[16vw] md:px-8 md:text-[11.5vw]">
-            EL MENÚ
+            LA CARTA
             <br />
             <span className="text-mr-yellow">QUE MÁS CHORREA</span>
           </h2>
