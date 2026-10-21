@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MENU_DEL_DIA } from "@/lib/site-data";
+import { useI18n } from "@/i18n/client";
 
 const toMinutes = (hhmm: string) => {
   const [h, m] = hhmm.split(":").map(Number);
@@ -21,7 +22,7 @@ function isServingNow() {
   const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
   const now = Number(get("hour")) * 60 + Number(get("minute"));
   return (
-    MENU_DEL_DIA.days.some((d) => d.day === day) &&
+    (MENU_DEL_DIA.days as readonly number[]).includes(day) &&
     now >= toMinutes(MENU_DEL_DIA.from) &&
     now < toMinutes(MENU_DEL_DIA.to)
   );
@@ -30,6 +31,7 @@ function isServingNow() {
 // Píldora de la tarjeta de reserva: "AHORA" con punto en directo mientras se
 // sirve; el resto del tiempo, los días en que hay menú.
 export function MenuDelDiaStatus() {
+  const { t } = useI18n();
   const [live, setLive] = useState(false);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export function MenuDelDiaStatus() {
           <span className="relative inline-flex size-1.5 rounded-full bg-mr-red" />
         </span>
       )}
-      {live ? "AHORA · MENÚ DEL DÍA" : "MENÚ DEL DÍA"}
+      {live ? t.menuDelDia.live : t.menuDelDia.label}
     </span>
   );
 }

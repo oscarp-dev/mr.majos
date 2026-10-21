@@ -1,45 +1,43 @@
 import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
 import { CountUp } from "@/components/motion/count-up";
+import { getI18n } from "@/i18n/server";
 
+// las etiquetas de cada cifra, en messages.process.stats (mismo orden)
 const STATS = [
-  { value: 180, suffix: "g", label: "de carne prensada al momento" },
-  { value: 45, suffix: "s", label: "de sellado a fuego vivo" },
-  { value: 100, suffix: "%", label: "a mano, plancha por plancha" },
+  { value: 180, suffix: "g" },
+  { value: 45, suffix: "s" },
+  { value: 100, suffix: "%" },
 ] as const;
 
-const PROCESS_STEPS = [
-  "Se prensa al momento, sin prisa.",
-  "Se sella a fuego vivo hasta soltar el jugo.",
-  "Se tuesta el pan en su propia grasa.",
-  "Se baña en salsa sin piedad.",
-] as const;
+export async function ProcessSection() {
+  const { t } = await getI18n();
+  const [l1, l2, l3, l4, l5] = t.process.lines;
 
-export function ProcessSection() {
   return (
     <section id="about" className="relative overflow-hidden bg-mr-yellow py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 md:grid-cols-2 md:items-center md:gap-16 md:px-8 xl:max-w-[92rem] xl:gap-24">
         <Reveal>
           <span className="font-tag text-xs tracking-widest text-mr-black/70">
-            EL PROCESO
+            {t.process.eyebrow}
           </span>
           <h2 className="font-display w-screen -translate-x-1/2 ml-[50%] px-4 mt-3 text-[clamp(2.75rem,15vw,4.5rem)] leading-[0.82] text-mr-black sm:px-6 sm:text-[clamp(3rem,10vw,5.5rem)] md:w-auto md:translate-x-0 md:ml-0 md:px-0 md:text-[clamp(3.25rem,6.2vw,6.5rem)]">
-            <span className="block">TODO EMPIEZA</span>
+            <span className="block">{l1}</span>
             <span className="block ml-[8%] -rotate-2 sm:ml-[10%] md:ml-[14%]">
-              EN LA PLANCHA
+              {l2}
             </span>
             <span className="block ml-[3%] rotate-1 sm:ml-[4%] md:ml-[5%]">
-              Y ACABA EN
+              {l3}
             </span>
             <span className="block text-mr-red ml-[14%] -rotate-1 sm:ml-[18%] md:ml-[24%]">
-              SALSA HASTA
+              {l4}
             </span>
             <span className="block text-mr-red ml-[1%] rotate-2 sm:ml-[2%] md:ml-[3%]">
-              QUE CHORREA.
+              {l5}
             </span>
           </h2>
           <ol className="mt-6 max-w-md">
-            {PROCESS_STEPS.map((step, i) => (
+            {t.process.steps.map((step, i) => (
               <li
                 key={step}
                 className="flex items-baseline gap-3 border-b border-mr-black/15 py-2.5 first:pt-0 last:border-b-0"
@@ -55,13 +53,13 @@ export function ProcessSection() {
           </ol>
 
           <dl className="mt-8 grid grid-cols-3 gap-2 border-t border-mr-black/15 pt-6 sm:gap-4">
-            {STATS.map((stat) => (
-              <div key={stat.label}>
+            {STATS.map((stat, i) => (
+              <div key={stat.suffix}>
                 <dt className="font-display text-3xl text-mr-black sm:text-4xl md:text-5xl">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                 </dt>
                 <dd className="mt-1 text-[10px] leading-snug text-mr-black/60 sm:text-xs">
-                  {stat.label}
+                  {t.process.stats[i]}
                 </dd>
               </div>
             ))}
@@ -72,7 +70,7 @@ export function ProcessSection() {
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border-2 border-mr-black shadow-[0_14px_0_0_rgba(0,0,0,1)] md:aspect-square">
             <Image
               src="/images/foto-hotdog-bacon.webp"
-              alt="Plancha smash de Mr. Majo's"
+              alt={t.process.imageAlt}
               fill
               loading="lazy"
               sizes="(max-width: 768px) 100vw, 45vw"
@@ -86,7 +84,7 @@ export function ProcessSection() {
               </div>
             </div>
             <span className="absolute bottom-4 left-4 font-tag text-xs tracking-wide text-mr-cream/80">
-              VÍDEO EN LOOP — PLANCHA EN VIVO
+              {t.process.video}
             </span>
           </div>
         </Reveal>

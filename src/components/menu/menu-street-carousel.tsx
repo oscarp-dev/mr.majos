@@ -11,6 +11,7 @@ import "swiper/css/pagination";
 
 import { GraffitiIcon, type GraffitiIconName } from "@/components/decorative/graffiti-icon";
 import type { StreetRow } from "./menu-street-list";
+import { useI18n } from "@/i18n/client";
 
 const css = `
   .street-cards {
@@ -47,6 +48,7 @@ export function MenuStreetCarousel({
   rows: StreetRow[];
   icon?: GraffitiIconName;
 }) {
+  const { t } = useI18n();
   const [index, setIndex] = useState(0);
 
   return (
@@ -59,7 +61,7 @@ export function MenuStreetCarousel({
           <span className="text-mr-cream/30"> / {pad(rows.length)}</span>
         </span>
         <span className="font-tag text-[10px] tracking-widest text-mr-cream/40">
-          DESLIZA PARA VER MÁS →
+          {t.menu.swipe}
         </span>
       </div>
 
@@ -92,6 +94,8 @@ function PriceSticker({ row }: { row: StreetRow }) {
 }
 
 function PhotoCard({ row }: { row: StreetRow }) {
+  const { t } = useI18n();
+
   return (
     <Link
       href={row.href}
@@ -104,7 +108,7 @@ function PhotoCard({ row }: { row: StreetRow }) {
       <div className="relative aspect-[5/4] w-full shrink-0 overflow-hidden bg-black [clip-path:inset(0)]">
         <Image
           src={row.image!}
-          alt={`${row.name} de Mr. Majo's`}
+          alt={t.menu.dishAlt(row.name)}
           fill
           sizes="300px"
           className={row.headroom ? "object-cover" : "scale-110 object-contain"}

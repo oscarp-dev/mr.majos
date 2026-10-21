@@ -1,14 +1,9 @@
-export const NAV_LINKS = [
-  { label: "Menú", href: "/#menu" },
-  { label: "About Us", href: "/#about" },
-  { label: "Pedir", href: "/#order" },
-] as const;
-
+// Las ventajas de cada nivel, en el idioma de la página: messages.club.perks.
 export const CLUB_TIERS = [
-  { name: "Foodie", stamps: "1+", perk: "Estás dentro. Bienvenido a la banda." },
-  { name: "Burger Lover", stamps: "15+", perk: "5% de descuento en todos tus pedidos." },
-  { name: "Burger Master", stamps: "30+", perk: "10% de descuento en todos tus pedidos." },
-  { name: "Food P*rn VIP", stamps: "50+", perk: "15% de descuento en todos tus pedidos." },
+  { name: "Foodie", stamps: "1+" },
+  { name: "Burger Lover", stamps: "15+" },
+  { name: "Burger Master", stamps: "30+" },
+  { name: "Food P*rn VIP", stamps: "50+" },
 ] as const;
 
 export const SOCIAL_LINKS = [
@@ -17,15 +12,10 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 // Menú del día: días (getDay(): 0 = domingo) y franja en hora de Madrid.
+// Los textos (días abreviados, qué incluye) están en messages.menuDelDia.
 export const MENU_DEL_DIA = {
   price: "13,70€",
-  includes: "Burger + patatas + bebida + postre",
-  days: [
-    { short: "VIE", day: 5 },
-    { short: "SÁB", day: 6 },
-    { short: "DOM", day: 0 },
-  ],
-  daysLabel: "VIERNES, SÁBADO Y DOMINGO",
+  days: [5, 6, 0],
   from: "13:00",
   to: "16:30",
 } as const;

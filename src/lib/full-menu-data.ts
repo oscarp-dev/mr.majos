@@ -1,4 +1,6 @@
 import type { GraffitiIconName } from "@/components/decorative/graffiti-icon";
+import type { Locale } from "@/i18n/config";
+import { CATEGORIES_EN, FEATURED_EN, ITEMS_EN, TOPPINGS_EN } from "./full-menu-en";
 
 // Carta real de Mr. Majo's — fuente de verdad para /carta y para el
 // escaparate de burgers del home. Los platos con foto de estudio (fondo negro)
@@ -258,6 +260,9 @@ export const FULL_MENU: FullMenuCategory[] = [
         highlight: "red",
         footerLeft: "BANDEJA PARA COMPARTIR",
         footerRight: "Pulled Pork + Pollo + Frankfurt",
+        image: "/images/carta/patatas-trifasicas.webp",
+        imagePosition: "center 55%",
+        headroom: true,
       },
       {
         id: "nachingones",
@@ -433,7 +438,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "margaritas-frozen",
         name: "Margaritas Frozen",
         description:
-          "Tequila reposado 100% agave, zumo natural de lima y hielo frappé. ¡Súper refrescante y adictivo!",
+          "Tequila reposado 100% agave, zumo natural de lima y hielo frappé. Clásica, de fresa o de mango. ¡Súper refrescante y adictivo!",
         price: "7,90€",
         priceSuffix: "/ copa",
         tag: "PROMO 2X (12,90€)",
@@ -497,21 +502,6 @@ export type HomeCategory = FullMenuCategory & {
 
 const toNumber = (price: string) => Number(price.replace("€", "").replace(",", "."));
 
-export const HOME_CATEGORIES: HomeCategory[] = HOME_PICKS.map(({ categoryId, itemIds }) => {
-  const category = FULL_MENU.find((c) => c.id === categoryId)!;
-  const min = Math.min(...category.items.map((item) => toNumber(item.price)));
-  return {
-    ...category,
-    items: itemIds.map((id) => {
-      const item = category.items.find((i) => i.id === id);
-      if (!item) throw new Error(`HOME_PICKS: "${id}" no existe en la categoría "${categoryId}"`);
-      return item;
-    }),
-    total: category.items.length,
-    from: `${min.toFixed(2).replace(".", ",")}€`,
-  };
-});
-
 // Escaparate de burgers del home: el plato insignia + las burgers elegidas.
 export type ShowcaseBurger = {
   id: string;
@@ -524,24 +514,73 @@ export type ShowcaseBurger = {
   headroom?: boolean;
 };
 
-export const BURGER_SHOWCASE: ShowcaseBurger[] = [
-  {
-    id: "sugar-daddy",
-    name: FEATURED_DISH.name,
-    description: FEATURED_DISH.description,
-    price: FEATURED_DISH.price,
-    tag: "⭐ PLATO INSIGNIA",
-    image: FEATURED_DISH.image,
-    headroom: true,
-  },
-  ...HOME_CATEGORIES[0].items.map((item) => ({
-    id: item.id,
-    name: item.name,
-    description: item.description,
-    price: item.price,
-    tag: item.tag,
-    image: item.image!,
-    imagePosition: item.imagePosition,
-    headroom: item.headroom,
-  })),
-];
+// ---------------------------------------------------------------------------
+// Carta por idioma: el español es la fuente; el inglés pisa textos por id.
+// ---------------------------------------------------------------------------
+
+function translate(lang: Locale) {
+  if (lang === "es") {
+    return { featured: { ...FEATURED_DISH, tag: "⭐ PLATO INSIGNIA" }, categories: FULL_MENU, toppings: TOPPINGS };
+  }
+  return {
+    featured: { ...FEATURED_DISH, ...FEATURED_EN },
+    categories: FULL_MENU.map((category) => ({
+      ...category,
+      ...CATEGORIES_EN[category.id],
+      items: category.items.map((item) => ({ ...item, ...ITEMS_EN[item.id] })),
+    })),
+    toppings: TOPPINGS.map((topping) => ({ ...topping, name: TOPPINGS_EN[topping.id] ?? topping.name })),
+  };
+}
+
+function buildMenu(lang: Locale) {
+  const { featured, categories, toppings } = translate(lang);
+
+  const homeCategories: HomeCategory[] = HOME_PICKS.map(({ categoryId, itemIds }) => {
+    const category = categories.find((c) => c.id === categoryId)!;
+    const min = Math.min(...category.items.map((item) => toNumber(item.price)));
+    return {
+      ...category,
+      items: itemIds.map((id) => {
+        const item = category.items.find((i) => i.id === id);
+        if (!item) throw new Error(`HOME_PICKS: "${id}" no existe en la categoría "${categoryId}"`);
+        return item;
+      }),
+      total: category.items.length,
+      from: `${min.toFixed(2).replace(".", ",")}€`,
+    };
+  });
+
+  const showcase: ShowcaseBurger[] = [
+    {
+      id: "sugar-daddy",
+      name: featured.name,
+      description: featured.description,
+      price: featured.price,
+      tag: featured.tag,
+      image: featured.image,
+      headroom: true,
+    },
+    ...homeCategories[0].items.map((item) => ({
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      tag: item.tag,
+      image: item.image!,
+      imagePosition: item.imagePosition,
+      headroom: item.headroom,
+    })),
+  ];
+
+  return { featured, categories, toppings, homeCategories, showcase };
+}
+
+const MENUS = { es: buildMenu("es"), en: buildMenu("en") } satisfies Record<Locale, unknown>;
+
+export type Menu = ReturnType<typeof buildMenu>;
+
+export const getMenu = (lang: Locale): Menu => MENUS[lang];
+
+export const HOME_CATEGORIES = MENUS.es.homeCategories;
+export const BURGER_SHOWCASE = MENUS.es.showcase;

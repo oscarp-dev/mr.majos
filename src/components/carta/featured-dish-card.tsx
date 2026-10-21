@@ -1,7 +1,10 @@
 import Image from "next/image";
-import { FEATURED_DISH } from "@/lib/full-menu-data";
+import { getI18n } from "@/i18n/server";
 
-export function FeaturedDishCard() {
+export async function FeaturedDishCard() {
+  const { t, menu } = await getI18n();
+  const dish = menu.featured;
+
   return (
     <article
       id="insignia"
@@ -9,8 +12,8 @@ export function FeaturedDishCard() {
     >
       <div className="relative order-first aspect-[4/5] w-full sm:mx-auto sm:max-w-md md:order-last md:max-w-none md:aspect-auto md:min-h-[560px]">
         <Image
-          src={FEATURED_DISH.image}
-          alt={`${FEATURED_DISH.name} de Mr. Majo's`}
+          src={dish.image}
+          alt={t.menu.dishAlt(dish.name)}
           fill
           preload
           sizes="(max-width: 768px) 100vw, 50vw"
@@ -19,13 +22,13 @@ export function FeaturedDishCard() {
         {/* fade into the copy column so the black backdrop reads as one surface */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black to-transparent md:inset-y-0 md:left-0 md:right-auto md:h-auto md:w-24 md:bg-gradient-to-r" />
         <span className="absolute right-4 top-4 rotate-6 rounded-full border-2 border-mr-black bg-mr-yellow px-5 py-2.5 font-tag text-xl text-mr-black shadow-[0_4px_0_0_rgba(0,0,0,1)]">
-          {FEATURED_DISH.price}
+          {dish.price}
         </span>
       </div>
 
       <div className="flex flex-col justify-center p-6 sm:p-10">
         <div className="flex flex-wrap items-center gap-2">
-          {FEATURED_DISH.badges.map((badge, i) => (
+          {dish.badges.map((badge, i) => (
             <span
               key={badge}
               className={
@@ -40,18 +43,18 @@ export function FeaturedDishCard() {
         </div>
 
         <p className="mt-6 font-tag text-xs tracking-widest text-mr-yellow/70">
-          {FEATURED_DISH.eyebrow}
+          {dish.eyebrow}
         </p>
         <h2 className="font-display text-6xl leading-[0.82] text-mr-cream sm:text-7xl lg:text-8xl">
-          {FEATURED_DISH.name}
+          {dish.name}
         </h2>
 
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-mr-cream/65 sm:text-base">
-          {FEATURED_DISH.description}
+          {dish.description}
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {FEATURED_DISH.chips.map((chip) => (
+          {dish.chips.map((chip) => (
             <span
               key={chip}
               className="rounded-full border border-mr-cream/15 px-3 py-1 font-tag text-[11px] tracking-wide text-mr-cream/70"
@@ -63,7 +66,7 @@ export function FeaturedDishCard() {
 
         <div className="mt-6 border-t border-mr-cream/10 pt-4">
           <span className="font-tag text-[11px] tracking-widest text-mr-yellow/80">
-            ✓ {FEATURED_DISH.footer}
+            ✓ {dish.footer}
           </span>
         </div>
       </div>

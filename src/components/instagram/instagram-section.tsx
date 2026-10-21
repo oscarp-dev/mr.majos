@@ -2,34 +2,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { SOCIAL_LINKS } from "@/lib/site-data";
+import { getI18n } from "@/i18n/server";
 
 // No hay credenciales de la API de Instagram conectadas en este proyecto:
 // el "perfil" usa fotos reales de producto a modo de mock visual del feed.
 // Sustituir por el feed real (API oficial o un embed) cuando haya acceso.
 // Sin cifras de seguidores ni likes: serían inventadas.
 
-type Post = { src: string; caption: string; position?: string };
+// Los pies de foto y las etiquetas de las historias van en messages.instagram,
+// en el mismo orden que estas listas.
+type Post = { src: string; position?: string };
 
 const POSTS: Post[] = [
-  { src: "/images/instagram/yankee-gorra.webp", caption: "Yankee mode: ON 🧢", position: "center 30%" },
-  { src: "/images/foto-burger-mano-3.webp", caption: "Hot dog vibes 🕶️" },
-  { src: "/images/instagram/bano-de-queso.webp", caption: "Baño de queso, sin miedo 🧀" },
-  { src: "/images/instagram/americano-mordisco.webp", caption: "El Americano no se comparte" },
-  { src: "/images/instagram/nutella-chorreando.webp", caption: "Nute Teques: Nutella hirviendo 🍫" },
-  { src: "/images/instagram/patatas-cesta.webp", caption: "Patatas ILIMITADAS 🍟" },
-  { src: "/images/foto-burger-mano-1.webp", caption: "Crunchy con guantes 🧤" },
-  { src: "/images/foto-burger-mano-2.webp", caption: "Burger & Corvette 💛", position: "center 30%" },
-  { src: "/images/instagram/burger-dos-manos.webp", caption: "A dos manos o no vale 🍔", position: "center 60%" },
+  { src: "/images/instagram/yankee-gorra.webp", position: "center 30%" },
+  { src: "/images/foto-burger-mano-3.webp" },
+  { src: "/images/instagram/bano-de-queso.webp" },
+  { src: "/images/instagram/americano-mordisco.webp" },
+  { src: "/images/instagram/nutella-chorreando.webp" },
+  { src: "/images/instagram/patatas-cesta.webp" },
+  { src: "/images/foto-burger-mano-1.webp" },
+  { src: "/images/foto-burger-mano-2.webp", position: "center 30%" },
+  { src: "/images/instagram/burger-dos-manos.webp", position: "center 60%" },
 ];
 
 // Historias destacadas → secciones de la carta.
 const HIGHLIGHTS = [
-  { label: "Burgers", src: "/images/burgers/gringa.webp", href: "/carta#burgers", position: "center 78%" },
-  { label: "Perritos", src: "/images/perritos/yankee-estudio.webp", href: "/carta#perritos", position: "center 55%" },
-  { label: "Teques", src: "/images/carta/majos-teques.webp", href: "/carta#acompanamientos", position: "center 68%" },
-  { label: "Veggie", src: "/images/carta/veggie-orale.webp", href: "/carta#veggie-kids", position: "center 62%" },
-  { label: "Postres", src: "/images/carta/nute-teques.webp", href: "/carta#postres", position: "center 55%" },
-  { label: "Menú del día", src: "/images/foto-burger-menu-del-dia.webp", href: "/#menu-del-dia" },
+  { src: "/images/burgers/gringa.webp", href: "/carta#burgers", position: "center 78%" },
+  { src: "/images/perritos/yankee-estudio.webp", href: "/carta#perritos", position: "center 55%" },
+  { src: "/images/carta/majos-teques.webp", href: "/carta#acompanamientos", position: "center 68%" },
+  { src: "/images/carta/veggie-orale.webp", href: "/carta#veggie-kids", position: "center 62%" },
+  { src: "/images/carta/nute-teques.webp", href: "/carta#postres", position: "center 55%" },
+  { src: "/images/foto-burger-menu-del-dia.webp", href: "/#menu-del-dia" },
 ];
 
 const INSTAGRAM_URL =
@@ -67,16 +70,18 @@ function ReelsIcon({ className }: { className?: string }) {
   );
 }
 
-export default function InstagramSection() {
+export default async function InstagramSection() {
+  const { t, href } = await getI18n();
+
   return (
     <section className="bg-mr-black py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal>
           <span className="font-tag text-xs tracking-widest text-mr-yellow">@MR_MAJOS</span>
           <h2 className="font-display bleed-full px-4 mt-2 text-[17vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[13vw] md:px-8 md:text-[9vw]">
-            TANTO CHORREO
+            {t.instagram.title}
             <br />
-            <span className="text-mr-yellow">QUE ROMPE INSTAGRAM</span>
+            <span className="text-mr-yellow">{t.instagram.titleAccent}</span>
           </h2>
         </Reveal>
       </div>
@@ -89,7 +94,7 @@ export default function InstagramSection() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noreferrer"
-              aria-label="Instagram de Mr. Majo's"
+              aria-label={t.instagram.profileAria}
               className={`shrink-0 rounded-full p-[3px] ${STORY_RING}`}
             >
               <span className="block rounded-full bg-[#111] p-[3px]">
@@ -113,13 +118,13 @@ export default function InstagramSection() {
                     rel="noreferrer"
                     className="rounded-lg bg-mr-yellow px-5 py-1.5 text-sm font-semibold text-mr-black transition-colors hover:bg-mr-cream"
                   >
-                    Seguir
+                    {t.instagram.follow}
                   </a>
                   <Link
-                    href="/#order"
+                    href={href("/#order")}
                     className="rounded-lg bg-mr-cream/10 px-4 py-1.5 text-sm font-semibold text-mr-cream transition-colors hover:bg-mr-cream/20"
                   >
-                    Pedir
+                    {t.instagram.order}
                   </Link>
                 </div>
               </div>
@@ -137,8 +142,8 @@ export default function InstagramSection() {
 
           {/* historias destacadas */}
           <div className="mt-6 flex gap-4 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mt-10 md:gap-8 md:px-12 [&::-webkit-scrollbar]:hidden">
-            {HIGHLIGHTS.map((h) => (
-              <Link key={h.label} href={h.href} className="group flex w-16 shrink-0 flex-col items-center gap-1.5 md:w-20">
+            {HIGHLIGHTS.map((h, i) => (
+              <Link key={h.href} href={href(h.href)} className="group flex w-16 shrink-0 flex-col items-center gap-1.5 md:w-20">
                 <span className="rounded-full border border-mr-cream/25 p-[3px] transition-colors group-hover:border-mr-yellow">
                   <span className="relative block size-14 overflow-hidden rounded-full bg-black md:size-[4.5rem]">
                     <Image
@@ -152,7 +157,7 @@ export default function InstagramSection() {
                   </span>
                 </span>
                 <span className="w-full truncate text-center text-[11px] font-medium text-mr-cream/85 md:text-xs">
-                  {h.label}
+                  {t.instagram.highlights[i]}
                 </span>
               </Link>
             ))}
@@ -162,7 +167,7 @@ export default function InstagramSection() {
           <div className="mt-6 flex justify-center gap-12 border-t border-mr-cream/10 md:mt-8 md:gap-16">
             <span className="-mt-px flex items-center gap-1.5 border-t border-mr-cream py-3 text-[11px] font-semibold tracking-[0.15em] text-mr-cream md:py-4 md:text-xs">
               <GridIcon className="size-3.5" />
-              PUBLICACIONES
+              {t.instagram.posts}
             </span>
             <a
               href={INSTAGRAM_URL}
@@ -177,18 +182,20 @@ export default function InstagramSection() {
 
           {/* feed */}
           <div className="grid grid-cols-3 gap-0.5 overflow-hidden rounded-b-3xl md:gap-1">
-            {POSTS.map((post, i) => (
+            {POSTS.map((post, i) => {
+              const caption = t.instagram.captions[i];
+              return (
               <a
                 key={post.src}
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`${post.caption} — ver en Instagram`}
+                aria-label={t.instagram.viewOnInstagram(caption)}
                 className="group relative aspect-[4/5] overflow-hidden bg-[#1a1a1a] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mr-yellow"
               >
                 <Image
                   src={post.src}
-                  alt={`${post.caption} — Mr. Majo's`}
+                  alt={`${caption} — Mr. Majo's`}
                   fill
                   loading={i < 3 ? "eager" : "lazy"}
                   sizes="(max-width: 1024px) 33vw, 330px"
@@ -197,10 +204,11 @@ export default function InstagramSection() {
                 />
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/55 p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                   <InstaIcon className="size-7 text-mr-yellow" />
-                  <p className="font-display text-lg leading-[0.95] text-mr-cream md:text-2xl">{post.caption}</p>
+                  <p className="font-display text-lg leading-[0.95] text-mr-cream md:text-2xl">{caption}</p>
                 </div>
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </Reveal>
@@ -208,14 +216,17 @@ export default function InstagramSection() {
   );
 }
 
-function Bio() {
+async function Bio() {
+  const { t, href } = await getI18n();
+
   return (
     <>
       <p className="font-semibold text-mr-cream">Mr. Majo&apos;s</p>
-      <p>Smash burgers &amp; perritos gigantes 🍔🌭</p>
-      <p>Patatas ILIMITADAS 🍟 · Alicante 📍</p>
-      <Link href="/carta" className="font-semibold text-mr-yellow hover:underline">
-        🔗 Ver la carta completa
+      {t.instagram.bio.map((line) => (
+        <p key={line}>{line}</p>
+      ))}
+      <Link href={href("/carta")} className="font-semibold text-mr-yellow hover:underline">
+        {t.instagram.bioLink}
       </Link>
     </>
   );

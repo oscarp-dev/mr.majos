@@ -9,47 +9,52 @@ import { MenuCategorySection } from "@/components/carta/menu-category-section";
 import { ToppingsGrid } from "@/components/carta/toppings-grid";
 import { CartaCategoryNav } from "@/components/carta/carta-category-nav";
 import { UnlimitedFriesStrip } from "@/components/promo/unlimited-fries-strip";
-import { FULL_MENU } from "@/lib/full-menu-data";
+import { getI18n } from "@/i18n/server";
 
-export const metadata: Metadata = {
-  title: "La Carta Completa — Mr. Majo's",
-  description:
-    "Toda la carta de Mr. Majo's: burgers, perritos gigantes, acompañamientos, veggie & kids, postres, bebidas y extras.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return {
+    title: t.meta.cartaTitle,
+    description: t.meta.cartaDescription,
+    alternates: { languages: { es: "/carta", en: "/en/carta" } },
+  };
+}
 
-const NAV_CATEGORIES = [
-  ...FULL_MENU.map((category) => ({
-    id: category.id,
-    label: category.shortTitle ?? category.title,
-    icon: category.icon,
-  })),
-  { id: "extras", label: "Extras", icon: "plus" as const },
-];
+export default async function CartaPage() {
+  const { t, menu, href } = await getI18n();
 
-export default function CartaPage() {
+  const navCategories = [
+    ...menu.categories.map((category) => ({
+      id: category.id,
+      label: category.shortTitle ?? category.title,
+      icon: category.icon,
+    })),
+    { id: "extras", label: t.carta.extras, icon: "plus" as const },
+  ];
+
   return (
     <>
       <SiteNav />
       <main className="bg-mr-black pb-20 pt-8 md:pt-12">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <Link
-            href="/#menu"
+            href={href("/#menu")}
             className="font-tag inline-flex items-center gap-1 text-xs tracking-wide text-mr-cream/60 transition-colors hover:text-mr-yellow"
           >
-            ← VOLVER AL INICIO
+            {t.carta.back}
           </Link>
 
           <div className="relative">
             <h1 className="font-display bleed-full mt-4 px-4 text-[16vw] leading-[0.78] text-mr-cream sm:px-6 sm:text-[11vw] md:px-8 md:text-[7.5vw]">
-              LA CARTA
+              {t.carta.title}
               <br />
-              <span className="text-mr-yellow">COMPLETA</span>
+              <span className="text-mr-yellow">{t.carta.titleAccent}</span>
             </h1>
 
             <div className="pointer-events-none absolute -top-4 right-2 hidden w-36 rotate-6 overflow-hidden rounded-2xl border-2 border-mr-black shadow-[0_6px_0_0_rgba(0,0,0,1)] md:block lg:w-44">
               <Image
                 src="/images/IMG_3614_menu.webp"
-                alt="Burger de Mr. Majo's con huevo y bacon y su banderita"
+                alt={t.carta.heroAlt}
                 width={908}
                 height={1274}
                 preload
@@ -60,17 +65,16 @@ export default function CartaPage() {
           </div>
 
           <p className="mt-6 max-w-xl text-sm leading-relaxed text-mr-cream/60 sm:text-base">
-            Smash de ternera, vaca madurada 30 días, pollo crunchy y pan brioche
-            artesano. Todo lo que sale de nuestra plancha, sin filtros.
+            {t.carta.intro}
           </p>
 
           {/* direct child of the page column so `sticky` spans the whole carta */}
-          <CartaCategoryNav categories={NAV_CATEGORIES} className="mt-8" />
+          <CartaCategoryNav categories={navCategories} className="mt-8" />
 
           <div className="mt-10 flex flex-col gap-20 md:mt-14">
             <FeaturedDishCard />
 
-            {FULL_MENU.map((category) => (
+            {menu.categories.map((category) => (
               <Fragment key={category.id}>
                 {/* la promo justo antes de Acompañamientos: el momento de "¿y de acompañar?" */}
                 {category.id === "acompanamientos" && <UnlimitedFriesStrip />}
@@ -79,6 +83,16 @@ export default function CartaPage() {
             ))}
 
             <ToppingsGrid />
+          </div>
+
+          <div className="mt-14 flex flex-col gap-2 rounded-2xl border border-dashed border-mr-cream/20 p-5 text-sm leading-relaxed text-mr-cream/60 md:flex-row md:items-center md:justify-between md:gap-8">
+            <p>
+              <span aria-hidden="true">⚠️ </span>
+              {t.carta.allergens}
+            </p>
+            <p className="font-tag shrink-0 text-xs tracking-widest text-mr-yellow/80">
+              {t.carta.vat.toUpperCase()}
+            </p>
           </div>
         </div>
       </main>

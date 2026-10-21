@@ -4,12 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
-import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-data";
+import { SOCIAL_LINKS } from "@/lib/site-data";
+import { useI18n } from "@/i18n/client";
 
-const PANEL_IMAGES = [
-  { src: "/images/hero-sugarmommy-burger.webp", alt: "La Sugarmommy" },
-  { src: "/images/foto-hotdog-mordida.webp", alt: "Hot Dog Vibes" },
-];
+// los alt van en messages.nav.panelImages
+const PANEL_IMAGES = ["/images/hero-sugarmommy-burger.webp", "/images/foto-hotdog-mordida.webp"];
 
 function TikTokIcon() {
   return (
@@ -86,6 +85,7 @@ export function NavPanel({
   isOpen: boolean;
   onNavigate: () => void;
 }) {
+  const { t, href } = useI18n();
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -145,16 +145,16 @@ export function NavPanel({
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-between gap-10 px-6 pb-10 pt-24 md:px-10">
       <p ref={taglineRef} className="font-tag text-xs tracking-widest text-mr-black/60">
-        PARA LOS MÁS GAMBERROS DEL HAMBRE
+        {t.nav.tagline}
       </p>
 
       <div className="flex flex-1 flex-col justify-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
         <nav className="flex flex-col">
-          {NAV_LINKS.map((link, i) => (
+          {t.nav.links.map((link, i) => (
             <NavLinkHover
               key={link.href}
               label={link.label}
-              href={link.href}
+              href={href(link.href)}
               onClick={onNavigate}
               reduced={reducedMotion}
               linkRef={(el) => {
@@ -165,15 +165,15 @@ export function NavPanel({
         </nav>
 
         <div className="flex gap-3 lg:flex-col lg:items-end">
-          {PANEL_IMAGES.map((img, i) => (
+          {PANEL_IMAGES.map((src, i) => (
             <div
-              key={img.src}
+              key={src}
               ref={(el) => {
                 imagesRef.current[i] = el;
               }}
               className="relative size-24 overflow-hidden rounded-xl border-2 border-mr-black shadow-[0_4px_0_0_rgba(0,0,0,1)] sm:size-28 md:size-36 lg:size-44"
             >
-              <Image src={img.src} alt={img.alt} fill sizes="(max-width: 1024px) 30vw, 180px" className="object-cover" />
+              <Image src={src} alt={t.nav.panelImages[i]} fill sizes="(max-width: 1024px) 30vw, 180px" className="object-cover" />
             </div>
           ))}
         </div>
@@ -203,11 +203,11 @@ export function NavPanel({
 
         <Link
           ref={ctaRef}
-          href="/#order"
+          href={href("/#order")}
           onClick={onNavigate}
           className="inline-flex rotate-1 items-center rounded-full border-2 border-mr-black bg-mr-black px-6 py-3 font-tag text-sm tracking-wide text-mr-yellow shadow-[0_4px_0_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 md:px-8 md:py-4 md:text-base"
         >
-          ¡PIDE YA!
+          {t.nav.orderCta}
         </Link>
       </div>
     </div>

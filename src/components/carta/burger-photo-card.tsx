@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { cn } from "cn";
 import type { FullMenuItem } from "@/lib/full-menu-data";
+import { getI18n } from "@/i18n/server";
 
 const TAG_STYLE: Record<string, string> = {
   yellow: "bg-mr-yellow text-mr-black",
@@ -14,13 +15,14 @@ const TAG_STYLE: Record<string, string> = {
  * en horizontal (foto a la izquierda) para la Custom Burger, cuya foto es
  * apaisada.
  */
-export function BurgerPhotoCard({
+export async function BurgerPhotoCard({
   item,
   wide = false,
 }: {
   item: FullMenuItem;
   wide?: boolean;
 }) {
+  const { t } = await getI18n();
   const tagClass = TAG_STYLE[item.tagVariant ?? "yellow"];
 
   return (
@@ -46,7 +48,7 @@ export function BurgerPhotoCard({
         {item.image && (
           <Image
             src={item.image}
-            alt={`${item.name} de Mr. Majo's`}
+            alt={t.menu.dishAlt(item.name)}
             fill
             sizes={
               wide

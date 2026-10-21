@@ -18,6 +18,7 @@ import {
 import { GraffitiIcon } from "@/components/decorative/graffiti-icon";
 import type { HomeCategory, ShowcaseBurger } from "@/lib/full-menu-data";
 import { MenuStreetCarousel } from "./menu-street-carousel";
+import { useI18n } from "@/i18n/client";
 
 export type StreetRow = {
   id: string;
@@ -34,14 +35,18 @@ export type StreetRow = {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-function toRows(category: HomeCategory, burgers: ShowcaseBurger[]): StreetRow[] {
+function toRows(
+  category: HomeCategory,
+  burgers: ShowcaseBurger[],
+  href: (path: string) => string
+): StreetRow[] {
   if (category.id === "burgers") {
     return burgers.map((b) => ({
       ...b,
-      href: `/carta#${b.id === "sugar-daddy" ? "insignia" : b.id}`,
+      href: href(`/carta#${b.id === "sugar-daddy" ? "insignia" : b.id}`),
     }));
   }
-  return category.items.map((item) => ({ ...item, href: `/carta#${category.id}` }));
+  return category.items.map((item) => ({ ...item, href: href(`/carta#${category.id}`) }));
 }
 
 /**
@@ -56,16 +61,17 @@ export function MenuStreetList({
   categories: HomeCategory[];
   burgers: ShowcaseBurger[];
 }) {
+  const { t, href } = useI18n();
   const [categoryId, setCategoryId] = useState(categories[0].id);
   const category = categories.find((c) => c.id === categoryId) ?? categories[0];
-  const rows = toRows(category, burgers);
+  const rows = toRows(category, burgers, href);
   const rest = category.total - category.items.length;
 
   return (
     <div>
       {/* category stickers: a swiper on mobile (iOS Safari won't reliably pan a
           native overflow strip here), a wrapped row from md up */}
-      <div role="tablist" aria-label="Categorías de la carta">
+      <div role="tablist" aria-label={t.menu.categoriesLabel}>
         <div className="-mx-4 md:hidden">
           <Swiper
             modules={[FreeMode]}
@@ -122,15 +128,15 @@ export function MenuStreetList({
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
               <span className="font-tag text-xs tracking-widest text-mr-cream/40">
-                DESDE {category.from} · LO MÁS PEDIDO
+                {t.menu.from(category.from)}
               </span>
               <Link
-                href={`/carta#${category.id}`}
+                href={href(`/carta#${category.id}`)}
                 className="font-tag group/more inline-flex items-center gap-2 text-sm tracking-wide text-mr-yellow transition-colors hover:text-mr-cream"
               >
                 {rest > 0
-                  ? `+${rest} ${category.id === "burgers" ? "BURGERS " : ""}MÁS EN LA CARTA`
-                  : "VER EN LA CARTA"}
+                  ? t.menu.moreInCarta(rest, category.id === "burgers")
+                  : t.menu.seeInCarta}
                 <span className="transition-transform group-hover/more:translate-x-1">→</span>
               </Link>
             </div>
@@ -177,6 +183,7 @@ function CategoryChip({
 }
 
 function StreetList({ rows, category }: { rows: StreetRow[]; category: HomeCategory }) {
+  const { t } = useI18n();
   const [active, setActive] = useState<number | null>(0);
   const [hovering, setHovering] = useState(false);
   const pointerType = useRef("mouse");
@@ -325,7 +332,7 @@ function StreetList({ rows, category }: { rows: StreetRow[]; category: HomeCateg
                     <div className="relative aspect-[4/5] w-28 shrink-0 -rotate-3 overflow-hidden rounded-xl border-2 border-mr-cream bg-mr-black shadow-[4px_5px_0_0_var(--mr-yellow)] md:hidden">
                       <Image
                         src={row.image}
-                        alt={`${row.name} de Mr. Majo's`}
+                        alt={t.menu.dishAlt(row.name)}
                         fill
                         sizes="112px"
                         className="object-cover"
@@ -347,7 +354,7 @@ function StreetList({ rows, category }: { rows: StreetRow[]; category: HomeCateg
                       tabIndex={open ? 0 : -1}
                       className="font-tag mt-3 inline-flex items-center gap-2 text-xs tracking-widest text-mr-yellow hover:text-mr-cream"
                     >
-                      VER EN LA CARTA →
+                      {t.menu.seeInCarta} →
                     </Link>
                   </div>
                 </div>

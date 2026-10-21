@@ -1,6 +1,6 @@
 type WarningMarqueeProps = {
   /** Frases que se van alternando en la cinta. */
-  texts?: string[];
+  texts: string[];
 };
 
 function TapeItem({ text }: { text: string }) {
@@ -18,9 +18,7 @@ function TapeItem({ text }: { text: string }) {
   );
 }
 
-export function WarningMarquee({
-  texts = ["MUCHO CHORREEEEO", "PATATAS ILIMITADAS +1€"],
-}: WarningMarqueeProps) {
+export function WarningMarquee({ texts }: WarningMarqueeProps) {
   const items = Array.from({ length: 12 }, (_, i) => texts[i % texts.length]);
 
   return (
