@@ -16,6 +16,8 @@ type DraggableStickerProps = {
   floatDistance?: number;
   rotateSwing?: number;
   neonColor?: string;
+  /** En reposo: "float" flota y se balancea; "shine" se queda quieto y le cruza un brillo. */
+  idle?: "float" | "shine";
 };
 
 export function DraggableSticker({
@@ -29,6 +31,7 @@ export function DraggableSticker({
   floatDistance = 10,
   rotateSwing = 7,
   neonColor,
+  idle = "float",
 }: DraggableStickerProps) {
   return (
     <motion.div
@@ -44,10 +47,16 @@ export function DraggableSticker({
       )}
     >
       <motion.div
-        animate={{
-          y: [0, -floatDistance, 0],
-          rotate: [rotate - rotateSwing, rotate + rotateSwing, rotate - rotateSwing],
-        }}
+        className="relative"
+        style={idle === "shine" ? { rotate } : undefined}
+        animate={
+          idle === "float"
+            ? {
+                y: [0, -floatDistance, 0],
+                rotate: [rotate - rotateSwing, rotate + rotateSwing, rotate - rotateSwing],
+              }
+            : undefined
+        }
         transition={{ duration: floatDuration, repeat: Infinity, ease: "easeInOut" }}
       >
         <Image
@@ -63,6 +72,13 @@ export function DraggableSticker({
             neonColor ? "animate-neon-flicker" : "drop-shadow-[0_8px_14px_rgba(0,0,0,0.55)]"
           )}
         />
+        {idle === "shine" && (
+          <span
+            aria-hidden="true"
+            className="animate-sticker-shine pointer-events-none absolute inset-0"
+            style={{ maskImage: `url(${src})` }}
+          />
+        )}
       </motion.div>
     </motion.div>
   );

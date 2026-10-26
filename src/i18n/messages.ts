@@ -5,12 +5,20 @@ import type { Locale } from "./config";
 
 const es = {
   meta: {
-    title: "Mr. Majo's — Hamburguesería Gamberra",
+    title: "Mr. Majo's — Hamburguesería Gamberra en Alicante",
     description:
-      "Mr. Majo's: smash burgers, hot dogs y una adicción total. Pide ya y chorrea sin vergüenza.",
-    cartaTitle: "La Carta Completa — Mr. Majo's",
+      "Smash burgers, hot dogs y una adicción total en Calle Bazán, 45 (Alicante). Menú del día, patatas ilimitadas y pedidos por Glovo y Uber Eats.",
+    cartaTitle: "Carta de Hamburguesas y Perritos — Mr. Majo's Alicante",
     cartaDescription:
-      "Toda la carta de Mr. Majo's: burgers, perritos gigantes, acompañamientos, veggie & kids, postres, bebidas y extras.",
+      "Toda la carta de Mr. Majo's: smash burgers, burgers dry aged de vaca madurada, perritos gigantes, entrantes, veggie, menú para peques, postres y bebidas.",
+    keywords: [
+      "hamburguesería Alicante",
+      "smash burgers Alicante",
+      "hot dogs Alicante",
+      "hamburguesas a domicilio Alicante",
+      "menú del día Alicante",
+      "Mr. Majo's",
+    ],
   },
   language: {
     label: "Idioma",
@@ -18,17 +26,19 @@ const es = {
   },
   nav: {
     homeLabel: "Mr. Majo's — inicio",
-    subtitle: "SMASH BURGERS • ALICANTE",
+    subtitle: "SMASH • DRY AGED • ALICANTE",
+    label: "Menú principal",
     open: "Abrir menú",
     close: "Cerrar menú",
     tagline: "PARA LOS MÁS GAMBERROS DEL HAMBRE",
     links: [
-      { label: "Menú", href: "/#menu" },
+      { label: "Carta", href: "/carta" },
       { label: "Promos", href: "/#margaritas" },
+      { label: "Club", href: "/#club" },
       { label: "Pedir", href: "/#order" },
     ],
     orderCta: "¡PIDE YA!",
-    panelImages: ["La Sugar Mommy", "Hot Dog Vibes"],
+    panelImages: ["La Sugar Daddy", "Hot Dog Vibes"],
   },
   hero: {
     gameBoyAlt: "Game Boy Color de Mr. Majo's mostrando fotos del local",
@@ -100,7 +110,7 @@ const es = {
     badge: "ESTO ES SOLO UN ADELANTO",
     morePlates: (n: number) => `+${n} PLATOS`,
     moreLine2: "MÁS EN LA CARTA",
-    all: "Todas las burgers, perritos, acompañamientos y postres",
+    all: "Todas las burgers, perritos, entrantes y postres",
     plus: (list: string) => `, además de ${list}`,
     and: "y",
     cta: "VER LA CARTA COMPLETA",
@@ -218,12 +228,19 @@ export type Messages = typeof es;
 
 const en: Messages = {
   meta: {
-    title: "Mr. Majo's — The Cheekiest Burger Joint",
+    title: "Mr. Majo's — The Cheekiest Burger Joint in Alicante",
     description:
-      "Mr. Majo's: smash burgers, hot dogs and a total addiction. Order now and drip with no shame.",
-    cartaTitle: "The Full Menu — Mr. Majo's",
+      "Smash burgers, hot dogs and a total addiction at Calle Bazán 45, Alicante. Lunch menu, unlimited fries and delivery via Glovo and Uber Eats.",
+    cartaTitle: "Burger & Hot Dog Menu — Mr. Majo's Alicante",
     cartaDescription:
-      "Mr. Majo's full menu: burgers, giant hot dogs, sides, veggie & kids, desserts, drinks and extras.",
+      "Mr. Majo's full menu: smash burgers, dry-aged beef burgers, giant hot dogs, starters, veggie, kids' menu, desserts and drinks.",
+    keywords: [
+      "burger restaurant Alicante",
+      "smash burgers Alicante",
+      "hot dogs Alicante",
+      "burger delivery Alicante",
+      "Mr. Majo's",
+    ],
   },
   language: {
     label: "Language",
@@ -231,17 +248,19 @@ const en: Messages = {
   },
   nav: {
     homeLabel: "Mr. Majo's — home",
-    subtitle: "SMASH BURGERS • ALICANTE",
+    subtitle: "SMASH • DRY AGED • ALICANTE",
+    label: "Main menu",
     open: "Open menu",
     close: "Close menu",
     tagline: "FOR THE HUNGRIEST TROUBLEMAKERS",
     links: [
-      { label: "Menu", href: "/#menu" },
+      { label: "Menu", href: "/carta" },
       { label: "Deals", href: "/#margaritas" },
+      { label: "Club", href: "/#club" },
       { label: "Order", href: "/#order" },
     ],
     orderCta: "ORDER NOW!",
-    panelImages: ["La Sugar Mommy", "Hot Dog Vibes"],
+    panelImages: ["La Sugar Daddy", "Hot Dog Vibes"],
   },
   hero: {
     gameBoyAlt: "Mr. Majo's Game Boy Color showing photos of the restaurant",
@@ -313,7 +332,7 @@ const en: Messages = {
     badge: "THIS IS JUST A TASTE",
     morePlates: (n: number) => `+${n} MORE`,
     moreLine2: "DISHES ON THE MENU",
-    all: "All the burgers, hot dogs, sides and desserts",
+    all: "All the burgers, hot dogs, starters and desserts",
     plus: (list: string) => `, plus ${list}`,
     and: "and",
     cta: "SEE THE FULL MENU",

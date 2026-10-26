@@ -5,7 +5,7 @@ import { getI18n } from "@/i18n/server";
 /**
  * La promo de patatas ilimitadas dentro de la carta, con el mismo lenguaje
  * que el póster del home: papel crema, cuadros de ajedrez, sticker +1€ y la
- * mascota flotando. Va justo antes de Acompañamientos ("¿y de acompañar?").
+ * mascota flotando. Va justo antes de Entrantes ("¿y para picar?").
  */
 export async function UnlimitedFriesStrip() {
   const { t } = await getI18n();

@@ -52,8 +52,9 @@ export const FEATURED_DISH = {
 
 export const FULL_MENU: FullMenuCategory[] = [
   {
-    id: "burgers",
-    title: "Burgers",
+    id: "smash",
+    title: "Smash Burgers",
+    shortTitle: "Smash",
     icon: "burger",
     items: [
       {
@@ -119,6 +120,15 @@ export const FULL_MENU: FullMenuCategory[] = [
         footerLeft: "Pulled Pork BBQ",
         image: "/images/burgers/goloza.webp",
       },
+    ],
+  },
+  {
+    id: "dry-aged",
+    title: "Dry Aged Burgers",
+    shortTitle: "Dry Aged",
+    icon: "crown",
+    description: "Vaca gallega madurada 30 días. No se puede muy hecha.",
+    items: [
       {
         id: "sugarmommy-real",
         name: "La Sugar Mommy",
@@ -231,8 +241,8 @@ export const FULL_MENU: FullMenuCategory[] = [
     ],
   },
   {
-    id: "acompanamientos",
-    title: "Acompañamientos",
+    id: "entrantes",
+    title: "Entrantes",
     icon: "fries",
     items: [
       {
@@ -316,8 +326,8 @@ export const FULL_MENU: FullMenuCategory[] = [
     ],
   },
   {
-    id: "veggie-kids",
-    title: "Veggie & Kids",
+    id: "veggie",
+    title: "Veggie",
     icon: "veggie",
     items: [
       {
@@ -345,6 +355,14 @@ export const FULL_MENU: FullMenuCategory[] = [
         imagePosition: "center 80%",
         headroom: true,
       },
+    ],
+  },
+  {
+    id: "peques",
+    title: "Para Peques",
+    shortTitle: "Peques",
+    icon: "patty",
+    items: [
       {
         id: "kids-carne",
         name: "La Majo's Kids Carne",
@@ -487,11 +505,18 @@ export const TOPPINGS: ToppingItem[] = [
 // ---------------------------------------------------------------------------
 
 export const HOME_PICKS: { categoryId: string; itemIds: string[] }[] = [
-  { categoryId: "burgers", itemIds: ["gringa", "guiri", "loba", "sugarmommy-real", "orale"] },
+  { categoryId: "smash", itemIds: ["gringa", "guiri", "loba"] },
+  { categoryId: "dry-aged", itemIds: ["sugarmommy-real", "orale", "pecadora"] },
   { categoryId: "perritos", itemIds: ["yankee", "cheese-porn"] },
-  { categoryId: "acompanamientos", itemIds: ["majos-teques", "patatas-trifasicas-carta", "chicken-wings"] },
+  { categoryId: "entrantes", itemIds: ["majos-teques", "patatas-trifasicas-carta", "chicken-wings"] },
   { categoryId: "postres", itemIds: ["nute-teques", "choko-majos"] },
 ];
+
+/** Categorías de burgers: en el home enlazan a cada plato y cuentan como "burgers". */
+export const BURGER_CATEGORY_IDS = ["smash", "dry-aged"];
+
+/** Id del plato insignia en el home; en la carta vive en el ancla #insignia. */
+export const FEATURED_ID = "sugar-daddy";
 
 export type HomeCategory = FullMenuCategory & {
   /** Platos que tiene la categoría en la carta completa. */
@@ -536,32 +561,38 @@ function translate(lang: Locale) {
 function buildMenu(lang: Locale) {
   const { featured, categories, toppings } = translate(lang);
 
+  // el plato insignia (doble smash) encabeza las Smash del home
+  const featuredItem: FullMenuItem = {
+    id: FEATURED_ID,
+    name: featured.name,
+    description: featured.description,
+    price: featured.price,
+    tag: featured.tag,
+    image: featured.image,
+    headroom: true,
+  };
+
   const homeCategories: HomeCategory[] = HOME_PICKS.map(({ categoryId, itemIds }) => {
     const category = categories.find((c) => c.id === categoryId)!;
+    const withFeatured = categoryId === "smash";
     const min = Math.min(...category.items.map((item) => toNumber(item.price)));
+    const items = itemIds.map((id) => {
+      const item = category.items.find((i) => i.id === id);
+      if (!item) throw new Error(`HOME_PICKS: "${id}" no existe en la categoría "${categoryId}"`);
+      return item;
+    });
     return {
       ...category,
-      items: itemIds.map((id) => {
-        const item = category.items.find((i) => i.id === id);
-        if (!item) throw new Error(`HOME_PICKS: "${id}" no existe en la categoría "${categoryId}"`);
-        return item;
-      }),
-      total: category.items.length,
+      items: withFeatured ? [featuredItem, ...items] : items,
+      total: category.items.length + (withFeatured ? 1 : 0),
       from: `${min.toFixed(2).replace(".", ",")}€`,
     };
   });
 
-  const showcase: ShowcaseBurger[] = [
-    {
-      id: "sugar-daddy",
-      name: featured.name,
-      description: featured.description,
-      price: featured.price,
-      tag: featured.tag,
-      image: featured.image,
-      headroom: true,
-    },
-    ...homeCategories[0].items.map((item) => ({
+  const showcase: ShowcaseBurger[] = homeCategories
+    .filter((c) => BURGER_CATEGORY_IDS.includes(c.id))
+    .flatMap((c) => c.items)
+    .map((item) => ({
       id: item.id,
       name: item.name,
       description: item.description,
@@ -570,8 +601,7 @@ function buildMenu(lang: Locale) {
       image: item.image!,
       imagePosition: item.imagePosition,
       headroom: item.headroom,
-    })),
-  ];
+    }));
 
   return { featured, categories, toppings, homeCategories, showcase };
 }

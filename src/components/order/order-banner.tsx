@@ -1,3 +1,4 @@
+import { BrandSticker } from "@/components/decorative/brand-sticker";
 import { Drip } from "@/components/decorative/drip";
 import { Reveal } from "@/components/motion/reveal";
 import { ORDER_LINKS } from "@/lib/site-data";
@@ -16,6 +17,7 @@ export async function OrderBanner() {
       <Drip className="absolute inset-x-0 top-0 h-8 md:h-11" />
 
       <div className="relative mx-auto max-w-7xl px-4 text-center md:px-8">
+        <BrandSticker name="sello" rotate={-10} className="-bottom-24 left-4 w-20 sm:w-28 md:bottom-auto md:left-8 md:top-6 md:w-40" />
         <Reveal>
           <span className="font-tag text-xs tracking-widest text-mr-black/70">
             {t.order.eyebrow}

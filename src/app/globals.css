@@ -197,9 +197,29 @@
   animation: neon-flicker 4.5s linear infinite;
 }
 
+/* brillo que cruza un sticker de vez en cuando; la capa va recortada con la
+   propia imagen (mask-image) para que solo brille la silueta */
+@keyframes sticker-shine {
+  0% {
+    background-position: 150% 0;
+  }
+  35%,
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+.animate-sticker-shine {
+  background: linear-gradient(105deg, transparent 44%, rgb(255 255 255 / 0.75) 50%, transparent 56%) no-repeat;
+  background-size: 250% 100%;
+  mask-size: 100% 100%;
+  animation: sticker-shine 4.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-float,
+  .animate-sticker-shine,
   .animate-neon-flicker {
     animation: none;
   }

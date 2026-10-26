@@ -11,7 +11,7 @@ export function MenuCategorySection({ category }: { category: FullMenuCategory }
           <GraffitiIcon name={category.icon} className="size-12 -rotate-6 sm:size-16" />
         )}
         <div className="min-w-0">
-          {/* "ACOMPAÑAMIENTOS" es una sola palabra: en móviles de 320px no cabe a text-4xl */}
+          {/* títulos largos de una sola palabra: en móviles de 320px no caben a text-4xl */}
           <h2 className="font-display text-4xl leading-[0.85] text-mr-cream break-words max-[359px]:text-[1.7rem] sm:text-5xl">
             {category.title}
           </h2>

@@ -4,16 +4,20 @@ import { Fragment } from "react";
 import { SiteNav } from "@/components/nav/site-nav";
 import { SiteFooter } from "@/components/footer/site-footer";
 import { getI18n } from "@/i18n/server";
+import { pageMetadata } from "@/lib/seo";
 import { LEGAL_UPDATED, getLegalDoc, type LegalDocId } from "@/lib/legal-content";
 
 export async function legalMetadata(id: LegalDocId): Promise<Metadata> {
   const { lang } = await getI18n();
   const doc = getLegalDoc(lang, id);
-  return {
+  // páginas de trámite: fuera del índice de Google, pero sus enlaces se siguen
+  return pageMetadata({
+    lang,
+    path: `/${id}`,
     title: `${doc.title} — Mr. Majo's`,
     description: doc.intro,
-    alternates: { languages: { es: `/${id}`, en: `/en/${id}` } },
-  };
+    index: false,
+  });
 }
 
 /** Resalta los datos pendientes ("[NIF/CIF]") para que no pasen desapercibidos. */

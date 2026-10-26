@@ -2,15 +2,16 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { getI18n } from "@/i18n/server";
+import { BrandSticker } from "@/components/decorative/brand-sticker";
 import { ORDER_LINKS } from "@/lib/site-data";
 import { CHECKER } from "./unlimited-fries-section";
 import { MargaritaGlass, type MargaritaFlavor } from "./margarita-glass";
 
-// etiqueta de cada sabor (mismo orden que messages.margaritas.flavors)
-const FLAVORS: { id: MargaritaFlavor; tag: string }[] = [
-  { id: "classic", tag: "bg-[#c9d97e]" },
-  { id: "strawberry", tag: "bg-[#e0596f] text-mr-cream" },
-  { id: "mango", tag: "bg-[#f5b041]" },
+// etiqueta e ilustración de cada sabor (mismo orden que messages.margaritas.flavors)
+const FLAVORS: { id: MargaritaFlavor; tag: string; src: string; width: number; height: number }[] = [
+  { id: "classic", tag: "bg-[#c9d97e]", src: "/images/promo/margarita-lima.webp", width: 595, height: 718 },
+  { id: "strawberry", tag: "bg-[#e0596f] text-mr-cream", src: "/images/promo/margarita-fresa.webp", width: 596, height: 726 },
+  { id: "mango", tag: "bg-[#f5b041]", src: "/images/promo/margarita-mango.webp", width: 594, height: 706 },
 ];
 
 // chorretones en vertical: el mismo trazo que <Drip>, girado y repetido en mosaico
@@ -66,10 +67,14 @@ function PromoBurst({ label, className }: { label: string; className?: string })
  * precios y sello PROMO. Las copas, una por sabor, en margarita-glass.tsx.
  */
 export async function MargaritaSection({
-  art = "illustration",
+  art = "trio",
 }: {
-  /** "illustration": la copa ilustrada (generada con Recraft), a pares como en el cartel. "drawn": las tres copas dibujadas en SVG, una por sabor. */
-  art?: "illustration" | "drawn";
+  /**
+   * "trio": las tres copas ilustradas (lima, fresa, mango), una por sabor.
+   * "illustration": la copa clásica (generada con Recraft), a pares como en el cartel.
+   * "drawn": las tres copas dibujadas en SVG, una por sabor.
+   */
+  art?: "trio" | "illustration" | "drawn";
 }) {
   const { t, href } = await getI18n();
   const m = t.margaritas;
@@ -154,6 +159,13 @@ export async function MargaritaSection({
         </Reveal>
 
         <Reveal delay={0.08} className="relative mx-auto w-full max-w-xl md:max-w-2xl">
+          {/* debajo de las copas y quieto (las copas ya flotan): solo un brillo de vez en cuando */}
+          <BrandSticker
+            name="firma"
+            rotate={-4}
+            idle="shine"
+            className="left-1/2 top-full mt-5 w-40 -translate-x-1/2 sm:w-48 md:mt-8 md:w-56"
+          />
           <div role="img" aria-label={m.illustration} className="relative aspect-[6/5]">
             <PromoBurst
               label={m.promo}
@@ -191,7 +203,18 @@ export async function MargaritaSection({
                 return (
                   <div key={flavor.id} className={`absolute ${place}`}>
                     <div className="animate-float" style={{ animationDelay: `${i * -1.3}s` }}>
-                      <MargaritaGlass flavor={flavor.id} className="w-full" />
+                      {art === "trio" ? (
+                        <Image
+                          src={flavor.src}
+                          alt=""
+                          width={flavor.width}
+                          height={flavor.height}
+                          sizes="(max-width: 768px) 45vw, 300px"
+                          className="h-auto w-full drop-shadow-[6px_10px_0_rgba(0,0,0,0.16)]"
+                        />
+                      ) : (
+                        <MargaritaGlass flavor={flavor.id} className="w-full" />
+                      )}
                     </div>
                     <span
                       className={`font-tag absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border-2 border-mr-black px-2.5 py-0.5 text-[11px] tracking-widest shadow-[0_3px_0_0_var(--mr-black)] md:text-xs ${

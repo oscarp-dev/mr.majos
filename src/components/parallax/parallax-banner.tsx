@@ -26,6 +26,8 @@ type ParallaxBannerProps = {
   /** Call to action under the heading (kept out of the h2 so links stay
    *  outside the heading's semantics). */
   action?: ReactNode;
+  /** Stickers u otros adornos sobre la foto; se posicionan dentro del ancho del contenido. */
+  decoration?: ReactNode;
 };
 
 export function ParallaxBanner({
@@ -40,6 +42,7 @@ export function ParallaxBanner({
   imageScaleRange = [1.15, 1.02],
   id,
   action,
+  decoration,
 }: ParallaxBannerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -123,6 +126,12 @@ export function ParallaxBanner({
           )}
         </div>
       </div>
+
+      {decoration && (
+        <div className="pointer-events-none absolute inset-0">
+          <div className="relative mx-auto h-full max-w-7xl">{decoration}</div>
+        </div>
+      )}
     </section>
   );
 }

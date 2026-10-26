@@ -8,13 +8,11 @@ import { getI18n } from "@/i18n/server";
  */
 export async function FullMenuCta() {
   const { t, menu, href } = await getI18n();
-  const { categories, homeCategories, showcase } = menu;
+  const { categories, homeCategories } = menu;
 
   // Lo que el home NO enseña: así el cartel se actualiza solo al tocar la carta.
   const totalDishes = categories.reduce((n, c) => n + c.items.length, 0) + 1; // + plato insignia
-  const shownDishes =
-    showcase.length +
-    homeCategories.filter((c) => c.id !== "burgers").reduce((n, c) => n + c.items.length, 0);
+  const shownDishes = homeCategories.reduce((n, c) => n + c.items.length, 0); // ya incluye el insignia
   const moreDishes = totalDishes - shownDishes;
 
   const homeIds = new Set(homeCategories.map((c) => c.id));

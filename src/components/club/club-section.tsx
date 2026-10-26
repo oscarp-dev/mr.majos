@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CLUB_TIERS } from "@/lib/site-data";
+import { CLUB_SIGNUP_URL, CLUB_TIERS } from "@/lib/site-data";
 import { Reveal } from "@/components/motion/reveal";
 import { PaintSplash } from "@/components/decorative/paint-splash";
 import { DraggableSticker } from "@/components/decorative/draggable-sticker";
@@ -57,7 +57,9 @@ export async function ClubSection() {
 
           <div className="relative mt-8 inline-block">
             <a
-              href="#menu"
+              href={CLUB_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative z-10 inline-flex -rotate-1 items-center rounded-full bg-mr-yellow px-6 py-3 font-tag text-sm tracking-wide text-mr-black shadow-[0_4px_0_0_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
             >
               {t.club.cta}

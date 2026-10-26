@@ -38,7 +38,7 @@ export async function MenuSection() {
             rotate={9}
             className="-top-16 right-[8%] hidden w-24 md:block"
           />
-          <MenuStreetList categories={menu.homeCategories} burgers={menu.showcase} />
+          <MenuStreetList categories={menu.homeCategories} />
         </Reveal>
 
         <Reveal delay={0.1}>

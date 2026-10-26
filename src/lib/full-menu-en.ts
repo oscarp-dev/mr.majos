@@ -22,14 +22,19 @@ export const FEATURED_EN = {
 };
 
 export const CATEGORIES_EN: Record<string, CategoryEn> = {
-  burgers: { title: "Burgers" },
+  smash: { title: "Smash Burgers" },
+  "dry-aged": {
+    title: "Dry Aged Burgers",
+    description: "Galician beef dry-aged for 30 days. Can't be cooked well done.",
+  },
   perritos: {
     title: "Giant Hot Dogs (120g)",
     shortTitle: "Hot Dogs",
     description: "A giant 120g sausage in a soft buttered bun.",
   },
-  acompanamientos: { title: "Sides" },
-  "veggie-kids": { title: "Veggie & Kids" },
+  entrantes: { title: "Starters" },
+  veggie: { title: "Veggie" },
+  peques: { title: "For the Little Ones", shortTitle: "Kids" },
   postres: { title: "Desserts" },
   bebidas: { title: "Drinks" },
 };
@@ -112,7 +117,7 @@ export const ITEMS_EN: Record<string, ItemEn> = {
       "120g sausage, triple cheddar, handmade guacamole, red onion, spicy jalapeños and Mr. Majo's chipotle sauce.",
   },
 
-  // acompañamientos
+  // entrantes
   "majos-teques": {
     description:
       "6 crispy golden cheese sticks oozing with melted cheese, served with homemade Garlic Mayo.",
@@ -154,7 +159,7 @@ export const ITEMS_EN: Record<string, ItemEn> = {
     footerRight: "Flaky Sea Salt",
   },
 
-  // veggie & kids
+  // veggie y peques
   "veggie-baby": {
     description:
       "Seasoned plant-based patty, melted Gouda, caramelized onion, tomato, Batavia lettuce and Mayo Majo's.",

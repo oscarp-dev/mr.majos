@@ -6,6 +6,9 @@ export const CLUB_TIERS = [
   { name: "Food P*rn VIP", stamps: "50+" },
 ] as const;
 
+// Alta en el Majo's Club (tarjeta de fidelidad en Comeback).
+export const CLUB_SIGNUP_URL = "https://signup.comeback.es/58970f74/mr.-majo%C2%B4s/createCustomer";
+
 export const SOCIAL_LINKS = [
   { label: "Instagram", href: "https://instagram.com/mr_majos" },
   { label: "TikTok", href: "https://tiktok.com/@mr_majos" },
@@ -24,7 +27,6 @@ export const MENU_DEL_DIA = {
 export const ORDER_LINKS = {
   glovo: "https://glovoapp.com/es/es/alicante/stores/mr-majos-alicante",
   uberEats: "https://www.ubereats.com/es/store/mr-majos/Y9d4SoQ5SZOJA7wNb9DG4Q",
-  // TODO: pegar aquí el enlace del módulo de reservas de CoverManager, p. ej.
-  // https://www.covermanager.com/reserve/module_restaurant/restaurante-mr-majos/spanish
-  reservas: "#reservar",
+  // módulo de reservas de CoverManager
+  reservas: "https://www.covermanager.com/reservation/module_restaurant/restaurante-mr-majos/spanish",
 } as const;

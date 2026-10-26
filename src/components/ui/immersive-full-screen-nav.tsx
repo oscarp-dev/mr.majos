@@ -33,12 +33,16 @@ const getFocusableElements = (container?: HTMLElement | null): HTMLElement[] => 
 interface UseFocusTrapParams {
   active: boolean;
   containerRef: RefObject<HTMLElement | null>;
+  /** Where focus lands on open; defaults to the container. */
+  initialRef?: RefObject<HTMLElement | null>;
   onEscape?: () => void;
 }
 
-function useFocusTrap({ active, containerRef, onEscape }: UseFocusTrapParams) {
+function useFocusTrap({ active, containerRef, initialRef, onEscape }: UseFocusTrapParams) {
   const onEscapeRef = useRef(onEscape);
-  onEscapeRef.current = onEscape;
+  useEffect(() => {
+    onEscapeRef.current = onEscape;
+  });
 
   useEffect(() => {
     if (!active) return;
@@ -49,7 +53,7 @@ function useFocusTrap({ active, containerRef, onEscape }: UseFocusTrapParams) {
     const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
     const focusInitial = () => {
-      const target = getFocusableElements(container)[0] ?? container;
+      const target = getFocusableElements(initialRef?.current ?? container)[0] ?? container;
       if (!(target instanceof HTMLElement)) return;
       if (target === container && !container.hasAttribute("tabindex")) {
         container.setAttribute("tabindex", "-1");
@@ -101,7 +105,7 @@ function useFocusTrap({ active, containerRef, onEscape }: UseFocusTrapParams) {
         previouslyFocused.focus();
       }
     };
-  }, [active, containerRef]);
+  }, [active, containerRef, initialRef]);
 }
 
 /* ------------------------------------------------------------------ *
@@ -146,6 +150,13 @@ export interface FullscreenNavOverlayProps {
   closeDuration?: number;
   ease?: string;
   className?: string;
+  /**
+   * Element the focus trap spans; defaults to the overlay itself. Pass the
+   * header so its close button and other controls stay reachable by Tab.
+   */
+  trapRef?: RefObject<HTMLElement | null>;
+  /** id for the trigger's aria-controls. */
+  id?: string;
   children: (isOpen: boolean) => ReactNode;
 }
 
@@ -158,9 +169,11 @@ export function FullscreenNavOverlay({
   closeDuration = 0.9,
   ease = "power4.inOut",
   className = "",
+  trapRef,
+  id,
   children,
 }: FullscreenNavOverlayProps) {
-  const overlayRef = useRef<HTMLElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<gsap.core.Timeline | gsap.core.Tween | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -223,23 +236,24 @@ export function FullscreenNavOverlay({
     };
   }, [open]);
 
-  useFocusTrap({ active: open, containerRef: rootRef, onEscape: onClose });
+  useFocusTrap({ active: open, containerRef: trapRef ?? rootRef, initialRef: rootRef, onEscape: onClose });
 
   return (
     <div ref={rootRef}>
-      <nav
+      {/* inert while closed: the clipped-away links must not take focus */}
+      <div
+        id={id}
         ref={overlayRef}
+        inert={!open}
         style={{ clipPath: closedInitial, backgroundColor: overlayBg }}
         className={`fixed inset-0 z-[100] flex flex-col overflow-y-auto ${
           open ? "pointer-events-auto" : "pointer-events-none"
         } ${className}`}
-        aria-hidden={!open}
-        role="navigation"
       >
         <div ref={contentRef} className="flex min-h-full w-full flex-col">
           {children(open)}
         </div>
-      </nav>
+      </div>
     </div>
   );
 }

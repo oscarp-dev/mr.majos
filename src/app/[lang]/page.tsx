@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { cn } from "cn";
 import { ArrowRight, Clock } from "lucide-react";
@@ -12,16 +13,27 @@ import { OrderBanner } from "@/components/order/order-banner";
 import { SiteFooter } from "@/components/footer/site-footer";
 import { MargaritaSection } from "@/components/promo/margarita-section";
 import { getI18n } from "@/i18n/server";
+import { BrandSticker } from "@/components/decorative/brand-sticker";
+import { jsonLdScript, pageMetadata, restaurantJsonLd } from "@/lib/seo";
 
 const InstagramSection = dynamic(
   () => import("@/components/instagram/instagram-section")
 );
 
+export async function generateMetadata(): Promise<Metadata> {
+  const { lang, t } = await getI18n();
+  return pageMetadata({ lang, path: "/", title: t.meta.title, description: t.meta.description });
+}
+
 export default async function Home() {
-  const { t } = await getI18n();
+  const { lang, t } = await getI18n();
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(restaurantJsonLd(lang, t.meta.description)) }}
+      />
       <SiteNav />
       <main>
         <HeroSection />
@@ -69,6 +81,9 @@ export default async function Home() {
               {t.bookTable}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 md:size-5" strokeWidth={3} />
             </a>
+          }
+          decoration={
+            <BrandSticker name="bloque" rotate={8} className="right-4 top-6 w-28 sm:w-36 md:right-10 md:top-12 md:w-52" />
           }
           id="menu-del-dia"
           verticalAlign="center"

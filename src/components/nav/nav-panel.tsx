@@ -8,7 +8,7 @@ import { SOCIAL_LINKS } from "@/lib/site-data";
 import { useI18n } from "@/i18n/client";
 
 // los alt van en messages.nav.panelImages
-const PANEL_IMAGES = ["/images/hero-sugarmommy-burger.webp", "/images/foto-hotdog-mordida.webp"];
+const PANEL_IMAGES = ["/images/burgers/sugar-daddy.webp", "/images/foto-hotdog-mordida.webp"];
 
 function TikTokIcon() {
   return (
@@ -35,46 +35,40 @@ const LINK_Y_OFFSET = 26;
    duplicate (offset 1.2em down, in mr-red). On hover/focus every letter's
    real copy slides up out of its clipping box at a staggered delay,
    revealing the red shadow copy sliding into the vacated spot beneath it.
-   Falls back to plain text under prefers-reduced-motion. */
+   Under prefers-reduced-motion the swap is instant (pure CSS, so server and
+   client render the same markup). */
 function NavLinkHover({
   label,
   href,
   onClick,
-  reduced,
   linkRef,
 }: {
   label: string;
   href: string;
   onClick: () => void;
-  reduced: boolean;
   linkRef: (el: HTMLAnchorElement | null) => void;
 }) {
-  const baseClass =
-    "font-display block border-b border-mr-black/10 py-3 text-[15vw] leading-[0.9] text-mr-black sm:text-[9vw] md:text-[6.5vw]";
-
-  if (reduced) {
-    return (
-      <a ref={linkRef} href={href} onClick={onClick} className={`${baseClass} transition-colors hover:text-mr-red`}>
-        {label}
-      </a>
-    );
-  }
-
   return (
-    <a ref={linkRef} href={href} onClick={onClick} className={`${baseClass} group/link-hover`}>
+    <Link
+      ref={linkRef}
+      href={href}
+      onClick={onClick}
+      className="font-display group/link-hover block border-b border-mr-black/10 py-3 text-[15vw] leading-[0.9] text-mr-black sm:text-[9vw] md:text-[6.5vw]"
+    >
       <span className="sr-only">{label}</span>
-      <span aria-hidden="true" className="relative inline-block overflow-hidden align-top leading-[0.9]">
+      {/* pt: room above the cap height so accents (MENÚ) aren't clipped */}
+      <span aria-hidden="true" className="relative inline-block overflow-hidden pt-[0.18em] align-top leading-[0.9]">
         {[...label].map((char, index) => (
           <span
             key={index}
-            className="relative inline-block whitespace-pre transition-transform duration-500 ease-[cubic-bezier(0.625,0.05,0,1)] group-hover/link-hover:-translate-y-[1.2em] group-focus-visible/link-hover:-translate-y-[1.2em]"
+            className="relative inline-block whitespace-pre transition-transform duration-500 ease-[cubic-bezier(0.625,0.05,0,1)] group-hover/link-hover:-translate-y-[1.2em] group-focus-visible/link-hover:-translate-y-[1.2em] motion-reduce:transition-none"
             style={{ textShadow: "0 1.2em var(--mr-red)", transitionDelay: `${index * 0.02}s` }}
           >
             {char === " " ? " " : char}
           </span>
         ))}
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -91,10 +85,9 @@ export function NavPanel({
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
   const socialsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const ctaRef = useRef<HTMLAnchorElement | null>(null);
-  const reducedMotion =
-    typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
   useEffect(() => {
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
     const targets = [taglineRef.current, ...linksRef.current, ...imagesRef.current, ...socialsRef.current, ctaRef.current];
     gsap.killTweensOf(targets);
 
@@ -139,7 +132,6 @@ export function NavPanel({
       delay: delay + 0.5,
     });
     gsap.to(ctaRef.current, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", delay: delay + 0.55 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   return (
@@ -149,14 +141,13 @@ export function NavPanel({
       </p>
 
       <div className="flex flex-1 flex-col justify-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
-        <nav className="flex flex-col">
+        <nav aria-label={t.nav.label} className="flex flex-col">
           {t.nav.links.map((link, i) => (
             <NavLinkHover
               key={link.href}
               label={link.label}
               href={href(link.href)}
               onClick={onNavigate}
-              reduced={reducedMotion}
               linkRef={(el) => {
                 linksRef.current[i] = el;
               }}

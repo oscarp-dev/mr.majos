@@ -10,14 +10,16 @@ import { ToppingsGrid } from "@/components/carta/toppings-grid";
 import { CartaCategoryNav } from "@/components/carta/carta-category-nav";
 import { UnlimitedFriesStrip } from "@/components/promo/unlimited-fries-strip";
 import { getI18n } from "@/i18n/server";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { t } = await getI18n();
-  return {
+  const { lang, t } = await getI18n();
+  return pageMetadata({
+    lang,
+    path: "/carta",
     title: t.meta.cartaTitle,
     description: t.meta.cartaDescription,
-    alternates: { languages: { es: "/carta", en: "/en/carta" } },
-  };
+  });
 }
 
 export default async function CartaPage() {
@@ -76,8 +78,8 @@ export default async function CartaPage() {
 
             {menu.categories.map((category) => (
               <Fragment key={category.id}>
-                {/* la promo justo antes de Acompañamientos: el momento de "¿y de acompañar?" */}
-                {category.id === "acompanamientos" && <UnlimitedFriesStrip />}
+                {/* la promo justo antes de Entrantes: el momento de "¿y para picar?" */}
+                {category.id === "entrantes" && <UnlimitedFriesStrip />}
                 <MenuCategorySection category={category} />
               </Fragment>
             ))}

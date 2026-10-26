@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Globe } from "lucide-react";
 import { switchLanguage } from "@/components/consent/consent-banner";
 import { useI18n } from "@/i18n/client";
@@ -67,9 +67,10 @@ function LanguageSwitch({ inverted }: { inverted: boolean }) {
 export function SiteNav() {
   const { t, href } = useI18n();
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-mr-black">
+    <header ref={headerRef} className="sticky top-0 z-50 border-b-2 border-mr-black">
       {/* solid, full-width, and stacked above the overlay (z-[101] > the
           overlay's z-[100]) — otherwise the overlay, nested as a sibling
           inside this header, would paint over the header's own background
@@ -87,7 +88,7 @@ export function SiteNav() {
           >
             <Image
               src="/images/badge-circular-amarillo-sin-anillo.webp"
-              alt="Mr. Majo's"
+              alt=""
               width={96}
               height={96}
               preload
@@ -104,7 +105,7 @@ export function SiteNav() {
                 MR. MAJO&apos;S
               </span>
               <span
-                className={`font-tag text-[8px] tracking-widest transition-colors duration-300 md:text-[9px] ${
+                className={`font-tag text-[9px] tracking-widest transition-colors duration-300 md:text-[10px] ${
                   open ? "text-mr-black/70" : "text-mr-yellow"
                 }`}
               >
@@ -120,6 +121,7 @@ export function SiteNav() {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
+            aria-controls="site-menu"
             aria-label={open ? t.nav.close : t.nav.open}
             className={`flex size-9 flex-col items-center justify-center gap-1.5 rounded-md border transition-colors duration-300 md:size-11 ${
               open ? "border-mr-black/30" : "border-mr-cream/20"
@@ -143,6 +145,8 @@ export function SiteNav() {
       <FullscreenNavOverlay
         open={open}
         onClose={() => setOpen(false)}
+        trapRef={headerRef}
+        id="site-menu"
         overlayBg="var(--mr-yellow)"
         clipOrigin="top"
         openDuration={0.6}

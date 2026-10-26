@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, DM_Serif_Display, Space_Grotesk } from "next/font/google";
 import { ConsentBanner } from "@/components/consent/consent-banner";
 import { LocaleProvider } from "@/i18n/client";
 import { LOCALES } from "@/i18n/config";
 import { getI18n } from "@/i18n/server";
+import { BUSINESS } from "@/lib/business";
+import { SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
 const anton = Anton({
@@ -36,12 +38,21 @@ export function generateStaticParams() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n();
+  // lo común a todas las páginas; cada page.tsx añade su canonical con pageMetadata
   return {
+    metadataBase: SITE_URL,
     title: t.meta.title,
     description: t.meta.description,
-    alternates: { languages: { es: "/", en: "/en" } },
+    applicationName: BUSINESS.brand,
+    keywords: t.meta.keywords,
+    formatDetection: { telephone: false },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
+};
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
   const { lang } = await getI18n();

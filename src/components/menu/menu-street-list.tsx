@@ -16,7 +16,7 @@ import {
   useVelocity,
 } from "framer-motion";
 import { GraffitiIcon } from "@/components/decorative/graffiti-icon";
-import type { HomeCategory, ShowcaseBurger } from "@/lib/full-menu-data";
+import { BURGER_CATEGORY_IDS, FEATURED_ID, type HomeCategory } from "@/lib/full-menu-data";
 import { MenuStreetCarousel } from "./menu-street-carousel";
 import { useI18n } from "@/i18n/client";
 
@@ -35,18 +35,16 @@ export type StreetRow = {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-function toRows(
-  category: HomeCategory,
-  burgers: ShowcaseBurger[],
-  href: (path: string) => string
-): StreetRow[] {
-  if (category.id === "burgers") {
-    return burgers.map((b) => ({
-      ...b,
-      href: href(`/carta#${b.id === "sugar-daddy" ? "insignia" : b.id}`),
-    }));
-  }
-  return category.items.map((item) => ({ ...item, href: href(`/carta#${category.id}`) }));
+const isBurgers = (category: HomeCategory) => BURGER_CATEGORY_IDS.includes(category.id);
+
+// las burgers enlazan a su ficha en la carta; el resto, a su sección
+function toRows(category: HomeCategory, href: (path: string) => string): StreetRow[] {
+  return category.items.map((item) => ({
+    ...item,
+    href: href(
+      `/carta#${!isBurgers(category) ? category.id : item.id === FEATURED_ID ? "insignia" : item.id}`
+    ),
+  }));
 }
 
 /**
@@ -54,17 +52,11 @@ function toRows(
  * hover while the dish follows the cursor as a slapped-on sticker. On touch
  * the row opens in place with the photo instead.
  */
-export function MenuStreetList({
-  categories,
-  burgers,
-}: {
-  categories: HomeCategory[];
-  burgers: ShowcaseBurger[];
-}) {
+export function MenuStreetList({ categories }: { categories: HomeCategory[] }) {
   const { t, href } = useI18n();
   const [categoryId, setCategoryId] = useState(categories[0].id);
   const category = categories.find((c) => c.id === categoryId) ?? categories[0];
-  const rows = toRows(category, burgers, href);
+  const rows = toRows(category, href);
   const rest = category.total - category.items.length;
 
   return (
@@ -88,7 +80,7 @@ export function MenuStreetList({
                 <CategoryChip
                   category={c}
                   index={i}
-                  count={c.id === "burgers" ? burgers.length : c.items.length}
+                  count={c.items.length}
                   selected={c.id === category.id}
                   onSelect={() => setCategoryId(c.id)}
                 />
@@ -102,7 +94,7 @@ export function MenuStreetList({
               key={c.id}
               category={c}
               index={i}
-              count={c.id === "burgers" ? burgers.length : c.items.length}
+              count={c.items.length}
               selected={c.id === category.id}
               onSelect={() => setCategoryId(c.id)}
             />
@@ -135,7 +127,7 @@ export function MenuStreetList({
                 className="font-tag group/more inline-flex items-center gap-2 text-sm tracking-wide text-mr-yellow transition-colors hover:text-mr-cream"
               >
                 {rest > 0
-                  ? t.menu.moreInCarta(rest, category.id === "burgers")
+                  ? t.menu.moreInCarta(rest, isBurgers(category))
                   : t.menu.seeInCarta}
                 <span className="transition-transform group-hover/more:translate-x-1">→</span>
               </Link>

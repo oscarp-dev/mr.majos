@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { SOCIAL_LINKS } from "@/lib/site-data";
 import { getI18n } from "@/i18n/server";
+import { BrandSticker } from "@/components/decorative/brand-sticker";
 
 // No hay credenciales de la API de Instagram conectadas en este proyecto:
 // el "perfil" usa fotos reales de producto a modo de mock visual del feed.
@@ -27,10 +28,10 @@ const POSTS: Post[] = [
 
 // Historias destacadas → secciones de la carta.
 const HIGHLIGHTS = [
-  { src: "/images/burgers/gringa.webp", href: "/carta#burgers", position: "center 78%" },
+  { src: "/images/burgers/gringa.webp", href: "/carta#gringa", position: "center 78%" },
   { src: "/images/perritos/yankee-estudio.webp", href: "/carta#perritos", position: "center 55%" },
-  { src: "/images/carta/majos-teques.webp", href: "/carta#acompanamientos", position: "center 68%" },
-  { src: "/images/carta/veggie-orale.webp", href: "/carta#veggie-kids", position: "center 62%" },
+  { src: "/images/carta/majos-teques.webp", href: "/carta#entrantes", position: "center 68%" },
+  { src: "/images/carta/veggie-orale.webp", href: "/carta#veggie-orale", position: "center 62%" },
   { src: "/images/carta/nute-teques.webp", href: "/carta#postres", position: "center 55%" },
   { src: "/images/foto-burger-menu-del-dia.webp", href: "/#menu-del-dia" },
 ];
@@ -75,7 +76,8 @@ export default async function InstagramSection() {
 
   return (
     <section className="bg-mr-black py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 md:px-8">
+        <BrandSticker name="nube" rotate={8} className="-top-6 right-4 w-28 sm:w-36 md:right-8 md:top-4 md:w-52" />
         <Reveal>
           <span className="font-tag text-xs tracking-widest text-mr-yellow">@MR_MAJOS</span>
           <h2 className="font-display bleed-full px-4 mt-2 text-[17vw] leading-[0.76] text-mr-cream sm:px-6 sm:text-[13vw] md:px-8 md:text-[9vw]">
