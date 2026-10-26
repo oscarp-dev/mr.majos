@@ -6,6 +6,12 @@ import { BrandSticker } from "@/components/decorative/brand-sticker";
 import { ORDER_LINKS } from "@/lib/site-data";
 import { CHECKER } from "./unlimited-fries-section";
 
+const GLASSES = [
+  { src: "/images/promo/margarita-lima.webp", width: 595, height: 718, place: "left-0 bottom-[6%] w-[40%] [--float-rot:-8deg]" },
+  { src: "/images/promo/margarita-fresa.webp", width: 596, height: 726, place: "left-[29%] bottom-0 z-10 w-[44%] [--float-rot:1deg]" },
+  { src: "/images/promo/margarita-mango.webp", width: 594, height: 706, place: "right-0 bottom-[8%] w-[40%] [--float-rot:9deg]" },
+];
+
 // chorretones en vertical: el mismo trazo que <Drip>, girado y repetido en mosaico
 const SIDE_DRIP =
   "M0,0 L0,400 L14,400 Q36,380 14,360 Q32,340 14,320 Q42,300 14,280 Q29,260 14,240 Q38,220 14,200 Q34,180 14,160 Q30,140 14,120 Q40,100 14,80 Q28,60 14,40 Q36,20 14,0 Z";
@@ -56,7 +62,8 @@ function PromoBurst({ label, className }: { label: string; className?: string })
 /**
  * Promo de margaritas (2 por 12,90€) con el lenguaje de su cartel del local:
  * amarillo con cuadrícula, cuadros negros que chorrean, serifa retro, tabla de
- * precios y sello PROMO. En carta solo hay la clásica frozen: dos copas, como el 2x.
+ * precios y sello PROMO. Tres copas ilustradas de adorno; en carta solo está la
+ * clásica frozen, así que no llevan etiqueta de sabor.
  */
 export async function MargaritaSection() {
   const { t, href } = await getI18n();
@@ -148,19 +155,16 @@ export async function MargaritaSection() {
               className="absolute -right-2 -top-14 z-20 w-24 rotate-12 drop-shadow-[3px_4px_0_var(--mr-black)] sm:w-28 md:-top-12 md:w-32"
             />
 
-            {/* como en el cartel: dos copas juntas, la de delante algo más grande */}
-            {[
-              "left-0 bottom-[4%] w-[49%] [--float-rot:-4deg]",
-              "left-[38%] bottom-0 z-10 w-[54%] [--float-rot:3deg]",
-            ].map((place, i) => (
-              <div key={place} className={`absolute ${place}`}>
-                <div className="animate-float" style={{ animationDelay: `${i * -1.6}s` }}>
+            {/* tres copas ilustradas, la del centro delante */}
+            {GLASSES.map((glass, i) => (
+              <div key={glass.src} className={`absolute ${glass.place}`}>
+                <div className="animate-float" style={{ animationDelay: `${i * -1.3}s` }}>
                   <Image
-                    src="/images/promo/margarita-clasica.webp"
+                    src={glass.src}
                     alt=""
-                    width={836}
-                    height={1098}
-                    sizes="(max-width: 768px) 50vw, 360px"
+                    width={glass.width}
+                    height={glass.height}
+                    sizes="(max-width: 768px) 45vw, 300px"
                     className="h-auto w-full drop-shadow-[6px_10px_0_rgba(0,0,0,0.16)]"
                   />
                 </div>
