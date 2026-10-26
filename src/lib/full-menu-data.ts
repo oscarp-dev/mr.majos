@@ -1,6 +1,13 @@
 import type { GraffitiIconName } from "@/components/decorative/graffiti-icon";
 import type { Locale } from "@/i18n/config";
-import { CATEGORIES_EN, FEATURED_EN, ITEMS_EN, TOPPINGS_EN } from "./full-menu-en";
+import {
+  CATEGORIES_EN,
+  DRINKS_EN,
+  FEATURED_EN,
+  ITEMS_EN,
+  TOPPING_GROUPS_EN,
+  TOPPINGS_EN,
+} from "./full-menu-en";
 
 // Carta real de Mr. Majo's — fuente de verdad para /carta y para el
 // escaparate de burgers del home. Los platos con foto de estudio (fondo negro)
@@ -36,17 +43,28 @@ export type FullMenuCategory = {
   icon?: GraffitiIconName;
   description?: string;
   items: FullMenuItem[];
+  /** Bebidas: en vez de tarjetas, listas de precios plegables por grupo. */
+  groups?: DrinkGroup[];
+};
+
+export type DrinkItem = { id: string; name: string; price: string; detail?: string };
+
+export type DrinkGroup = {
+  id: string;
+  title: string;
+  /** Subapartados dentro del grupo (p. ej. barril / tercios); sin título si no hace falta. */
+  sections: { title?: string; items: DrinkItem[] }[];
 };
 
 export const FEATURED_DISH = {
   badges: ["⭐ PLATO INSIGNIA", "100% REAL LACEY CRUST"],
   eyebrow: "EL REY DEL MENÚ",
   name: "La Sugar Daddy",
-  price: "14,90€",
+  price: "13,70€",
   description:
-    "Doble smash de ternera 100% vaca gallega con bordes extradelgados hipercaramelizados, queso cheddar fundido, pepinillos agridulces americanos, cebolla caramelizada casera, doble ración de bacon ultra crujiente y la legendaria salsa secreta Mayo Majo's en brioche artesano. ¡Una adicción total!",
-  chips: ["Doble Smash 180g", "Cheddar Fundido", "Bacon Crujiente"],
-  footer: "PAN BRIOCHE ARTESANO",
+    "Doble Smash de ternera, queso cheddar, pepinillos agridulces, cebolla caramelizada, doble de bacon crujiente y nuestra salsa Mayo Majo's. ¡Una ADICCIÓN TOTAL!",
+  chips: ["Doble Smash", "Cheddar", "Doble Bacon"],
+  footer: "CON PATATAS FINAS GRATIS",
   image: "/images/burgers/sugar-daddy.webp",
 };
 
@@ -56,16 +74,17 @@ export const FULL_MENU: FullMenuCategory[] = [
     title: "Smash Burgers",
     shortTitle: "Smash",
     icon: "burger",
+    description: "Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "gringa",
         name: "La Gringa",
         description:
-          "Doble Smash de ternera, queso cheddar, relish especial de pepinillos agridulces y cebolla picadita, doble bacon crujiente, ketchup clásico y miel mostaza original. ¡De locoooos!",
-        price: "13,70€",
+          "Doble Smash de ternera, queso cheddar, relish de pepinillos agridulces y cebolla picada, doble de bacon crujiente, ketchup y miel mostaza. ¡De locoooos!",
+        price: "12,90€",
         tag: "NEW HIT",
         tagVariant: "red",
-        footerLeft: "Doble 180g",
+        footerLeft: "Relish & Miel Mostaza",
         image: "/images/burgers/gringa.webp",
         headroom: true,
       },
@@ -73,38 +92,38 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "guiri",
         name: "La Guiri",
         description:
-          "Doble Smash de ternera, queso cheddar, cebolla dulce a la plancha, doble de bacon crujiente, huevo frito de granja con yema dorada y salsa Mayo Majo's. Al más puro estilo americano.",
+          "Doble Smash de ternera, queso cheddar, cebolla a la plancha, doble de bacon crujiente, huevo frito y salsa Mayo Majo's. ¡Al mejor AMERICAN STYLE!",
         price: "13,70€",
         tag: "AMERICAN STYLE",
-        footerLeft: "Huevo Campero",
+        footerLeft: "Huevo Frito",
         image: "/images/burgers/guiri.webp",
       },
       {
         id: "tiquismiquis",
         name: "La Tiquismiquis",
         description:
-          "Doble de pechuga de pollo empanada SUPER CRUNCHY con rebozado secreto, queso cheddar derretido, doble de bacon crujiente, lechuga Batavia fresca y salsa Mayo Majo's. ¡Especial chicken lovers!",
-        price: "13,70€",
-        tag: "SUPER CRUNCHY 🍗",
-        footerLeft: "Pollo Crujiente",
+          "Doble de pollo empanado SUPER CRUNCHY, queso cheddar, doble de bacon crujiente, lechuga Batavia y salsa Mayo Majo's. ¡ESPECIAL para los chicken lovers!",
+        price: "12,90€",
+        tag: "CHICKEN 🍗",
+        footerLeft: "Pollo Super Crunchy",
         image: "/images/burgers/tiquismiquis.webp",
       },
       {
         id: "motomami",
         name: "La Motomami",
         description:
-          "Doble Smash de ternera, queso cheddar, pepinillos agridulces, cebolla a la plancha, doble bacon crujiente, rodajas de tomate natural, lechuga fresca y salsa Mayo Majo's. ¡Ñaaaam!",
+          "Doble Smash de ternera, queso cheddar, pepinillos agridulces, cebolla a la plancha, doble de bacon crujiente, tomate, lechuga Batavia y salsa Mayo Majo's. ¡Ñaaaam!",
         price: "13,70€",
         tag: "FRESH & CRUNCH",
-        footerLeft: "Fresh Classic",
+        footerLeft: "Tomate & Batavia",
         image: "/images/burgers/motomami.webp",
       },
       {
         id: "loba",
         name: "La Loba",
         description:
-          "Doble Smash de ternera, queso cheddar, cebolla crunchy crujiente, doble bacon, lechuga Batavia, huevo frito y nuestra adictiva salsa Mayo Trufa. ¡Clara-mente divina!",
-        price: "14,90€",
+          "Doble Smash de ternera, queso cheddar, cebolla crunchy, doble de bacon crujiente, lechuga Batavia, huevo frito y salsa Mayo Trufa. ¡CLARA-MENTE DIVINA!",
+        price: "13,70€",
         tag: "TRUFFLE TOUCH ✨",
         footerLeft: "Mayo Trufa",
         image: "/images/burgers/loba.webp",
@@ -113,8 +132,8 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "goloza",
         name: "La Goloza",
         description:
-          "Doble Smash de ternera, queso cheddar, cebolla a la plancha caramelizada, pulled pork casero horneado a baja temperatura con barbacoa, lechuga y salsa Barbacoa Mr. Majo's.",
-        price: "15,70€",
+          "Doble Smash de ternera, queso cheddar, cebolla a la plancha, pulled pork casero a la BBQ, lechuga Batavia y salsa Barbacoa de Mr. Majo's. ¡Así es, el PULLED PORK es casero!",
+        price: "14,90€",
         tag: "PULLED PORK CASERO",
         tagVariant: "red",
         footerLeft: "Pulled Pork BBQ",
@@ -127,45 +146,46 @@ export const FULL_MENU: FullMenuCategory[] = [
     title: "Dry Aged Burgers",
     shortTitle: "Dry Aged",
     icon: "crown",
-    description: "Vaca gallega madurada 30 días. No se puede muy hecha.",
+    description: "Vaca gallega madurada 30 días. Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "sugarmommy-real",
         name: "La Sugar Mommy",
         description:
-          "Vaca Gallega Madurada 30 días con bacon bits y cebolla crunchy, queso cheddar, rulo de cabra dorado a la plancha y cebolla caramelizada casera. (No se puede muy hecha).",
+          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, queso cheddar, queso de cabra a la plancha y cebolla caramelizada. (No se puede MUY HECHA).",
         price: "17,90€",
         tag: "CABRA & CEBOLLA CARAMELIZADA",
-        footerLeft: "Rulo de Cabra",
+        footerLeft: "Queso de Cabra",
         image: "/images/burgers/sugar-mommy.webp",
       },
       {
-        id: "pecadora",
-        name: "La Pecadora",
+        id: "sexy-crush",
+        name: "La Sexy Crush",
         description:
-          "Vaca Madurada con tropezones de bacon y cebolla frita. Trilogía de quesos bestial: Cheddar inglés, Gouda ahumado y Provolone italiano fundido. (No se puede muy hecha).",
+          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, 110 g de pulled pork casero a la BBQ, mucho queso cheddar y huevo frito. ¡Una Crush MUY P*RN! (No se puede MUY HECHA).",
         price: "17,90€",
-        tag: "¡CHEESE BOOM! 🧀",
-        footerLeft: "Trilogía de Quesos",
-        image: "/images/burgers/pecadora.webp",
+        tag: "BEST SELLER",
+        tagVariant: "red",
+        footerLeft: "110 g de Pulled Pork",
+        footerRight: "Huevo Frito",
       },
       {
         id: "pija",
         name: "La Pija",
         description:
-          "Vaca Gallega Madurada 30 días, medallón de queso de cabra fundido al cromo, cebolla dulce pochada lentamente y doble bacon crujiente. (No se puede muy hecha).",
+          "Vaca Gallega Madurada 30 días, queso de cabra a la plancha, cebolla caramelizada y doble de bacon crujiente.",
         price: "15,70€",
         tag: "CLÁSICO GOURMET",
-        footerLeft: "Gourmet Edition",
+        footerLeft: "Cabra & Bacon",
         image: "/images/burgers/pija.webp",
       },
       {
         id: "orale",
         name: "La Órale",
         description:
-          "Vaca Madurada 30 días, doble queso cheddar fundido, guacamole rústico fresco hecho a diario y salsa picantona chipotle de la casa. ¡Oraleeee CABRXN!",
-        price: "16,50€",
-        tag: "🌶️ SPICY CHINGÓN",
+          "Vaca Gallega Madurada 30 días, doble de queso cheddar, guacamole casero, fresco y rústico, y la picantona salsa chipotle de Mr. Majo's. ¡Oraleeee CABRXN!",
+        price: "15,70€",
+        tag: "🌶️ SPICY",
         footerLeft: "Guacamole & Chipotle",
         image: "/images/burgers/orale.webp",
       },
@@ -173,12 +193,12 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "custom-burger",
         name: "Custom Burger",
         description:
-          "Base de ternera Madurada 30 días o doble pechuga de pollo crunchy con pan brioche. Añade extras: bacon crujiente, quesos gourmet, huevo campero, pulled pork casero, cebolla frita y salsas al fallo.",
-        price: "10,70€",
-        priceSuffix: "+toppings",
-        tag: "¡TÚ ERES EL CHEF!",
-        footerLeft: "PERSONALIZACIÓN TOTAL EN MESA",
-        footerRight: "Elige tus ingredientes",
+          "¡Tú eres el/la chef! Es hora de ponerse creativ@: añade los ingredientes y salsas extra que quieras. Partes de una base de Vaca Gallega Madurada 30 días o doble de pollo empanado SUPER CRUNCHY.",
+        price: "9,90€",
+        priceSuffix: "+extras",
+        tag: "¡TÚ ERES EL/LA CHEF!",
+        footerLeft: "VACA MADURADA O POLLO CRUNCHY",
+        footerRight: "Añade tus extras",
         highlight: "dashed",
         image: "/images/IMG_3613_menu.webp",
       },
@@ -186,16 +206,16 @@ export const FULL_MENU: FullMenuCategory[] = [
   },
   {
     id: "perritos",
-    title: "Perritos Calientes Gigantes (120g)",
+    title: "Hot Dogs",
     shortTitle: "Perritos",
     icon: "hotdog",
-    description: "Salchicha gigante de 120 gramos en pan tierno con mantequilla.",
+    description: "Todos incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "yankee",
         name: "El Yankee",
         description:
-          "Salchicha 120gr, triple cheddar, cebolla caramelizada, cebolla crunchy, salsa BBQ Mr. Majo's, miel mostaza y bacon bits.",
+          "Salchicha de 120 g, triple de queso cheddar, cebolla caramelizada, cebolla crunchy, salsa Barbacoa de Mr. Majo's, miel mostaza y muchos bacon bits.",
         price: "12,90€",
         tag: "TOP VENTAS",
         highlight: "yellow",
@@ -207,7 +227,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "cheese-porn",
         name: "El Cheese P*rn",
         description:
-          "Salchicha 120gr, doble queso gouda, triple cheddar inglés, baño de salsa de queso fundido y lluvia de bacon crujiente.",
+          "Salchicha de 120 g, doble de queso gouda, triple de queso cheddar, salsa de queso fundido y muchos bacon bits. ¡Cheeese BOOOOOM!",
         price: "10,70€",
         tag: "¡CHEESE BOOM!",
         image: "/images/perritos/cheese-porn-estudio.webp",
@@ -218,7 +238,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "americano",
         name: "El Americano",
         description:
-          "Salchicha 120gr, queso cheddar, tomate fresco picadito, cebolla crujiente, relish de pepinillos, ketchup y miel mostaza.",
+          "Salchicha de 120 g, queso cheddar, tomate, cebolla crunchy, relish de pepinillos agridulces y cebolla picada, ketchup y miel mostaza. ¡Desde EEUU con mucho <3!",
         price: "10,70€",
         tag: "NEW HIT",
         tagVariant: "red",
@@ -230,7 +250,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "chingon",
         name: "El Chingón",
         description:
-          "Salchicha 120gr, triple cheddar, guacamole artesanal, cebolla morada, jalapeños picantones y salsa chipotle Mr. Majo's.",
+          "Salchicha de 120 g, triple de queso cheddar, guacamole casero, fresco y rústico, cebolla morada picada, jalapeños y picantona salsa chipotle de Mr. Majo's. ¡Órale, carnalitx!",
         price: "11,70€",
         tag: "🌶️ SPICY",
         tagVariant: "red",
@@ -249,11 +269,11 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "majos-teques",
         name: "Majo's Teques",
         description:
-          "6 deditos dorados crujientes rellenos de queso derretido a borbotones, acompañados de salsa casera Mayo Ajo.",
+          "6 deditos fritos rellenos de queso derretido acompañados de deliciosa salsa Mayo Ajo.",
         price: "9,90€",
-        tag: "BEST SELLER TOTAL",
+        tag: "¡NUESTRX BEST SELLER!",
         highlight: "yellow",
-        footerLeft: "6 UNIDADES",
+        footerLeft: "6 DEDITOS",
         footerRight: "Con Salsa Mayo Ajo",
         image: "/images/carta/majos-teques.webp",
         imagePosition: "center 95%",
@@ -263,13 +283,12 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "patatas-trifasicas-carta",
         name: "Patatas Trifásicas",
         description:
-          "Bandeja gigante de patatas finas con pulled pork casero a la BBQ, pollo empanado crujiente, trocitos de Frankfurt, queso fundido y Mayo Majo's.",
-        price: "15,70€",
+          "Patatas finas con pulled pork casero a la BBQ, crujiente pollo empanado, salchicha Frankfurt, salsa Mayo Majo's, salsa de queso americano fundido y perejil deshidratado.",
+        price: "14,90€",
         tag: "¡LOCURA TOTAL!",
         tagVariant: "red",
         highlight: "red",
-        footerLeft: "BANDEJA PARA COMPARTIR",
-        footerRight: "Pulled Pork + Pollo + Frankfurt",
+        footerLeft: "PULLED PORK + POLLO + FRANKFURT",
         image: "/images/carta/patatas-trifasicas.webp",
         imagePosition: "center 55%",
         headroom: true,
@@ -278,23 +297,23 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "nachingones",
         name: "Nachingones",
         description:
-          "Nachos artesanos bañados en chili con carne casero, guacamole rústico fresco, crema agria, jalapeños, queso fundido y pico de gallo.",
+          "Nachos bañados en chili con carne casero, guacamole fresco y rústico, nata agria, jalapeños, salsa de queso americano fundido, cebolla morada y tomate picado.",
         price: "13,70€",
         tag: "STREET CLASSIC",
-        footerLeft: "CHILI CASERO & GUACAMOLE",
-        footerRight: "Ideales para 2-3 pax",
+        footerLeft: "CHILI CON CARNE CASERO",
+        footerRight: "Guacamole & Jalapeños",
         image: "/images/carta/nachingones.webp",
         imagePosition: "center 85%",
         headroom: true,
       },
       {
         id: "chicken-wings",
-        name: "Chicken Wings",
+        name: "Crunchy Chicken Wings",
         description:
-          "7 alitas tiernas de pollo rebozadas en fina corteza supercrujiente con cebolla morada picada, perejil y salsa Mayo Majo's.",
+          "7 alitas de pollo rebozadas a la perfección, con cebolla morada picada, perejil deshidratado y nuestra increíble salsa Mayo Majo's.",
         price: "11,70€",
-        tag: "7 PIEZAS CRUNCHY",
-        footerLeft: "7 ALITAS CRUJIENTES",
+        tag: "7 ALITAS",
+        footerLeft: "REBOZADAS A LA PERFECCIÓN",
         footerRight: "Con Mayo Majo's",
         image: "/images/carta/chicken-wings.webp",
         imagePosition: "center 20%",
@@ -302,26 +321,26 @@ export const FULL_MENU: FullMenuCategory[] = [
       },
       {
         id: "aros-cebolla",
-        name: "Aros de Cebolla",
+        name: "Super Aros de Cebolla",
         description:
-          "Aros de cebolla tiernos y dulces por dentro, dorados y crujientes por fuera. Acompañados de dip de barbacoa Mr. Majo's.",
+          "Muchos, pero muuuuchos aritos de cebolla suavecitos por dentro y crujientes por fuera. Acompañados de salsa BBQ de Mr. Majo's. ¡Muy cruuuunchys!",
         price: "9,90€",
-        tag: "AROS XXL",
-        footerLeft: "AROS CRUJIENTES XXL",
-        footerRight: "Dip BBQ Casero",
+        tag: "¡MUY CRUUUUNCHYS!",
+        footerLeft: "CRUJIENTES POR FUERA",
+        footerRight: "Con Salsa BBQ",
         image: "/images/carta/aros-cebolla.webp",
         imagePosition: "center 75%",
         headroom: true,
       },
       {
         id: "sweet-potatoes",
-        name: "Sweet Potatoes",
+        name: "Ración de Sweet Potatoes",
         description:
-          "Boniato frito fino y súper dulce con punto de sal marina escamada, perfecto para contrastar tu smash burger.",
+          "Increíble boniato frito y SUPER SWEET, perfecto para acompañar tu burger o hot dog. También sirven de entrante para hacer estómago, jeje :)",
         price: "7,90€",
         tag: "BONIATO FRITO",
-        footerLeft: "RACIÓN GENEROSA",
-        footerRight: "Sal Marina Escamada",
+        footerLeft: "SUPER SWEET",
+        footerRight: "Para tu Burger o Hot Dog",
       },
     ],
   },
@@ -329,14 +348,15 @@ export const FULL_MENU: FullMenuCategory[] = [
     id: "veggie",
     title: "Veggie",
     icon: "veggie",
+    description: "Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "veggie-baby",
         name: "La Veggie Baby",
         description:
-          "Carne vegetal sazonada, queso gouda fundido, cebolla caramelizada, tomate, lechuga Batavia y Mayo Majo's.",
-        price: "15,70€",
-        tag: "100% PLANT BASED 🌱",
+          "Carne vegetariana, queso gouda, cebolla caramelizada, tomate, lechuga Batavia y salsa Mayo Majo's. ¡Porque lo vegetariano también está que FLIPAS, bb!",
+        price: "14,90€",
+        tag: "VEGGIE 🌱",
         tagVariant: "green",
         image: "/images/carta/veggie-baby.webp",
         imagePosition: "center 80%",
@@ -346,8 +366,8 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "veggie-orale",
         name: "La Veggie Órale",
         description:
-          "Carne vegetal, queso fundido, guacamole casero rústico, salsa chipotle picantona y lechuga fresca.",
-        price: "15,70€",
+          "Carne vegetariana, queso americano, guacamole casero, fresco y rústico, con picantona salsa chipotle y lechuga Batavia. Picantemente veggie :)",
+        price: "14,90€",
         tag: "🌱 VEGGIE SPICY 🌶️",
         tagVariant: "green",
         footerLeft: "🌱 Guacamole & Chipotle",
@@ -359,15 +379,16 @@ export const FULL_MENU: FullMenuCategory[] = [
   },
   {
     id: "peques",
-    title: "Para Peques",
+    title: "Para Peques <3",
     shortTitle: "Peques",
-    icon: "patty",
+    icon: "kids",
+    description: "Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "kids-carne",
         name: "La Majo's Kids Carne",
         description:
-          "Carne smash de ternera 90g suave, queso cheddar derretido, doble de bacon crujiente y mayonesa suave.",
+          "Carne Smash de ternera, queso cheddar, doble de bacon crujiente y salsa Mayo Majo's.",
         price: "10,70€",
         tag: "MENÚ PEQUES 👶",
       },
@@ -375,7 +396,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         id: "kids-pollo",
         name: "La Majo's Kids Pollo",
         description:
-          "Pollo empanado súper crunchy, cheddar derretido, doble de bacon crujiente y salsa mayo suave.",
+          "Pollo empanado SUPER CRUNCHY, queso cheddar, doble de bacon crujiente y salsa Mayo Majo's.",
         price: "10,70€",
         tag: "MENÚ PEQUES 👶",
       },
@@ -387,28 +408,42 @@ export const FULL_MENU: FullMenuCategory[] = [
     icon: "dessert",
     items: [
       {
+        id: "choko-majos",
+        name: "Choko Majo's",
+        description:
+          "Delicioso secreto casero de Mr. Majo's a base de galleta de chocolate y TOP SECRET PRODUCTS.",
+        price: "5,70€",
+        tag: "BEST SELLER",
+        footerLeft: "SECRETO CASERO",
+        footerRight: "Galleta de Chocolate",
+        image: "/images/carta/choko-majos.webp",
+        imagePosition: "center 80%",
+        headroom: true,
+      },
+      {
         id: "nute-teques",
         name: "Nute Teques",
         description:
-          "Tequeños dulces rellenos de Nutella hirviendo que explota en boca, bañados en sirope de chocolate y espolvoreados con azúcar glass.",
+          "4 deditos fritos rellenos de suculenta Nutella y chorreados por encima con sirope de chocolate. ¿Te ATREVES? ¡Están suuuuper SWEEEEET P*RN!",
         price: "7,90€",
         tag: "NUTELLA LOVERS 💎",
-        footerLeft: "EXPLOSIÓN DE NUTELLA",
-        footerRight: "4 Deditos Dulces",
+        footerLeft: "4 DEDITOS",
+        footerRight: "Sirope de Chocolate",
         image: "/images/carta/nute-teques.webp",
         imagePosition: "center 70%",
         headroom: true,
       },
       {
-        id: "choko-majos",
-        name: "Choko Majo's",
+        id: "coulant",
+        name: "The Golden Coulant",
         description:
-          "Tarta artesana de chocolate negro intenso con base crujiente de galleta dorada y fino topping de cacao noble puro.",
-        price: "5,70€",
-        tag: "BEST SELLER",
-        footerLeft: "CHOCOLATE NEGRO PURO",
-        footerRight: "Elaboración Casera Diaria",
-        image: "/images/carta/choko-majos.webp",
+          "La clásica e increíble receta francesa de 1981, pero esta vez rellena de dulce de leche que se funde en una explosión de sabores. Acompañado de crujiente lluvia de galleta María y helado de vainilla.",
+        price: "7,90€",
+        tag: "NEW",
+        tagVariant: "red",
+        footerLeft: "RELLENO DE DULCE DE LECHE",
+        footerRight: "Con Helado de Vainilla",
+        image: "/images/carta/coulant.webp",
         imagePosition: "center 80%",
         headroom: true,
       },
@@ -418,60 +453,78 @@ export const FULL_MENU: FullMenuCategory[] = [
     id: "bebidas",
     title: "Bebidas",
     icon: "drink",
-    items: [
+    items: [],
+    groups: [
       {
-        id: "mahou-5-estrellas",
-        name: "Mahou 5 Estrellas (33cl)",
-        description: "Tirada con la presión perfecta en copa bien fría.",
-        price: "3,50€",
-        tag: "CERVEZA BARRIL",
-        footerLeft: "Barril Frío",
+        id: "cervezas",
+        title: "Cerveza fría",
+        sections: [
+          {
+            title: "Mahou 5 Estrellas de barril",
+            items: [
+              { id: "cana-doble", name: "Caña doble 33cl", price: "3,50€" },
+              { id: "jarra-grande", name: "Jarra grande 50cl", price: "4,90€" },
+              { id: "cana-doble-radler", name: "Caña doble Radler 33cl", price: "3,50€" },
+              { id: "jarra-grande-radler", name: "Jarra grande Radler 50cl", price: "4,90€" },
+            ],
+          },
+          {
+            title: "Tercios 33cl",
+            items: [
+              { id: "tercio-mahou", name: "Mahou 5 Estrellas", price: "3,50€" },
+              { id: "tercio-tostada", name: "Mahou Tostada 0,0", price: "3,90€" },
+              { id: "tercio-alhambra", name: "Alhambra Reserva", price: "3,90€" },
+              { id: "tercio-corona", name: "Corona", price: "3,90€" },
+            ],
+          },
+        ],
       },
       {
-        id: "jarra-mahou",
-        name: "Jarra Mahou (50cl)",
-        description: "Medio litro de cerveza bien helada para acompañar el smash.",
-        price: "4,90€",
-        tag: "JARRA HELADA",
-        footerLeft: "500ml Doble Tiro",
-      },
-      {
-        id: "alhambra-corona",
-        name: "Alhambra & Corona",
-        description: "Alhambra Reserva 1925, Coronita con lima y Mahou Sin Gluten 0,0%.",
-        price: "3,80€",
-        tag: "TERCIOS SELECCIÓN",
-        footerLeft: "Botellín 33cl",
-      },
-      {
-        id: "refrescos-agua",
-        name: "Refrescos y Agua",
-        description:
-          "Coca-Cola Zero/Original, Fanta Naranja, Nestea, Aquarius y Agua Mineral.",
-        price: "2,80€",
-        tag: "REFRESCOS",
-        footerLeft: "Vidrio 350ml",
-      },
-      {
-        id: "margaritas-frozen",
-        name: "Margaritas Frozen",
-        description:
-          "Tequila reposado 100% agave, zumo natural de lima y hielo frappé. Clásica, de fresa o de mango. ¡Súper refrescante y adictivo!",
-        price: "7,90€",
-        priceSuffix: "/ copa",
-        tag: "PROMO 2X (12,90€)",
-        tagVariant: "red",
-        highlight: "yellow",
-        footerLeft: "Copa individual 7,90€ • Promo 2 Copas por solo 12,90€",
+        id: "bebidas-mixtas",
+        title: "Bebidas mixtas",
+        sections: [
+          {
+            items: [
+              { id: "agua", name: "Agua 50cl", price: "2,50€" },
+              { id: "agua-gas", name: "Agua con gas 36cl", price: "2,90€" },
+              { id: "refresco", name: "Refresco de vidrio 36cl", price: "2,90€" },
+              { id: "tinto-verano", name: "Tinto de verano", price: "3,90€" },
+              { id: "ice-tea", name: "Majo's Ice Tea", price: "3,90€" },
+              {
+                id: "vino-blanco",
+                name: "Vino blanco Alacanta",
+                detail: "Verdejo & Macabeo · D.O. Alicante",
+                price: "3,90€ / 14,90€",
+              },
+            ],
+          },
+        ],
       },
       {
         id: "cubatas",
-        name: "Cubatas Primeras Marcas",
-        description:
-          "Gin Tonic (Seagram's / Beefeater), Ron Cola (Barceló / Santa Teresa), Whisky (Red Label / Jameson) o Vodka con refresco a elegir.",
-        price: "7,90€",
-        tag: "COPAS Y COMBINADOS",
-        footerLeft: "Primeras Marcas Oficiales",
+        title: "Cubatas",
+        sections: [
+          {
+            items: [
+              { id: "ron", name: "Ron + refresco", price: "7,90€" },
+              { id: "vodka", name: "Vodka + refresco", price: "7,90€" },
+              { id: "gin", name: "Gin + refresco", price: "7,90€" },
+              { id: "whisky", name: "Whisky + refresco", price: "7,90€" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "margaritas-frozen",
+        title: "Margaritas Frozen",
+        sections: [
+          {
+            items: [
+              { id: "margarita-clasica", name: "Margarita clásica frozen", price: "7,90€" },
+              { id: "margarita-promo", name: "PROMO x2 Margarita clásica frozen", price: "12,90€" },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -480,23 +533,69 @@ export const FULL_MENU: FullMenuCategory[] = [
 export type ToppingItem = {
   id: string;
   name: string;
-  icon: GraffitiIconName;
   price: string;
+  /** Solo las carnes, que van en tarjeta con icono; el resto va en lista. */
+  icon?: GraffitiIconName;
 };
 
-export const TOPPINGS: ToppingItem[] = [
-  { id: "smash-extra", name: "Smash Extra 90g", icon: "patty", price: "3,90€" },
-  { id: "vaca-madurada", name: "Vaca Madurada 30D", icon: "crown", price: "5,70€" },
-  { id: "pollo-crujiente", name: "Pollo Crujiente", icon: "drumstick", price: "3,50€" },
-  { id: "doble-bacon", name: "Doble Bacon Crispy", icon: "bacon", price: "1,80€" },
-  { id: "huevo-granja", name: "Huevo de Granja", icon: "egg", price: "1,50€" },
-  { id: "pulled-pork", name: "Pulled Pork Casero", icon: "flame", price: "2,90€" },
-  { id: "guacamole", name: "Guacamole Rústico", icon: "avocado", price: "2,50€" },
-  { id: "rulo-cabra", name: "Rulo de Cabra", icon: "cheese", price: "2,20€" },
-  { id: "mayo-majos", name: "Mayo Majo's", icon: "mayo", price: "1,50€" },
-  { id: "salsa-trufa", name: "Salsa Trufa Secreta", icon: "truffle", price: "1,90€" },
-  { id: "salsa-chipotle", name: "Salsa Chipotle", icon: "chili", price: "1,50€" },
-  { id: "pan-sin-gluten", name: "Pan Sin Gluten", icon: "glutenfree", price: "1,90€" },
+export type ToppingGroup = {
+  id: string;
+  title: string;
+  icon: GraffitiIconName;
+  items: ToppingItem[];
+};
+
+// Extras de la carta impresa, agrupados igual que en ella. El pan sin gluten
+// sale en la cabecera de cada página de burgers/perritos; aquí va con los ingredientes.
+export const TOPPING_GROUPS: ToppingGroup[] = [
+  {
+    id: "carnes",
+    title: "Carnes extra",
+    icon: "patty",
+    items: [
+      { id: "pollo-crujiente", name: "Pollo Crujiente", icon: "drumstick", price: "3,50€" },
+      { id: "carne-vegetariana", name: "Carne Vegetariana", icon: "veggie", price: "3,90€" },
+      { id: "smash-extra", name: "Smash de Ternera", icon: "patty", price: "3,90€" },
+      { id: "vaca-madurada", name: "Vaca Madurada 30 días", icon: "crown", price: "5,70€" },
+    ],
+  },
+  {
+    id: "ingredientes",
+    title: "Ingredientes extra",
+    icon: "cheese",
+    items: [
+      { id: "tomate", name: "Tomate", price: "0,90€" },
+      { id: "lechuga", name: "Lechuga Batavia", price: "0,90€" },
+      { id: "cebolla-natural", name: "Cebolla natural", price: "0,90€" },
+      { id: "cebolla-plancha", name: "Cebolla a la plancha", price: "0,90€" },
+      { id: "cebolla-crunchy", name: "Cebolla crunchy", price: "0,90€" },
+      { id: "pepinillos", name: "Pepinillos", price: "0,90€" },
+      { id: "jalapenos", name: "Jalapeños", price: "0,90€" },
+      { id: "doble-bacon", name: "Doble de bacon crujiente", price: "1,50€" },
+      { id: "queso-americano", name: "Queso americano x2", price: "1,50€" },
+      { id: "queso-gouda", name: "Queso gouda x2", price: "1,50€" },
+      { id: "huevo-frito", name: "Huevo frito", price: "1,70€" },
+      { id: "queso-cabra", name: "Queso de cabra", price: "1,90€" },
+      { id: "cebolla-caramelizada", name: "Cebolla caramelizada", price: "1,90€" },
+      { id: "guacamole", name: "Guacamole fresco y rústico", price: "3,50€" },
+      { id: "pulled-pork", name: "Pulled pork a la BBQ casero", price: "3,50€" },
+      { id: "pan-sin-gluten", name: "Pan sin gluten", price: "1,90€" },
+    ],
+  },
+  {
+    id: "salsas",
+    title: "Salsas",
+    icon: "mayo",
+    items: [
+      { id: "mayo-majos", name: "Mayo Majo's", price: "0,90€" },
+      { id: "barbacoa", name: "Barbacoa de Mr. Majo's", price: "0,90€" },
+      { id: "miel-mostaza", name: "Miel mostaza", price: "0,90€" },
+      { id: "mayo-ajo", name: "Mayo Ajo", price: "0,90€" },
+      { id: "mayo-trufa", name: "Mayo Trufa", price: "1,50€" },
+      { id: "chipotle", name: "Chipotle picantón", price: "1,50€" },
+      { id: "salsa-queso", name: "Salsa de queso", price: "1,50€" },
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -506,7 +605,7 @@ export const TOPPINGS: ToppingItem[] = [
 
 export const HOME_PICKS: { categoryId: string; itemIds: string[] }[] = [
   { categoryId: "smash", itemIds: ["gringa", "guiri", "loba"] },
-  { categoryId: "dry-aged", itemIds: ["sugarmommy-real", "orale", "pecadora"] },
+  { categoryId: "dry-aged", itemIds: ["sugarmommy-real", "orale", "pija"] },
   { categoryId: "perritos", itemIds: ["yankee", "cheese-porn"] },
   { categoryId: "entrantes", itemIds: ["majos-teques", "patatas-trifasicas-carta", "chicken-wings"] },
   { categoryId: "postres", itemIds: ["nute-teques", "choko-majos"] },
@@ -545,7 +644,7 @@ export type ShowcaseBurger = {
 
 function translate(lang: Locale) {
   if (lang === "es") {
-    return { featured: { ...FEATURED_DISH, tag: "⭐ PLATO INSIGNIA" }, categories: FULL_MENU, toppings: TOPPINGS };
+    return { featured: { ...FEATURED_DISH, tag: "⭐ PLATO INSIGNIA" }, categories: FULL_MENU, toppings: TOPPING_GROUPS };
   }
   return {
     featured: { ...FEATURED_DISH, ...FEATURED_EN },
@@ -553,8 +652,24 @@ function translate(lang: Locale) {
       ...category,
       ...CATEGORIES_EN[category.id],
       items: category.items.map((item) => ({ ...item, ...ITEMS_EN[item.id] })),
+      groups: category.groups?.map((group) => ({
+        ...group,
+        title: DRINKS_EN[group.id] ?? group.title,
+        sections: group.sections.map((section) => ({
+          title: section.title && (DRINKS_EN[section.title] ?? section.title),
+          items: section.items.map((item) => ({
+            ...item,
+            name: DRINKS_EN[item.id] ?? item.name,
+            detail: item.detail && (DRINKS_EN[`${item.id}:detail`] ?? item.detail),
+          })),
+        })),
+      })),
     })),
-    toppings: TOPPINGS.map((topping) => ({ ...topping, name: TOPPINGS_EN[topping.id] ?? topping.name })),
+    toppings: TOPPING_GROUPS.map((group) => ({
+      ...group,
+      title: TOPPING_GROUPS_EN[group.id] ?? group.title,
+      items: group.items.map((topping) => ({ ...topping, name: TOPPINGS_EN[topping.id] ?? topping.name })),
+    })),
   };
 }
 
@@ -575,7 +690,9 @@ function buildMenu(lang: Locale) {
   const homeCategories: HomeCategory[] = HOME_PICKS.map(({ categoryId, itemIds }) => {
     const category = categories.find((c) => c.id === categoryId)!;
     const withFeatured = categoryId === "smash";
-    const min = Math.min(...category.items.map((item) => toNumber(item.price)));
+    const min = Math.min(
+      ...category.items.filter((item) => !item.priceSuffix).map((item) => toNumber(item.price))
+    );
     const items = itemIds.map((id) => {
       const item = category.items.find((i) => i.id === id);
       if (!item) throw new Error(`HOME_PICKS: "${id}" no existe en la categoría "${categoryId}"`);

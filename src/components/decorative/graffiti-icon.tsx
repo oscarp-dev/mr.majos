@@ -15,6 +15,7 @@ export type GraffitiIconName =
   | "dessert"
   | "drink"
   | "plus"
+  | "kids"
   // extras & toppings
   | "patty"
   | "crown"
@@ -142,16 +143,45 @@ const ART: Record<GraffitiIconName, Art> = {
     ],
     marks: [{ d: "M30 12L30 22", stroke: CREAM, width: 2.6 }],
   },
-
-  /* ---- extras & toppings ---- */
-  patty: {
+  // mini burger con carita, para el menú de peques
+  kids: {
     shapes: [
-      { d: "M8 31Q8 22 18 21L46 21Q56 22 56 31L56 36Q56 44 46 44L18 44Q8 44 8 36Z", fill: BROWN },
-      { d: "M40 43L40 51Q42.5 55 45 51L45 43Z", fill: BROWN },
+      { d: "M12 47L52 47Q52 56 44 56L20 56Q12 56 12 47Z", fill: YELLOW },
+      { d: "M11 37.5L53 37.5Q56 37.5 56 41.5Q56 45.5 53 45.5L11 45.5Q8 45.5 8 41.5Q8 37.5 11 37.5Z", fill: BROWN },
+      {
+        d: "M9 33L55 33L55 35.5Q51 39.5 47 36.5Q43 39.5 39 36.5Q35 39.5 31 36.5Q27 39.5 23 36.5Q19 39.5 15 36.5Q12 39 9 36Z",
+        fill: GREEN,
+      },
+      { d: "M12 32C12 18 22 11 32 11C42 11 52 18 52 32Q32 35 12 32Z", fill: YELLOW },
+      { d: c(25, 22.5, 2.3), fill: INK, inner: true },
+      { d: c(39, 22.5, 2.3), fill: INK, inner: true },
+      { d: "M54 2c.6 3.6 1.6 4.6 5 5.2-3.4.6-4.4 1.6-5 5.2-.6-3.6-1.6-4.6-5-5.2 3.4-.6 4.4-1.6 5-5.2Z", fill: CREAM },
     ],
     marks: [
-      { d: "M17 28L23 35M27 27L33 34M37 27L43 34", stroke: INK, width: 2.4 },
-      { d: "M14 27Q16 23.5 22 23", stroke: CREAM, width: 2.4 },
+      { d: "M27.5 26.5Q32 30.5 36.5 26.5", stroke: INK, width: 2.4 },
+      { d: "M18 27.5h3.5M42.5 27.5h3.5", stroke: RED, width: 2.8 },
+      { d: "M17 21Q19 16 24 14", stroke: CREAM, width: 2.6 },
+    ],
+  },
+
+  /* ---- extras & toppings ---- */
+  // smash vista de lado: canto crujiente irregular, loncha de cheddar fundiéndose
+  patty: {
+    shapes: [
+      {
+        d: "M6 26Q6 11 32 10Q58 11 58 26L58 38Q56 43 52 42Q50 48 45 46Q42 51 36 48Q32 52 28 48Q22 51 19 46Q14 48 12 43Q7 43 6 38Z",
+        fill: CHOC,
+      },
+      { d: "M9 26Q9 13.5 32 13Q55 13.5 55 26Q55 36 32 37Q9 36 9 26Z", fill: BROWN, inner: true },
+      {
+        d: "M19 23Q20 16.5 32 16.5Q44 16.5 45 23Q46 28 42 30.5L42 40Q40.5 44.5 39 40L39 32.5Q35 34 30.5 33.5L30.5 44Q28 49 25.5 44L25.5 31.5Q18 29 19 23Z",
+        fill: YELLOW,
+      },
+    ],
+    marks: [
+      { d: "M13 20l3 -2M48 18l3 2M12 30l3 1M49 31l3 -1", stroke: INK, width: 2.2 },
+      { d: "M23.5 21.5Q26 19 32 19", stroke: CREAM, width: 2.6 },
+      { d: "M12 42.5l2 1M33 49l2 0M50 42.5l2 -1", stroke: INK, width: 2 },
     ],
   },
   crown: {

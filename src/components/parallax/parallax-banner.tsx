@@ -113,17 +113,14 @@ export function ParallaxBanner({
           >
             {eyebrow}
           </motion.span>
-          <motion.h2
-            style={{ y: headingY }}
-            className="font-display mt-5 text-[13vw] leading-[0.8] text-mr-cream sm:text-[8vw] md:mt-6 md:text-[5.2vw]"
-          >
-            {heading}
-          </motion.h2>
-          {action && (
-            <motion.div style={{ y: headingY }} className="mt-5 md:mt-7">
-              {action}
-            </motion.div>
-          )}
+          {/* titular y CTA en una sola capa: con el % de translate cada uno se
+              movía según su propia altura y el botón acababa pisando el titular */}
+          <motion.div style={{ y: headingY }}>
+            <h2 className="font-display mt-5 text-[13vw] leading-[0.8] text-mr-cream sm:text-[8vw] md:mt-6 md:text-[5.2vw]">
+              {heading}
+            </h2>
+            {action && <div className="mt-5 md:mt-7">{action}</div>}
+          </motion.div>
         </div>
       </div>
 

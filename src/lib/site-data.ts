@@ -1,9 +1,10 @@
-// Las ventajas de cada nivel, en el idioma de la página: messages.club.perks.
+// Majo's Levels: sellos para cada nivel. El texto de cada uno (descuento) está
+// en messages.club.perks, en el mismo orden.
 export const CLUB_TIERS = [
-  { name: "Foodie", stamps: "1+" },
-  { name: "Burger Lover", stamps: "15+" },
-  { name: "Burger Master", stamps: "30+" },
-  { name: "Food P*rn VIP", stamps: "50+" },
+  { name: "Foodie", stamps: 1 },
+  { name: "Burger Lover", stamps: 15 },
+  { name: "Burger Master", stamps: 30 },
+  { name: "Food P*rn VIP", stamps: 50 },
 ] as const;
 
 // Alta en el Majo's Club (tarjeta de fidelidad en Comeback).
@@ -22,6 +23,15 @@ export const MENU_DEL_DIA = {
   from: "13:00",
   to: "16:30",
 } as const;
+
+// Horario del local, agrupando días con la misma franja (getDay(): 0 = domingo).
+// El nombre de cada grupo está en messages.order.hoursDays, en el mismo orden.
+// El sábado cierra pasada la medianoche (00:15).
+export const OPENING_HOURS: { days: number[]; slots: [opens: string, closes: string][] }[] = [
+  { days: [1, 2, 3], slots: [["19:30", "23:45"]] },
+  { days: [4, 5, 0], slots: [["13:00", "16:30"], ["19:30", "23:45"]] },
+  { days: [6], slots: [["13:00", "00:15"]] },
+];
 
 // Plataformas de pedido online y reservas.
 export const ORDER_LINKS = {

@@ -88,10 +88,16 @@ export default async function CartaPage() {
           </div>
 
           <div className="mt-14 flex flex-col gap-2 rounded-2xl border border-dashed border-mr-cream/20 p-5 text-sm leading-relaxed text-mr-cream/60 md:flex-row md:items-center md:justify-between md:gap-8">
-            <p>
-              <span aria-hidden="true">⚠️ </span>
-              {t.carta.allergens}
-            </p>
+            <div className="flex flex-col gap-2">
+              <p>
+                <span aria-hidden="true">⚠️ </span>
+                {t.carta.allergens}
+              </p>
+              <p>
+                <span aria-hidden="true">💳 </span>
+                {t.carta.payment}
+              </p>
+            </div>
             <p className="font-tag shrink-0 text-xs tracking-widest text-mr-yellow/80">
               {t.carta.vat.toUpperCase()}
             </p>

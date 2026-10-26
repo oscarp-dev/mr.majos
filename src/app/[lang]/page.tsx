@@ -72,15 +72,18 @@ export default async function Home() {
             </>
           }
           action={
-            <a
-              href={ORDER_LINKS.reservas}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full border-2 border-mr-black bg-mr-red px-6 py-3 font-tag text-sm tracking-wide text-mr-cream shadow-[0_4px_0_0_rgba(0,0,0,1)] transition-[translate,background-color,color] hover:-translate-y-0.5 hover:bg-mr-yellow hover:text-mr-black md:px-8 md:py-4 md:text-base"
-            >
-              {t.bookTable}
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 md:size-5" strokeWidth={3} />
-            </a>
+            <>
+              <p className="mb-4 font-tag text-xs tracking-wide text-mr-cream/70 md:text-sm">{t.menuDelDia.note}</p>
+              <a
+                href={ORDER_LINKS.reservas}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full border-2 border-mr-black bg-mr-red px-6 py-3 font-tag text-sm tracking-wide text-mr-cream shadow-[0_4px_0_0_rgba(0,0,0,1)] transition-[translate,background-color,color] hover:-translate-y-0.5 hover:bg-mr-yellow hover:text-mr-black md:px-8 md:py-4 md:text-base"
+              >
+                {t.bookTable}
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 md:size-5" strokeWidth={3} />
+              </a>
+            </>
           }
           decoration={
             <BrandSticker name="bloque" rotate={8} className="right-4 top-6 w-28 sm:w-36 md:right-10 md:top-12 md:w-52" />
@@ -108,6 +111,11 @@ export default async function Home() {
                 {t.thursday.badge}
               </span>
             </>
+          }
+          action={
+            <p className="ml-auto max-w-[17rem] text-[11px] leading-snug text-mr-cream/75 md:max-w-sm md:text-sm">
+              {t.thursday.terms}
+            </p>
           }
           align="right"
           verticalAlign="center"

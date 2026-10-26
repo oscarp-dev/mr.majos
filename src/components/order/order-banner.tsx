@@ -1,10 +1,9 @@
 import { BrandSticker } from "@/components/decorative/brand-sticker";
 import { Drip } from "@/components/decorative/drip";
 import { Reveal } from "@/components/motion/reveal";
-import { ORDER_LINKS } from "@/lib/site-data";
+import { OPENING_HOURS, ORDER_LINKS } from "@/lib/site-data";
 import { getI18n } from "@/i18n/server";
 
-// NOTE: el horario (messages.order.hours) sigue siendo placeholder — sustitúyelo antes de publicar.
 const STORE_ADDRESS = "Calle Bazán, 45, 03001 Alicante";
 const MAPS_URL =
   "https://maps.google.com/?q=Calle+Baz%C3%A1n+45+03001+Alicante";
@@ -66,9 +65,22 @@ export async function OrderBanner() {
               className="underline decoration-mr-black/30 underline-offset-4 hover:text-mr-black"
             >
               {STORE_ADDRESS}
-            </a>{" "}
-            · {t.order.hours}
+            </a>
           </p>
+
+          <div className="mx-auto mt-5 w-full max-w-xs -rotate-1 rounded-xl border-2 border-mr-black bg-mr-cream px-4 py-3 text-left shadow-[0_4px_0_0_rgba(0,0,0,1)]">
+            <p className="font-display text-xl leading-none text-mr-black">{t.order.hoursTitle}</p>
+            <dl className="mt-2 flex flex-col gap-1.5 font-tag text-xs tracking-wide text-mr-black">
+              {OPENING_HOURS.map(({ slots }, i) => (
+                <div key={i} className="flex items-baseline justify-between gap-3 border-t border-dashed border-mr-black/20 pt-1.5">
+                  <dt className="text-mr-black/60">{t.order.hoursDays[i]}</dt>
+                  <dd className="text-right">
+                    {slots.map(([opens, closes]) => `${opens}–${closes}`).join(" · ")}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </Reveal>
       </div>
     </section>

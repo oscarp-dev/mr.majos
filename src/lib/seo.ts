@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { DEFAULT_LOCALE, LOCALES, localePath, type Locale } from "@/i18n/config";
 import { BUSINESS } from "./business";
-import { ORDER_LINKS, SOCIAL_LINKS } from "./site-data";
+import { OPENING_HOURS, ORDER_LINKS, SOCIAL_LINKS } from "./site-data";
+
+/** getDay() → día de schema.org (0 = domingo). */
+const SCHEMA_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 // Dominio público de la web. En producción: NEXT_PUBLIC_SITE_URL=https://dominio.com
 // (en Vercel, si falta, se usa el dominio de producción del proyecto).
@@ -102,7 +105,15 @@ export function restaurantJsonLd(lang: Locale, description: string) {
       addressCountry: "ES",
     },
     sameAs: SOCIAL_LINKS.map((link) => link.href),
-    // TODO: añadir telephone y openingHoursSpecification cuando el horario sea el definitivo
+    openingHoursSpecification: OPENING_HOURS.flatMap(({ days, slots }) =>
+      slots.map(([opens, closes]) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: days.map((day) => SCHEMA_DAYS[day]),
+        opens,
+        closes,
+      }))
+    ),
+    // TODO: añadir telephone cuando esté el dato (BUSINESS.phone)
   };
 }
 

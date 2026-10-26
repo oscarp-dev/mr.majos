@@ -5,14 +5,6 @@ import { getI18n } from "@/i18n/server";
 import { BrandSticker } from "@/components/decorative/brand-sticker";
 import { ORDER_LINKS } from "@/lib/site-data";
 import { CHECKER } from "./unlimited-fries-section";
-import { MargaritaGlass, type MargaritaFlavor } from "./margarita-glass";
-
-// etiqueta e ilustración de cada sabor (mismo orden que messages.margaritas.flavors)
-const FLAVORS: { id: MargaritaFlavor; tag: string; src: string; width: number; height: number }[] = [
-  { id: "classic", tag: "bg-[#c9d97e]", src: "/images/promo/margarita-lima.webp", width: 595, height: 718 },
-  { id: "strawberry", tag: "bg-[#e0596f] text-mr-cream", src: "/images/promo/margarita-fresa.webp", width: 596, height: 726 },
-  { id: "mango", tag: "bg-[#f5b041]", src: "/images/promo/margarita-mango.webp", width: 594, height: 706 },
-];
 
 // chorretones en vertical: el mismo trazo que <Drip>, girado y repetido en mosaico
 const SIDE_DRIP =
@@ -64,18 +56,9 @@ function PromoBurst({ label, className }: { label: string; className?: string })
 /**
  * Promo de margaritas (2 por 12,90€) con el lenguaje de su cartel del local:
  * amarillo con cuadrícula, cuadros negros que chorrean, serifa retro, tabla de
- * precios y sello PROMO. Las copas, una por sabor, en margarita-glass.tsx.
+ * precios y sello PROMO. En carta solo hay la clásica frozen: dos copas, como el 2x.
  */
-export async function MargaritaSection({
-  art = "trio",
-}: {
-  /**
-   * "trio": las tres copas ilustradas (lima, fresa, mango), una por sabor.
-   * "illustration": la copa clásica (generada con Recraft), a pares como en el cartel.
-   * "drawn": las tres copas dibujadas en SVG, una por sabor.
-   */
-  art?: "trio" | "illustration" | "drawn";
-}) {
+export async function MargaritaSection() {
   const { t, href } = await getI18n();
   const m = t.margaritas;
 
@@ -108,16 +91,9 @@ export async function MargaritaSection({
             {m.title}
           </h2>
 
-          <p className="font-tag mt-6 flex flex-wrap gap-x-4 gap-y-1 text-sm tracking-widest md:text-base">
-            {m.flavors.map((flavor, i) => (
-              <span key={flavor} className="inline-flex items-center gap-1.5">
-                <span
-                  aria-hidden="true"
-                  className={`size-3 rounded-full border-2 border-mr-black ${FLAVORS[i].tag.split(" ")[0]}`}
-                />
-                {flavor.toUpperCase()}
-              </span>
-            ))}
+          <p className="font-tag mt-6 inline-flex items-center gap-1.5 text-sm tracking-widest md:text-base">
+            <span aria-hidden="true" className="size-3 rounded-full border-2 border-mr-black bg-[#c9d97e]" />
+            {m.flavor.toUpperCase()}
           </p>
 
           {/* tabla de precios como la del cartel */}
@@ -146,7 +122,7 @@ export async function MargaritaSection({
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" strokeWidth={3} />
             </a>
             <a
-              href={href("/carta#bebidas")}
+              href={href("/carta#margaritas-frozen")}
               className="font-tag inline-flex items-center rounded-full border-2 border-mr-black px-6 py-3 text-sm tracking-wide transition-colors hover:bg-mr-black hover:text-mr-cream md:text-base"
             >
               {m.menu}
@@ -169,64 +145,27 @@ export async function MargaritaSection({
           <div role="img" aria-label={m.illustration} className="relative aspect-[6/5]">
             <PromoBurst
               label={m.promo}
-              className={`absolute right-0 z-20 w-24 rotate-12 drop-shadow-[3px_4px_0_var(--mr-black)] sm:w-28 md:w-32 ${
-                art === "illustration" ? "-right-2 -top-14 md:-top-12 lg:w-32" : "-top-2"
-              }`}
+              className="absolute -right-2 -top-14 z-20 w-24 rotate-12 drop-shadow-[3px_4px_0_var(--mr-black)] sm:w-28 md:-top-12 md:w-32"
             />
 
-            {art === "illustration" ? (
-              // como en el cartel: dos copas juntas, la de delante algo más grande
-              [
-                "left-0 bottom-[4%] w-[49%] [--float-rot:-4deg]",
-                "left-[38%] bottom-0 z-10 w-[54%] [--float-rot:3deg]",
-              ].map((place, i) => (
-                <div key={place} className={`absolute ${place}`}>
-                  <div className="animate-float" style={{ animationDelay: `${i * -1.6}s` }}>
-                    <Image
-                      src="/images/promo/margarita-clasica.webp"
-                      alt=""
-                      width={836}
-                      height={1098}
-                      sizes="(max-width: 768px) 50vw, 360px"
-                      className="h-auto w-full drop-shadow-[6px_10px_0_rgba(0,0,0,0.16)]"
-                    />
-                  </div>
+            {/* como en el cartel: dos copas juntas, la de delante algo más grande */}
+            {[
+              "left-0 bottom-[4%] w-[49%] [--float-rot:-4deg]",
+              "left-[38%] bottom-0 z-10 w-[54%] [--float-rot:3deg]",
+            ].map((place, i) => (
+              <div key={place} className={`absolute ${place}`}>
+                <div className="animate-float" style={{ animationDelay: `${i * -1.6}s` }}>
+                  <Image
+                    src="/images/promo/margarita-clasica.webp"
+                    alt=""
+                    width={836}
+                    height={1098}
+                    sizes="(max-width: 768px) 50vw, 360px"
+                    className="h-auto w-full drop-shadow-[6px_10px_0_rgba(0,0,0,0.16)]"
+                  />
                 </div>
-              ))
-            ) : (
-              FLAVORS.map((flavor, i) => {
-                const place = [
-                  "left-0 bottom-[6%] w-[40%] [--float-rot:-8deg]",
-                  "left-[29%] bottom-0 z-10 w-[44%] [--float-rot:1deg]",
-                  "right-0 bottom-[8%] w-[40%] [--float-rot:9deg]",
-                ][i];
-                return (
-                  <div key={flavor.id} className={`absolute ${place}`}>
-                    <div className="animate-float" style={{ animationDelay: `${i * -1.3}s` }}>
-                      {art === "trio" ? (
-                        <Image
-                          src={flavor.src}
-                          alt=""
-                          width={flavor.width}
-                          height={flavor.height}
-                          sizes="(max-width: 768px) 45vw, 300px"
-                          className="h-auto w-full drop-shadow-[6px_10px_0_rgba(0,0,0,0.16)]"
-                        />
-                      ) : (
-                        <MargaritaGlass flavor={flavor.id} className="w-full" />
-                      )}
-                    </div>
-                    <span
-                      className={`font-tag absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border-2 border-mr-black px-2.5 py-0.5 text-[11px] tracking-widest shadow-[0_3px_0_0_var(--mr-black)] md:text-xs ${
-                        flavor.tag
-                      } ${i === 1 ? "rotate-2" : i ? "rotate-6" : "-rotate-6"}`}
-                    >
-                      {m.flavors[i].toUpperCase()}
-                    </span>
-                  </div>
-                );
-              })
-            )}
+              </div>
+            ))}
           </div>
         </Reveal>
       </div>

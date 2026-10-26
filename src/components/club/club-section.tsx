@@ -37,8 +37,12 @@ export async function ClubSection() {
           <p className="mt-4 max-w-md text-sm leading-relaxed text-mr-cream/60 md:text-base">
             {t.club.text}
           </p>
+          <p className="mt-3 max-w-md font-tag text-xs tracking-wide text-mr-yellow md:text-sm">
+            {t.club.wallet}
+          </p>
 
-          <ul className="mt-8 flex flex-col gap-3">
+          <p className="mt-8 max-w-md text-sm leading-relaxed text-mr-cream/60">{t.club.levelsIntro}</p>
+          <ul className="mt-4 flex flex-col gap-3">
             {CLUB_TIERS.map((tier, i) => (
               <li
                 key={tier.name}
@@ -46,14 +50,13 @@ export async function ClubSection() {
               >
                 <div>
                   <p className="font-display text-lg text-mr-cream">{tier.name}</p>
-                  <p className="text-xs text-mr-cream/55">{t.club.perks[i]}</p>
+                  {t.club.perks[i] && <p className="text-xs text-mr-yellow">{t.club.perks[i]}</p>}
                 </div>
-                <span className="shrink-0 font-tag text-sm text-mr-yellow">
-                  {tier.stamps}
-                </span>
+                <span className="shrink-0 font-tag text-sm text-mr-yellow">{t.club.stamps(tier.stamps)}</span>
               </li>
             ))}
           </ul>
+          <p className="mt-3 max-w-md text-xs leading-relaxed text-mr-cream/45">* {t.club.levelsNote}</p>
 
           <div className="relative mt-8 inline-block">
             <a

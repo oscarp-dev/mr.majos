@@ -105,7 +105,7 @@ export function SiteNav() {
                 MR. MAJO&apos;S
               </span>
               <span
-                className={`font-tag text-[9px] tracking-widest transition-colors duration-300 md:text-[10px] ${
+                className={`font-tag text-[9px] tracking-widest transition-colors duration-300 max-[374px]:hidden md:text-[10px] ${
                   open ? "text-mr-black/70" : "text-mr-yellow"
                 }`}
               >
