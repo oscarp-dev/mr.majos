@@ -49,9 +49,13 @@ export function MenuItemCard({ item }: { item: FullMenuItem }) {
         </span>
       </div>
 
-      <h3 className="font-display text-xl leading-none text-mr-cream">
+      <h3 className="font-display text-3xl leading-[0.9] text-mr-cream">
         {item.name}
       </h3>
+
+      {item.note && (
+        <span className="font-tag text-[11px] tracking-wide text-mr-red">*{item.note}*</span>
+      )}
 
       <p className="text-sm leading-relaxed text-mr-cream/60">
         {item.description}

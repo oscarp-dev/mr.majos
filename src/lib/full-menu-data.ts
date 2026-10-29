@@ -19,6 +19,8 @@ export type FullMenuItem = {
   description: string;
   price: string;
   priceSuffix?: string;
+  /** Aviso en rojo bajo el nombre (p. ej. "No se puede MUY HECHA"). */
+  note?: string;
   tag?: string;
   tagVariant?: "yellow" | "red" | "green";
   footerLeft?: string;
@@ -150,9 +152,10 @@ export const FULL_MENU: FullMenuCategory[] = [
     items: [
       {
         id: "sugarmommy-real",
+        note: "No se puede MUY HECHA",
         name: "La Sugar Mommy",
         description:
-          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, queso cheddar, queso de cabra a la plancha y cebolla caramelizada. (No se puede MUY HECHA).",
+          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, queso cheddar, queso de cabra a la plancha y cebolla caramelizada.",
         price: "17,90€",
         tag: "CABRA & CEBOLLA CARAMELIZADA",
         footerLeft: "Queso de Cabra",
@@ -160,9 +163,10 @@ export const FULL_MENU: FullMenuCategory[] = [
       },
       {
         id: "sexy-crush",
+        note: "No se puede MUY HECHA",
         name: "La Sexy Crush",
         description:
-          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, 110 g de pulled pork casero a la BBQ, mucho queso cheddar y huevo frito. ¡Una Crush MUY P*RN! (No se puede MUY HECHA).",
+          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, 110 g de pulled pork casero a la BBQ, mucho queso cheddar y huevo frito. ¡Una Crush MUY P*RN!",
         price: "17,90€",
         tag: "BEST SELLER",
         tagVariant: "red",
@@ -184,17 +188,28 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Órale",
         description:
           "Vaca Gallega Madurada 30 días, doble de queso cheddar, guacamole casero, fresco y rústico, y la picantona salsa chipotle de Mr. Majo's. ¡Oraleeee CABRXN!",
-        price: "15,70€",
+        price: "16,50€",
         tag: "🌶️ SPICY",
         footerLeft: "Guacamole & Chipotle",
         image: "/images/burgers/orale.webp",
+      },
+      {
+        id: "pecadora",
+        note: "No se puede MUY HECHA",
+        name: "La Pecadora",
+        description:
+          "Vaca Gallega Madurada 30 días picada y mezclada con bacon bits, cebolla crunchy, queso cheddar, queso gouda y queso provolone. ¡CHEESE BOOM!",
+        price: "17,90€",
+        tag: "¡CHEESE BOOM!",
+        footerLeft: "Cheddar, Gouda & Provolone",
+        image: "/images/burgers/pecadora.webp",
       },
       {
         id: "custom-burger",
         name: "Custom Burger",
         description:
           "¡Tú eres el/la chef! Es hora de ponerse creativ@: añade los ingredientes y salsas extra que quieras. Partes de una base de Vaca Gallega Madurada 30 días o doble de pollo empanado SUPER CRUNCHY.",
-        price: "9,90€",
+        price: "10,70€",
         priceSuffix: "+extras",
         tag: "¡TÚ ERES EL/LA CHEF!",
         footerLeft: "VACA MADURADA O POLLO CRUNCHY",
@@ -487,7 +502,7 @@ export const FULL_MENU: FullMenuCategory[] = [
             items: [
               { id: "agua", name: "Agua 50cl", price: "2,50€" },
               { id: "agua-gas", name: "Agua con gas 36cl", price: "2,90€" },
-              { id: "refresco", name: "Refresco de vidrio 36cl", price: "2,90€" },
+              { id: "refresco", name: "Refresco de vidrio 36cl", price: "3,50€" },
               { id: "tinto-verano", name: "Tinto de verano", price: "3,90€" },
               { id: "ice-tea", name: "Majo's Ice Tea", price: "3,90€" },
               {

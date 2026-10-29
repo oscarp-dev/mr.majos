@@ -98,6 +98,9 @@ export async function BurgerPhotoCard({
             )}
           </span>
         </div>
+        {item.note && (
+          <span className="font-tag text-[11px] tracking-wide text-mr-red">*{item.note}*</span>
+        )}
         <p className="text-sm leading-relaxed text-mr-cream/60">
           {item.description}
         </p>

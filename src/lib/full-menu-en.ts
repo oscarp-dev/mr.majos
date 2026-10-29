@@ -7,6 +7,7 @@ type ItemEn = {
   footerLeft?: string;
   footerRight?: string;
   priceSuffix?: string;
+  note?: string;
 };
 
 type CategoryEn = { title: string; shortTitle?: string; description?: string };
@@ -76,14 +77,16 @@ export const ITEMS_EN: Record<string, ItemEn> = {
     tag: "HOMEMADE PULLED PORK",
   },
   "sugarmommy-real": {
+    note: "Can't be cooked WELL DONE",
     description:
-      "30-day dry-aged Galician beef, minced and mixed with bacon bits and crunchy onion, cheddar cheese, grilled goat cheese and caramelized onion. (Can't be cooked WELL DONE.)",
+      "30-day dry-aged Galician beef, minced and mixed with bacon bits and crunchy onion, cheddar cheese, grilled goat cheese and caramelized onion.",
     tag: "GOAT CHEESE & CARAMELIZED ONION",
     footerLeft: "Goat Cheese",
   },
   "sexy-crush": {
+    note: "Can't be cooked WELL DONE",
     description:
-      "30-day dry-aged Galician beef, minced and mixed with bacon bits and crunchy onion, 110 g of homemade BBQ pulled pork, loads of cheddar cheese and a fried egg. A VERY P*RN crush! (Can't be cooked WELL DONE.)",
+      "30-day dry-aged Galician beef, minced and mixed with bacon bits and crunchy onion, 110 g of homemade BBQ pulled pork, loads of cheddar cheese and a fried egg. A VERY P*RN crush!",
     footerLeft: "110 g Pulled Pork",
     footerRight: "Fried Egg",
   },
@@ -96,6 +99,13 @@ export const ITEMS_EN: Record<string, ItemEn> = {
   orale: {
     description:
       "30-day dry-aged Galician beef, double cheddar cheese, fresh and rustic homemade guacamole and Mr. Majo's spicy chipotle sauce. ¡Oraleeee CABRXN!",
+  },
+  pecadora: {
+    note: "Can't be cooked WELL DONE",
+    description:
+      "30-day dry-aged Galician beef, minced and mixed with bacon bits and crunchy onion, cheddar, gouda and provolone cheese. CHEESE BOOM!",
+    tag: "CHEESE BOOM!",
+    footerLeft: "Cheddar, Gouda & Provolone",
   },
   "custom-burger": {
     description:
