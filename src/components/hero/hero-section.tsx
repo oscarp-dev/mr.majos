@@ -1,7 +1,6 @@
 import { HeroCollage } from "./hero-collage";
 import { PaintSplash } from "@/components/decorative/paint-splash";
 import { Sparkle } from "@/components/decorative/sparkle";
-import { GameBoyDevice } from "@/components/decorative/game-boy-device";
 import { CooltextBadge } from "./cooltext-badge";
 import { BadDecisionsBadge } from "./bad-decisions-badge";
 import { SpecialText } from "@/components/ui/special-text";
@@ -30,17 +29,10 @@ export function HeroSection() {
           <CooltextBadge className="inset-x-0 top-full mx-auto mt-4 sm:mt-2 md:inset-x-auto md:right-[6%] md:top-auto md:bottom-4 md:mx-0" />
         </div>
 
-        <div className="mt-16 grid gap-8 md:mt-14 lg:grid-cols-12 lg:items-center lg:gap-6">
-          <div className="lg:col-span-5">
-            <div className="relative flex aspect-[4/5] w-full items-center justify-center md:aspect-[3/4]">
-              <GameBoyDevice className="w-full -rotate-6 scale-150" />
-              <BadDecisionsBadge className="-bottom-2 -left-2 md:-bottom-4 md:-left-4" />
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 lg:pt-10">
-            <HeroCollage />
-          </div>
+        {/* la rejilla 2×2 de móvil, en tablet, no pasa de max-w-xl para no inflar las tarjetas */}
+        <div className="relative mx-auto mb-16 mt-16 max-w-xl md:mt-20 lg:mb-0 lg:max-w-6xl">
+          <HeroCollage />
+          <BadDecisionsBadge className="-bottom-20 -left-2 sm:-bottom-24 lg:-left-4 lg:-top-6 lg:bottom-auto" />
         </div>
 
       </div>

@@ -124,7 +124,7 @@ export default async function Home() {
         <ClubSection />
         <OrderBanner />
       </main>
-      <SiteFooter />
+      <SiteFooter gameBoy />
     </>
   );
 }

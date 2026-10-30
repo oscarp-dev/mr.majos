@@ -167,7 +167,7 @@ const es = {
     levelsNote: "Los descuentos se hacen en tu burger o hot dog, aplicables de domingo a miércoles.",
     cta: "APÚNTATE AL CLUB",
     cardAlt: "Tarjeta de fidelidad del Majo's Club",
-    stickerAlt: "Sticker de un señor rico con una bolsa de dinero",
+    stickerAlt: "Sticker del Señor Fortuna, con chistera y una bolsa de dinero",
   },
   order: {
     eyebrow: "PIDE ONLINE O VEN A VERNOS",
@@ -390,7 +390,7 @@ const en: Messages = {
     levelsNote: "Discounts apply to your burger or hot dog, Sunday to Wednesday.",
     cta: "JOIN THE CLUB",
     cardAlt: "Majo's Club loyalty card",
-    stickerAlt: "Sticker of a rich man holding a money bag",
+    stickerAlt: "Señor Fortuna sticker, with a top hat and a money bag",
   },
   order: {
     eyebrow: "ORDER ONLINE OR COME SEE US",

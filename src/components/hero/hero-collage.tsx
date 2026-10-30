@@ -69,7 +69,7 @@ async function InstagramCard({
 
         <span
           className={cn(
-            "absolute left-2.5 top-2.5 grid size-8 lg:top-11 place-items-center rounded-lg text-white shadow-[0_3px_0_0_rgba(0,0,0,1)]",
+            "absolute left-2.5 top-2.5 grid size-8 place-items-center rounded-lg text-white shadow-[0_3px_0_0_rgba(0,0,0,1)]",
             IG_GRADIENT
           )}
         >
@@ -77,7 +77,7 @@ async function InstagramCard({
         </span>
         <Heart
           aria-hidden="true"
-          className="absolute right-3 top-3 size-6 lg:top-12 fill-[#ff3040] text-[#ff3040] drop-shadow-[0_2px_0_rgba(0,0,0,1)] motion-safe:animate-pulse"
+          className="absolute right-3 top-3 size-6 fill-[#ff3040] text-[#ff3040] drop-shadow-[0_2px_0_rgba(0,0,0,1)] motion-safe:animate-pulse"
         />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-3">
@@ -270,21 +270,14 @@ export async function HeroCollage() {
   const { t } = await getI18n();
 
   return (
-    <div className="grid grid-cols-2 gap-x-3 gap-y-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-5">
-      {/* Por debajo de lg las columnas se disuelven (contents) y las cuatro
+    <div className="grid grid-cols-2 gap-x-3 gap-y-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1fr)] lg:items-center lg:gap-10">
+      {/* Por debajo de lg el póster se disuelve (contents) y las cuatro
           tarjetas forman una rejilla 2×2 con filas alineadas: club + póster
-          arriba, Instagram + teaser abajo. En desktop vuelven las columnas y
-          el teaser flota sobre el póster. */}
-      <div className="contents lg:flex lg:flex-col lg:gap-5">
-        <ClubTeaserCard rotate="rotate-2" className="max-lg:order-1 lg:z-10 lg:-mb-8" />
-        <InstagramCard
-          src="/images/foto-burger-mano-2.webp"
-          rotate="-rotate-1"
-          className="aspect-[3/4] self-stretch max-lg:order-3"
-        />
-      </div>
+          arriba, Instagram + teaser abajo. En desktop van en tres columnas,
+          con el póster en medio y el teaser flotando sobre él. */}
+      <ClubTeaserCard rotate="rotate-2" className="max-lg:order-1" />
       <div className="contents lg:relative lg:block">
-        <MenuDelDiaCard rotate="-rotate-1" className="min-h-64 max-lg:order-2 lg:h-full" />
+        <MenuDelDiaCard rotate="-rotate-1" className="min-h-64 max-lg:order-2 lg:aspect-[4/5]" />
         <Image
           src="/images/badge-circular-amarillo-sin-anillo.webp"
           alt={t.hero.sealAlt}
@@ -294,6 +287,11 @@ export async function HeroCollage() {
         />
         <MenuDelDiaTeaser className="max-lg:order-4 lg:absolute lg:-bottom-6 lg:-right-4" />
       </div>
+      <InstagramCard
+        src="/images/foto-burger-mano-2.webp"
+        rotate="-rotate-1"
+        className="aspect-[3/4] self-stretch max-lg:order-3 lg:self-center"
+      />
     </div>
   );
 }

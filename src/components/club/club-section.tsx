@@ -69,12 +69,12 @@ export async function ClubSection() {
             </a>
 
             <DraggableSticker
-              src="/images/sticker-money-bag.gif"
+              src="/images/stickers/senor-fortuna.webp"
               alt={t.club.stickerAlt}
-              width={480}
-              height={480}
+              width={429}
+              height={733}
               rotate={-10}
-              className="-right-16 top-1 w-16 sm:-right-20 sm:w-20"
+              className="-right-16 -top-8 w-14 sm:-right-20 sm:w-16"
             />
           </div>
         </Reveal>
