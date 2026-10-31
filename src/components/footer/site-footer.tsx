@@ -95,9 +95,6 @@ async function GameOver() {
       <div className="relative mx-auto aspect-square w-[68%] max-w-[17rem] md:w-full md:max-w-sm">
         <div aria-hidden="true" className="absolute inset-[8%] rounded-full bg-mr-yellow/15 blur-3xl" />
         <GameBoyDevice className="w-full -rotate-6 scale-150" />
-        <span className="absolute -bottom-6 -right-6 rotate-6 rounded-full border-2 border-mr-black bg-mr-yellow px-3 py-1 font-tag text-[11px] tracking-widest text-mr-black shadow-[0_3px_0_0_rgba(0,0,0,1)] md:-right-2 md:text-xs">
-          {t.footer.pressStart} <span className="motion-safe:animate-pulse">▶</span>
-        </span>
       </div>
 
       <div className="relative mt-14 text-center md:mt-0 md:text-left">

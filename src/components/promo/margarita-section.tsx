@@ -6,11 +6,14 @@ import { BrandSticker } from "@/components/decorative/brand-sticker";
 import { ORDER_LINKS } from "@/lib/site-data";
 import { CHECKER } from "./unlimited-fries-section";
 
+// mismo orden que t.margaritas.flavors: clásica, fresa, mango
 const GLASSES = [
-  { src: "/images/promo/margarita-lima.webp", width: 595, height: 718, place: "left-0 bottom-[6%] w-[40%] [--float-rot:-8deg]" },
-  { src: "/images/promo/margarita-fresa.webp", width: 596, height: 726, place: "left-[29%] bottom-0 z-10 w-[44%] [--float-rot:1deg]" },
-  { src: "/images/promo/margarita-mango.webp", width: 594, height: 706, place: "right-0 bottom-[8%] w-[40%] [--float-rot:9deg]" },
+  { src: "/images/promo/margarita-lima.webp", width: 595, height: 718, place: "left-0 bottom-[6%] w-[40%] [--float-rot:-8deg]", tag: "-rotate-6" },
+  { src: "/images/promo/margarita-fresa.webp", width: 596, height: 726, place: "left-[29%] bottom-0 z-10 w-[44%] [--float-rot:1deg]", tag: "rotate-2" },
+  { src: "/images/promo/margarita-mango.webp", width: 594, height: 706, place: "right-0 bottom-[8%] w-[40%] [--float-rot:9deg]", tag: "rotate-6" },
 ];
+
+const FLAVOR_DOTS = ["bg-[#c9d97e]", "bg-[#ff5a6e]", "bg-[#ff9f1c]"];
 
 // chorretones en vertical: el mismo trazo que <Drip>, girado y repetido en mosaico
 const SIDE_DRIP =
@@ -62,8 +65,7 @@ function PromoBurst({ label, className }: { label: string; className?: string })
 /**
  * Promo de margaritas (2 por 12,90€) con el lenguaje de su cartel del local:
  * amarillo con cuadrícula, cuadros negros que chorrean, serifa retro, tabla de
- * precios y sello PROMO. Tres copas ilustradas de adorno; en carta solo está la
- * clásica frozen, así que no llevan etiqueta de sabor.
+ * precios y sello PROMO. Tres copas ilustradas, una por sabor, con su etiqueta.
  */
 export async function MargaritaSection() {
   const { t, href } = await getI18n();
@@ -98,10 +100,15 @@ export async function MargaritaSection() {
             {m.title}
           </h2>
 
-          <p className="font-tag mt-6 inline-flex items-center gap-1.5 text-sm tracking-widest md:text-base">
-            <span aria-hidden="true" className="size-3 rounded-full border-2 border-mr-black bg-[#c9d97e]" />
-            {m.flavor.toUpperCase()}
-          </p>
+          <ul className="font-tag mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm tracking-widest md:text-base">
+            <li className="rounded-md bg-mr-black px-2 py-0.5 text-mr-yellow">{m.frozen.toUpperCase()}</li>
+            {m.flavors.map((flavor, i) => (
+              <li key={flavor} className="inline-flex items-center gap-1.5">
+                <span aria-hidden="true" className={`size-3 rounded-full border-2 border-mr-black ${FLAVOR_DOTS[i]}`} />
+                {flavor.toUpperCase()}
+              </li>
+            ))}
+          </ul>
 
           {/* tabla de precios como la del cartel */}
           <dl className="font-retro mt-7 grid w-full max-w-sm grid-cols-[1fr_auto] border-[3px] border-mr-black text-2xl md:text-3xl">
@@ -158,7 +165,7 @@ export async function MargaritaSection() {
             {/* tres copas ilustradas, la del centro delante */}
             {GLASSES.map((glass, i) => (
               <div key={glass.src} className={`absolute ${glass.place}`}>
-                <div className="animate-float" style={{ animationDelay: `${i * -1.3}s` }}>
+                <div className="relative animate-float" style={{ animationDelay: `${i * -1.3}s` }}>
                   <Image
                     src={glass.src}
                     alt=""
@@ -167,6 +174,12 @@ export async function MargaritaSection() {
                     sizes="(max-width: 768px) 45vw, 300px"
                     className="h-auto w-full drop-shadow-[6px_10px_0_rgba(0,0,0,0.16)]"
                   />
+                  <span
+                    aria-hidden="true"
+                    className={`font-tag absolute bottom-[4%] left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-mr-black bg-mr-cream px-2.5 py-0.5 text-[10px] tracking-widest shadow-[0_3px_0_0_var(--mr-black)] sm:text-xs ${glass.tag}`}
+                  >
+                    {m.flavors[i].toUpperCase()}
+                  </span>
                 </div>
               </div>
             ))}
