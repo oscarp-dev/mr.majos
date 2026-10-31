@@ -32,7 +32,7 @@ export function HeroSection() {
         {/* la rejilla 2×2 de móvil, en tablet, no pasa de max-w-xl para no inflar las tarjetas */}
         <div className="relative mx-auto mb-16 mt-16 max-w-xl md:mt-20 lg:mb-0 lg:max-w-6xl">
           <HeroCollage />
-          <BadDecisionsBadge className="-bottom-20 -left-2 sm:-bottom-24 lg:-left-4 lg:-top-6 lg:bottom-auto" />
+          <BadDecisionsBadge className="inset-x-0 -bottom-20 mx-auto sm:-bottom-24 lg:inset-x-auto lg:-left-4 lg:-top-6 lg:bottom-auto lg:mx-0" />
         </div>
 
       </div>
