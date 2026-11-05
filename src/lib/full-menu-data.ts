@@ -62,7 +62,7 @@ export const FEATURED_DISH = {
   badges: ["⭐ PLATO INSIGNIA", "100% REAL LACEY CRUST"],
   eyebrow: "EL REY DEL MENÚ",
   name: "La Sugar Daddy",
-  price: "13,70€",
+  price: "14,90€",
   description:
     "Doble Smash de ternera, queso cheddar, pepinillos agridulces, cebolla caramelizada, doble de bacon crujiente y nuestra salsa Mayo Majo's. ¡Una ADICCIÓN TOTAL!",
   chips: ["Doble Smash", "Cheddar", "Doble Bacon"],
@@ -83,7 +83,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Gringa",
         description:
           "Doble Smash de ternera, queso cheddar, relish de pepinillos agridulces y cebolla picada, doble de bacon crujiente, ketchup y miel mostaza. ¡De locoooos!",
-        price: "12,90€",
+        price: "13,70€",
         tag: "NEW HIT",
         tagVariant: "red",
         footerLeft: "Relish & Miel Mostaza",
@@ -105,7 +105,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Tiquismiquis",
         description:
           "Doble de pollo empanado SUPER CRUNCHY, queso cheddar, doble de bacon crujiente, lechuga Batavia y salsa Mayo Majo's. ¡ESPECIAL para los chicken lovers!",
-        price: "12,90€",
+        price: "13,70€",
         tag: "CHICKEN 🍗",
         footerLeft: "Pollo Super Crunchy",
         image: "/images/burgers/tiquismiquis.webp",
@@ -125,7 +125,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Loba",
         description:
           "Doble Smash de ternera, queso cheddar, cebolla crunchy, doble de bacon crujiente, lechuga Batavia, huevo frito y salsa Mayo Trufa. ¡CLARA-MENTE DIVINA!",
-        price: "13,70€",
+        price: "14,90€",
         tag: "TRUFFLE TOUCH ✨",
         footerLeft: "Mayo Trufa",
         image: "/images/burgers/loba.webp",
@@ -135,7 +135,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Goloza",
         description:
           "Doble Smash de ternera, queso cheddar, cebolla a la plancha, pulled pork casero a la BBQ, lechuga Batavia y salsa Barbacoa de Mr. Majo's. ¡Así es, el PULLED PORK es casero!",
-        price: "14,90€",
+        price: "15,70€",
         tag: "PULLED PORK CASERO",
         tagVariant: "red",
         footerLeft: "Pulled Pork BBQ",
@@ -299,7 +299,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "Patatas Trifásicas",
         description:
           "Patatas finas con pulled pork casero a la BBQ, crujiente pollo empanado, salchicha Frankfurt, salsa Mayo Majo's, salsa de queso americano fundido y perejil deshidratado.",
-        price: "14,90€",
+        price: "15,70€",
         tag: "¡LOCURA TOTAL!",
         tagVariant: "red",
         highlight: "red",
@@ -370,7 +370,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Veggie Baby",
         description:
           "Carne vegetariana, queso gouda, cebolla caramelizada, tomate, lechuga Batavia y salsa Mayo Majo's. ¡Porque lo vegetariano también está que FLIPAS, bb!",
-        price: "14,90€",
+        price: "15,70€",
         tag: "VEGGIE 🌱",
         tagVariant: "green",
         image: "/images/carta/veggie-baby.webp",
@@ -382,7 +382,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         name: "La Veggie Órale",
         description:
           "Carne vegetariana, queso americano, guacamole casero, fresco y rústico, con picantona salsa chipotle y lechuga Batavia. Picantemente veggie :)",
-        price: "14,90€",
+        price: "15,70€",
         tag: "🌱 VEGGIE SPICY 🌶️",
         tagVariant: "green",
         footerLeft: "🌱 Guacamole & Chipotle",

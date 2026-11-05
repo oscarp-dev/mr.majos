@@ -62,7 +62,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
       lang={lang}
       className={`${anton.variable} ${spaceGrotesk.variable} ${dmSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+      <body className="min-h-full flex flex-col overflow-x-clip bg-background text-foreground font-sans">
         <LocaleProvider lang={lang}>
           {children}
           <ConsentBanner />
