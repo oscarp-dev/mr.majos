@@ -95,7 +95,6 @@ export default async function Home() {
         />
         {/* "El proceso" (ProcessSection) queda fuera de momento: su hueco es para la promo */}
         <MargaritaSection />
-        <InstagramSection />
         <ParallaxBanner
           src="/images/lifestyle-pareja-coche-amarillo.webp"
           alt={t.thursday.imageAlt}
@@ -121,6 +120,7 @@ export default async function Home() {
           verticalAlign="center"
           className="aspect-[4/3] h-auto min-h-0 md:h-auto"
         />
+        <InstagramSection />
         <ClubSection />
         <OrderBanner />
       </main>
