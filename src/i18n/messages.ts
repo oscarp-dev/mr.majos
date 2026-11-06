@@ -49,9 +49,9 @@ const es = {
     stamps: "TUS SELLOS",
     stampDone: (n: number) => `Sello ${n} conseguido`,
     stampPending: (n: number) => `Sello ${n} pendiente`,
-    stampPrize: "Premio: burger o hot dog gratis",
+    stampPrize: "Una burger o hot dog gratis cada 9 sellos en tarjeta",
     clubText:
-      "Con tu tarjeta de fidelidad ganas burgers y perritos gratis, by the face.",
+      "Una burger o hot dog GRATIS cada 9 sellos en tu tarjeta de fidelidad, by the face.",
     clubCta: "ACCEDER →",
     menuDelDiaAlt:
       "Menú del día de Mr. Majo's: burger con huevo y bacon, patatas, refresco y postre",
@@ -160,7 +160,7 @@ const es = {
   },
   club: {
     eyebrow: "TU LEALTAD TIENE PREMIO",
-    text: "Descarga tu tarjeta de fidelidad y gana BURGERS y PERRITOS GRATIS, by the face.",
+    text: "Una BURGER o HOT DOG GRATIS cada 9 sellos en tu tarjeta de fidelidad, by the face.",
     wallet: "Disponible para Apple y Google Wallet <3 · QR en el mantel :)",
     levelsIntro: "Mientras más sellos acumules, más beneficios te llevarás. Te presentamos los Majo's Levels:",
     stamps: (n: number) => (n === 1 ? "1 sello" : `${n} sellos`),
@@ -218,7 +218,7 @@ const es = {
     drinksSummary: (n: number, from: string) => `${n} opciones · desde ${from}`,
     vat: "Precios en euros con IVA incluido.",
     payment:
-      "Cuentas separadas solo con tarjeta; en efectivo, la cuenta se paga junta. ¡Disculpad las molestias!",
+      "El pago de cuentas separadas solo se permite con tarjeta. Si el pago es en efectivo, la cuenta debe pagarse en su totalidad (junta). Disculpen las molestias.",
     allergens: "¿Alergias o intolerancias? Pregúntanos antes de pedir: tenemos la información de los 14 alérgenos de cada plato.",
   },
   fries: {
@@ -283,9 +283,9 @@ const en: Messages = {
     stamps: "YOUR STAMPS",
     stampDone: (n: number) => `Stamp ${n} collected`,
     stampPending: (n: number) => `Stamp ${n} to go`,
-    stampPrize: "Reward: free burger or hot dog",
+    stampPrize: "A free burger or hot dog for every 9 stamps on your card",
     clubText:
-      "With your loyalty card you earn free burgers and hot dogs, by the face.",
+      "A FREE burger or hot dog for every 9 stamps on your loyalty card, by the face.",
     clubCta: "JOIN →",
     menuDelDiaAlt:
       "Mr. Majo's lunch menu: burger with egg and bacon, fries, soft drink and dessert",
@@ -390,7 +390,7 @@ const en: Messages = {
   },
   club: {
     eyebrow: "LOYALTY PAYS OFF",
-    text: "Get your loyalty card and earn FREE BURGERS and HOT DOGS, by the face.",
+    text: "A FREE BURGER or HOT DOG for every 9 stamps on your loyalty card, by the face.",
     wallet: "Available for Apple and Google Wallet <3 · QR code on your placemat :)",
     levelsIntro: "The more stamps you collect, the more perks you get. Meet the Majo's Levels:",
     stamps: (n: number) => (n === 1 ? "1 stamp" : `${n} stamps`),
@@ -447,7 +447,7 @@ const en: Messages = {
     toppingsTitle: "Extras & Toppings",
     drinksSummary: (n: number, from: string) => `${n} options · from ${from}`,
     vat: "Prices in euros, VAT included.",
-    payment: "Split bills by card only; cash payments must be for the whole bill. Sorry for the inconvenience!",
+    payment: "Split bills are only accepted by card. If paying in cash, the whole bill must be paid together. Sorry for the inconvenience.",
     allergens: "Allergies or intolerances? Ask us before ordering: we have information on the 14 allergens for every dish.",
   },
   fries: {

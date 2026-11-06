@@ -172,6 +172,7 @@ export const FULL_MENU: FullMenuCategory[] = [
         tagVariant: "red",
         footerLeft: "110 g de Pulled Pork",
         footerRight: "Huevo Frito",
+        image: "/images/burgers/sexy-crush.webp",
       },
       {
         id: "pija",
