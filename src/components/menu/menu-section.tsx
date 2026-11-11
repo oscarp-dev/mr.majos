@@ -4,6 +4,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { LineartSticker } from "@/components/decorative/lineart-sticker";
 import { DraggableSticker } from "@/components/decorative/draggable-sticker";
 import { getI18n } from "@/i18n/server";
+import { FreeFriesBanner } from "@/components/promo/free-fries-banner";
 
 export async function MenuSection() {
   const { t, menu } = await getI18n();
@@ -39,6 +40,10 @@ export async function MenuSection() {
             className="-top-16 right-[8%] hidden w-24 md:block"
           />
           <MenuStreetList categories={menu.homeCategories} />
+        </Reveal>
+
+        <Reveal delay={0.05}>
+          <FreeFriesBanner className="mt-12 md:mt-16" />
         </Reveal>
 
         <Reveal delay={0.1}>

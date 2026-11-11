@@ -76,7 +76,6 @@ export const FULL_MENU: FullMenuCategory[] = [
     title: "Smash Burgers",
     shortTitle: "Smash",
     icon: "burger",
-    description: "Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "gringa",
@@ -148,7 +147,7 @@ export const FULL_MENU: FullMenuCategory[] = [
     title: "Dry Aged Burgers",
     shortTitle: "Dry Aged",
     icon: "crown",
-    description: "Vaca gallega madurada 30 días. Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
+    description: "Vaca gallega madurada 30 días.",
     items: [
       {
         id: "sugarmommy-real",
@@ -225,7 +224,6 @@ export const FULL_MENU: FullMenuCategory[] = [
     title: "Hot Dogs",
     shortTitle: "Perritos",
     icon: "hotdog",
-    description: "Todos incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "yankee",
@@ -364,7 +362,6 @@ export const FULL_MENU: FullMenuCategory[] = [
     id: "veggie",
     title: "Veggie",
     icon: "veggie",
-    description: "Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "veggie-baby",
@@ -398,7 +395,6 @@ export const FULL_MENU: FullMenuCategory[] = [
     title: "Para Peques <3",
     shortTitle: "Peques",
     icon: "kids",
-    description: "Todas incluyen patatas finas gratis :) · Opción de pan sin gluten +1,90€",
     items: [
       {
         id: "kids-carne",

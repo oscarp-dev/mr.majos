@@ -23,22 +23,20 @@ export const FEATURED_EN = {
 };
 
 export const CATEGORIES_EN: Record<string, CategoryEn> = {
-  smash: { title: "Smash Burgers", description: "All come with free thin fries :) · Gluten-free bun available +€1.90" },
+  smash: { title: "Smash Burgers" },
   "dry-aged": {
     title: "Dry Aged Burgers",
-    description: "Galician beef dry-aged for 30 days. All come with free thin fries :) · Gluten-free bun available +€1.90",
+    description: "Galician beef dry-aged for 30 days.",
   },
   perritos: {
     title: "Hot Dogs",
     shortTitle: "Hot Dogs",
-    description: "All come with free thin fries :) · Gluten-free bun available +€1.90",
   },
   entrantes: { title: "Starters" },
-  veggie: { title: "Veggie", description: "All come with free thin fries :) · Gluten-free bun available +€1.90" },
+  veggie: { title: "Veggie" },
   peques: {
     title: "For the Little Ones <3",
     shortTitle: "Kids",
-    description: "All come with free thin fries :) · Gluten-free bun available +€1.90",
   },
   postres: { title: "Desserts" },
   bebidas: { title: "Drinks" },

@@ -221,6 +221,16 @@ const es = {
       "El pago de cuentas separadas solo se permite con tarjeta. Si el pago es en efectivo, la cuenta debe pagarse en su totalidad (junta). Disculpen las molestias.",
     allergens: "¿Alergias o intolerancias? Pregúntanos antes de pedir: tenemos la información de los 14 alérgenos de cada plato.",
   },
+  freeFries: {
+    aria: "Todas las burgers incluyen patatas gratis",
+    eyebrow: "SIN LETRA PEQUEÑA",
+    line1: "TODAS NUESTRAS BURGERS",
+    line2: "VIENEN CON",
+    accent: "PATATAS GRATIS",
+    also: "Y los perritos, las veggie y el menú peques, también 🍟",
+    gluten: "Pan sin gluten",
+    glutenPrice: "+1,90€",
+  },
   fries: {
     aria: "Promo patatas ilimitadas por 1 euro más",
     mascotAlt: "Mascota de Mr. Majo's: patata surfera con el lema Patatas Ilimitadas",
@@ -449,6 +459,16 @@ const en: Messages = {
     vat: "Prices in euros, VAT included.",
     payment: "Split bills are only accepted by card. If paying in cash, the whole bill must be paid together. Sorry for the inconvenience.",
     allergens: "Allergies or intolerances? Ask us before ordering: we have information on the 14 allergens for every dish.",
+  },
+  freeFries: {
+    aria: "Every burger comes with free fries",
+    eyebrow: "NO SMALL PRINT",
+    line1: "EVERY ONE OF OUR BURGERS",
+    line2: "COMES WITH",
+    accent: "FREE FRIES",
+    also: "So do the hot dogs, the veggies and the kids' menu 🍟",
+    gluten: "Gluten-free bun",
+    glutenPrice: "+€1.90",
   },
   fries: {
     aria: "Unlimited fries promo for 1 euro more",

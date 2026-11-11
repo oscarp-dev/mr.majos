@@ -9,6 +9,7 @@ import { MenuCategorySection } from "@/components/carta/menu-category-section";
 import { ToppingsGrid } from "@/components/carta/toppings-grid";
 import { CartaCategoryNav } from "@/components/carta/carta-category-nav";
 import { UnlimitedFriesStrip } from "@/components/promo/unlimited-fries-strip";
+import { FreeFriesBanner } from "@/components/promo/free-fries-banner";
 import { getI18n } from "@/i18n/server";
 import { pageMetadata } from "@/lib/seo";
 
@@ -74,6 +75,7 @@ export default async function CartaPage() {
           <CartaCategoryNav categories={navCategories} className="mt-8" />
 
           <div className="mt-10 flex flex-col gap-20 md:mt-14">
+            <FreeFriesBanner className="-mb-8 md:-mb-6" />
             <FeaturedDishCard />
 
             {menu.categories.map((category) => (
