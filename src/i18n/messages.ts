@@ -227,7 +227,7 @@ const es = {
     line1: "TODAS NUESTRAS BURGERS",
     line2: "VIENEN CON",
     accent: "PATATAS GRATIS",
-    also: "Y los perritos, las veggie y el menú peques, también 🍟",
+    also: "Los perritos, las veggie y el menú peques, también 🍟",
     gluten: "Pan sin gluten",
     glutenPrice: "+1,90€",
   },

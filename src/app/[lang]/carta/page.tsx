@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/components/nav/site-nav";
@@ -75,15 +74,15 @@ export default async function CartaPage() {
           <CartaCategoryNav categories={navCategories} className="mt-8" />
 
           <div className="mt-10 flex flex-col gap-20 md:mt-14">
-            <FreeFriesBanner className="-mb-8 md:-mb-6" />
+            {/* patatas gratis y, justo debajo, el +1€ por patatas ilimitadas */}
+            <div className="flex flex-col gap-8 md:gap-10">
+              <FreeFriesBanner />
+              <UnlimitedFriesStrip />
+            </div>
             <FeaturedDishCard />
 
             {menu.categories.map((category) => (
-              <Fragment key={category.id}>
-                {/* la promo justo antes de Entrantes: el momento de "¿y para picar?" */}
-                {category.id === "entrantes" && <UnlimitedFriesStrip />}
-                <MenuCategorySection category={category} />
-              </Fragment>
+              <MenuCategorySection key={category.id} category={category} />
             ))}
 
             <ToppingsGrid />
