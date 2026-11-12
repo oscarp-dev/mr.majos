@@ -46,7 +46,6 @@ const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
             `NIF/CIF: ${B.taxId}.`,
             `Domicilio: ${B.address}.`,
             `Email: ${B.email} · Teléfono: ${B.phone}.`,
-            `Datos registrales: ${B.registry}.`,
           ],
         },
         {
@@ -113,7 +112,7 @@ const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
             "Esta web no tiene formularios, registro ni cuentas de usuario, y no te pide datos personales.",
             "Solo usa dos cookies técnicas propias, para recordar tu idioma y tu elección sobre las cookies. Las detallamos en la política de cookies.",
             "Si nos escribes por email, por teléfono o por redes sociales, trataremos los datos que nos des (nombre, contacto y el mensaje) para responderte.",
-            "Majo's Club: si te unes al programa de fidelidad, trataremos los datos que nos facilites para gestionar tus sellos y descuentos. [REVISAR: qué datos se piden al apuntarse al club y dónde se guardan]",
+            "Majo's Club: el alta en el programa de fidelidad no se hace en esta web, sino en el formulario de Comeback, la plataforma de tarjetas de fidelidad que usamos. Si te unes, trataremos los datos que te pide ese formulario (como tu nombre y tus datos de contacto) para gestionar tus sellos, premios y descuentos.",
           ],
         },
         {
@@ -139,7 +138,7 @@ const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
         {
           heading: "6. Con quién los compartimos",
           blocks: [
-            `No vendemos ni cedemos tus datos a terceros, salvo obligación legal. La web está alojada en ${B.hosting}, que actúa como encargado del tratamiento. Si algún proveedor trata datos fuera del Espacio Económico Europeo, lo hace con las garantías que exige el RGPD (como las cláusulas contractuales tipo de la Comisión Europea).`,
+            `No vendemos ni cedemos tus datos a terceros, salvo obligación legal. La web está alojada en ${B.hosting} y los datos del Majo's Club se guardan en Comeback; ambos actúan como encargados del tratamiento, por nuestra cuenta. Si algún proveedor trata datos fuera del Espacio Económico Europeo, lo hace con las garantías que exige el RGPD (como las cláusulas contractuales tipo de la Comisión Europea).`,
           ],
         },
         {
@@ -193,7 +192,6 @@ const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
             `Tax ID (NIF/CIF): ${B.taxId}.`,
             `Address: ${B.address}.`,
             `Email: ${B.email} · Phone: ${B.phone}.`,
-            `Registry details: ${B.registry}.`,
           ],
         },
         {
@@ -260,7 +258,7 @@ const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
             "This website has no forms, sign-up or user accounts, and does not ask you for personal data.",
             "It only uses two essential first-party cookies, to remember your language and your cookie choice. They are listed in the cookie policy.",
             "If you contact us by email, phone or social media, we will process the data you give us (name, contact details and your message) to reply to you.",
-            "Majo's Club: if you join the loyalty programme, we will process the data you provide to manage your stamps and discounts. [REVISAR: qué datos se piden al apuntarse al club y dónde se guardan]",
+            "Majo's Club: you don't sign up for the loyalty programme on this website but on the form of Comeback, the loyalty card platform we use. If you join, we will process the data that form asks for (such as your name and contact details) to manage your stamps, rewards and discounts.",
           ],
         },
         {
@@ -286,7 +284,7 @@ const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
         {
           heading: "6. Who we share it with",
           blocks: [
-            `We don't sell or pass on your data to third parties, unless required by law. This website is hosted by ${B.hosting}, acting as data processor. If any provider processes data outside the European Economic Area, it does so with the safeguards required by the GDPR (such as the European Commission's standard contractual clauses).`,
+            `We don't sell or pass on your data to third parties, unless required by law. This website is hosted by ${B.hosting} and Majo's Club data is stored on Comeback; both act as data processors on our behalf. If any provider processes data outside the European Economic Area, it does so with the safeguards required by the GDPR (such as the European Commission's standard contractual clauses).`,
           ],
         },
         {

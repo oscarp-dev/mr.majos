@@ -6,14 +6,15 @@ export const BUSINESS = {
   /** Nombre comercial. */
   brand: "Mr. Majo's",
   /** Razón social de la sociedad o nombre y apellidos del autónomo. */
-  legalName: "[RAZÓN SOCIAL]",
+  legalName: "Richard Luciany Angulo Archila",
   /** NIF / CIF. */
-  taxId: "[NIF/CIF]",
+  taxId: "60549016K",
   address: "Calle Bazán, 45, 03001 Alicante (España)",
-  email: "[EMAIL DE CONTACTO]",
-  phone: "[TELÉFONO]",
-  /** Solo sociedades: "Registro Mercantil de Alicante, Tomo X, Folio X, Hoja A-X". */
-  registry: "[DATOS DEL REGISTRO MERCANTIL, si es sociedad]",
-  /** Empresa donde está alojada la web (p. ej. Vercel Inc.). */
-  hosting: "[PROVEEDOR DE HOSTING]",
+  email: "majosgrill.info@gmail.com",
+  /** Tal cual se muestra en la web. */
+  phone: "722 77 51 24",
+  /** Para enlaces tel: y datos estructurados. */
+  phoneIntl: "+34722775124",
+  /** Empresa donde está alojada la web. */
+  hosting: "Vercel Inc.",
 } as const;

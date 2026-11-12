@@ -112,7 +112,7 @@ export function restaurantJsonLd(lang: Locale, description: string) {
         closes,
       }))
     ),
-    // TODO: añadir telephone cuando esté el dato (BUSINESS.phone)
+    telephone: BUSINESS.phoneIntl,
   };
 }
 
