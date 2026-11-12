@@ -10,7 +10,7 @@ import { CartaCategoryNav } from "@/components/carta/carta-category-nav";
 import { UnlimitedFriesStrip } from "@/components/promo/unlimited-fries-strip";
 import { FreeFriesBanner } from "@/components/promo/free-fries-banner";
 import { getI18n } from "@/i18n/server";
-import { pageMetadata } from "@/lib/seo";
+import { jsonLdScript, menuJsonLd, pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { lang, t } = await getI18n();
@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CartaPage() {
-  const { t, menu, href } = await getI18n();
+  const { lang, t, menu, href } = await getI18n();
 
   const navCategories = [
     ...menu.categories.map((category) => ({
@@ -36,6 +36,10 @@ export default async function CartaPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(menuJsonLd(lang, menu)) }}
+      />
       <SiteNav />
       <main className="bg-mr-black pb-20 pt-8 md:pt-12">
         <div className="mx-auto max-w-7xl px-4 md:px-8">

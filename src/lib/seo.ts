@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 import { DEFAULT_LOCALE, LOCALES, localePath, type Locale } from "@/i18n/config";
 import { BUSINESS } from "./business";
+import type { Menu } from "./full-menu-data";
 import { OPENING_HOURS, ORDER_LINKS, SOCIAL_LINKS } from "./site-data";
 
 /** getDay() → día de schema.org (0 = domingo). */
 const SCHEMA_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-// Dominio público de la web. En producción: NEXT_PUBLIC_SITE_URL=https://dominio.com
-// (en Vercel, si falta, se usa el dominio de producción del proyecto).
+// Dominio público de la web: www.mrmajos.es (mrmajos.es redirige ahí en Vercel).
+// NEXT_PUBLIC_SITE_URL lo sobrescribe; en desarrollo, localhost.
 export const SITE_URL = new URL(
   process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000")
+    (process.env.NODE_ENV === "production" ? "https://www.mrmajos.es" : "http://localhost:3000")
 );
 
 /** Rutas públicas que van al sitemap (sin prefijo de idioma). */
@@ -87,7 +86,7 @@ export function restaurantJsonLd(lang: Locale, description: string) {
     url: absoluteUrl(localePath(lang, "/")),
     image: absoluteUrl("/images/foto-burger-menu-del-dia.webp"),
     logo: absoluteUrl("/images/logo-mark.webp"),
-    menu: absoluteUrl(localePath(lang, "/carta")),
+    hasMenu: absoluteUrl(localePath(lang, "/carta")),
     servesCuisine: ["Hamburguesas", "Smash burgers", "Hot dogs", "Americana"],
     priceRange: "€€",
     acceptsReservations: true,
@@ -114,6 +113,55 @@ export function restaurantJsonLd(lang: Locale, description: string) {
       }))
     ),
     // TODO: añadir telephone cuando esté el dato (BUSINESS.phone)
+  };
+}
+
+/** "13,70€" → "13.70"; precios dobles ("3,90€ / 14,90€") se quedan con el primero. */
+const schemaPrice = (price: string) => {
+  const match = price.match(/\d+(?:[.,]\d+)?/);
+  return match ? Number(match[0].replace(",", ".")).toFixed(2) : undefined;
+};
+
+/** Carta completa en schema.org (Menu → MenuSection → MenuItem), para /carta. */
+export function menuJsonLd(lang: Locale, menu: Menu) {
+  const item = (name: string, description: string | undefined, price: string) => {
+    const amount = schemaPrice(price);
+    return {
+      "@type": "MenuItem",
+      name,
+      ...(description ? { description } : {}),
+      ...(amount
+        ? { offers: { "@type": "Offer", price: amount, priceCurrency: "EUR" } }
+        : {}),
+    };
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    "@id": absoluteUrl(`${localePath(lang, "/carta")}#menu`),
+    name: `${BUSINESS.brand} — ${lang === "es" ? "Carta" : "Menu"}`,
+    url: absoluteUrl(localePath(lang, "/carta")),
+    inLanguage: lang,
+    mainEntityOfPage: absoluteUrl(localePath(lang, "/carta")),
+    provider: { "@id": absoluteUrl("/#restaurant") },
+    hasMenuSection: menu.categories.map((category) => ({
+      "@type": "MenuSection",
+      name: category.title,
+      ...(category.description ? { description: category.description } : {}),
+      hasMenuItem: [
+        // el plato insignia va aparte en la carta, pero es una smash más
+        ...(category.id === "smash"
+          ? [item(menu.featured.name, menu.featured.description, menu.featured.price)]
+          : []),
+        ...category.items.map((i) => item(i.name, i.description, i.price)),
+        ...(category.groups ?? []).flatMap((group) =>
+          group.sections.flatMap((section) =>
+            section.items.map((d) => item(d.name, d.detail, d.price))
+          )
+        ),
+      ],
+    })),
   };
 }
 

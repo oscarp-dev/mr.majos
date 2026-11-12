@@ -4,8 +4,11 @@ import { Sparkle } from "@/components/decorative/sparkle";
 import { CooltextBadge } from "./cooltext-badge";
 import { BadDecisionsBadge } from "./bad-decisions-badge";
 import { SpecialText } from "@/components/ui/special-text";
+import { getI18n } from "@/i18n/server";
 
-export function HeroSection() {
+export async function HeroSection() {
+  const { t } = await getI18n();
+
   return (
     <section id="top" className="relative overflow-hidden bg-mr-black pt-8 md:pt-12">
       <PaintSplash className="-right-16 top-4 h-72 w-72 opacity-90 md:h-96 md:w-96" />
@@ -22,6 +25,8 @@ export function HeroSection() {
             >
               FOOD P*RN
             </SpecialText>
+            {/* el titular es puro cartel: Google y los lectores de pantalla leen también qué es el sitio */}
+            <span className="sr-only"> — {t.hero.h1Seo}</span>
           </h1>
 
           <Sparkle className="absolute -top-1 right-6 hidden size-12 md:block md:right-8 md:size-14" />

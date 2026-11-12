@@ -41,6 +41,7 @@ const es = {
     panelImages: ["La Sugar Daddy", "Hot Dog Vibes"],
   },
   hero: {
+    h1Seo: "Mr. Majo's, hamburguesería de smash burgers y hot dogs en Alicante",
     gameBoyAlt: "Game Boy Color de Mr. Majo's mostrando fotos del local",
     instagramAria: "Síguenos en Instagram: @mr_majos",
     instagramAlt: "Clienta de Mr. Majo's mordiendo una burger en su coche",
@@ -285,6 +286,7 @@ const en: Messages = {
     panelImages: ["La Sugar Daddy", "Hot Dog Vibes"],
   },
   hero: {
+    h1Seo: "Mr. Majo's, smash burger and hot dog joint in Alicante",
     gameBoyAlt: "Mr. Majo's Game Boy Color showing photos of the restaurant",
     instagramAria: "Follow us on Instagram: @mr_majos",
     instagramAlt: "Mr. Majo's customer biting into a burger in her car",
